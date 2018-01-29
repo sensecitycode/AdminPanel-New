@@ -1,0 +1,116 @@
+{
+    "NEXT":"Next",
+    "BACK":"Back",
+    "USERNAME":"Username",
+    "PASSWORD":"Password",
+    "CONFIRM_PASS":"Confirm password",
+    "SUBMIT":"Submit",
+    "RESET":"Reset",
+    "CANCEL":"Cancel",
+    "LANGUAGE":"En",
+    "FILTER":"Filter",
+    "OTHERS":"others",
+    "REQ_ERR":"Field is <strong>required</strong>",
+    "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
+    "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
+
+    "ROLES":
+    {
+        "sensecityAdmin":"SenseCity Administrator",
+        "cityAdmin":"City Administrator",
+        "cityManager":"Issues Administrator",
+        "departmentAdmin":"Department Administrator",
+        "departmentUser":"Department User",
+        "Anonymous":"Anonymous User"
+    },
+
+    "GRID":
+    {
+        "USERNAME":"Username",
+        "NAME":"Name",
+        "SURNAME":"Surname",
+        "DEPARTMENTS":"Departments",
+        "USEROLE":"User role",
+        "PAGE":"Page",
+        "MORE":"More",
+        "TO":"to",
+        "OF":"of",
+        "NEXT":"Next",
+        "LAST":"Last",
+        "FIRST":"First",
+        "PREVIOUS":"Previous"
+    },
+
+    "WELCOME":
+    {
+        "TITLE":"Sense.city<br>Welcomes you",
+        "SUBTITLE":"add and manage your city",
+        "SIGN_IN":"Sign In",
+        "SIGN_UP":"Sign Up"
+    },
+
+    "SIGNUP":
+    {
+        "TITLE":"Want to be part of sense.city?",
+        "SUBTITLE":"You can now add your city!",
+        "STEP1_LABEL":"Locate your city",
+        "STEP2_LABEL":"Fill in the contact form",
+        "PERSONAL_INFO":"Personal data",
+        "PERSONAL_INFO_DESC":"How should we address you?",
+        "CONTACT_INFO":"Contact data",
+        "CONTACT_INFO_DESC":"How should we contact you?",
+        "NAME":"Name",
+        "SURNAME":"Surname",
+        "TEL":"Phone",
+        "ADDRESS":"Address",
+        "CITY":"City",
+        "PROVINCE":"Province",
+        "POSTAL_CODE":"Postal Code",
+        "STEP3_LABEL":"Create account",
+        "STEP4_LABEL":"Submit",
+        "STEP4_FINISH":"Congratulations, You are now done!",
+        "STEP4_CLICK":"By submitting your application, you accept:",
+        "STEP4_CITY_ACKN":"the responsibility of correct city entry.",
+        "STEP4_TERMS_ACKN":"the terms and conditions."
+    },
+
+    "LOGIN":
+    {
+        "SUBMIT":"Log In",
+        "REQ_ERR":"Field is required",
+        "CREDENTIALS_ERR":"Username or password is incorrect"
+    },
+
+    "DASHBOARD":
+    {
+        "DASHB":"Dashboard",
+        "DB_TITLE":"City Manager Dashboard",
+        "USER_SETTINGS":"User settings",
+        "DEPARTMENT_SETTINGS":"Department settings",
+        "FIXED_ISSUES":"Fixed Issues",
+        "LAST24HOURS":"Last 24 Hours",
+        "USER":"User",
+        "USERS":"Users",
+        "USERS_DESC":"Create and manage your city's users",
+        "CITY_MANAGER":"City Manager",
+        "DEPARTMENTS":"Departments",
+        "DEP_DESC":"Create and manage your city's departments",
+        "BOUNDARIES":"Boundaries",
+        "BOUND_DESC":"Manage your city boundaries",
+        "POLICIES":"Policies",
+        "POL_DESC":"Manage your city policies",
+        "SETTINGS":"Account Settings",
+        "LOGOUT":"Logout",
+        "EDIT_USER":"Edit user",
+        "CREATE_USER":"Create user",
+        "CREATING_USER":"Creating user",
+        "RESET":"Reset",
+        "RESET_PASSWORD":"Reset Password",
+        "RESET_PASSWORD_MSG":"A new password was sent at",
+        "NAME":"Name",
+        "SURNAME":"Surname",
+        "LAST_LOGIN":"Last login",
+        "USEROLE":"User role",
+        "USER_ADDED_MSG":"User <strong>{{username}}</strong> successfully added!"
+    }
+}

@@ -1,0 +1,12 @@
+
+mat-horizontal-stepper{
+    font-size: 15px;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
+    border-radius: 3px;
+    color: rgba(0,0,0,.87);
+    background: #fff;
+}
+
+.mat-expansion-panel-header, .mat-expansion-panel-body {
+    font-size: 15px;
+}

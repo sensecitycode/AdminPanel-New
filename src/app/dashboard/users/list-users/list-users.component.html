@@ -1,0 +1,23 @@
+<div class="table-responsive">
+    <div class="col-xl-2 col-lg-4 col-md-6 input-group">
+      <span class="input-group-addon"><i class="material-icons" style="display:flex; font-size:22px">search</i></span>
+      <input type="text" class="form-control" id="filter-text-box" placeholder="{{ 'FILTER' | translate }}..." (input)="onFilterTextBoxChanged()" aria-describedby="filter">
+    </div>
+    <div>
+        <ag-grid-angular #agGrid style="width: 100%; height: 1000px;" class="ag-theme-material"
+            [gridOptions]="gridOptions"
+            [columnDefs]="columnDefs"
+            [rowData]="rowData"
+            [animateRows]=true
+            [context]="context"
+            enableSorting
+            enableColResize
+            [frameworkComponents]="frameworkComponents"
+            [pagination]=true
+            [paginationAutoPageSize]=true
+            [localeText]="localeText"
+            (gridSizeChanged)="onGridSizeChanged($event)"
+            (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+    </div>
+</div>

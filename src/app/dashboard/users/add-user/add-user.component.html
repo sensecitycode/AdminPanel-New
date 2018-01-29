@@ -1,0 +1,101 @@
+<div class="col-md-12">
+    <button mat-raised-button class="btn-default" [routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
+</div>
+<div class="col-xl-2 col-lg-4 col-md-6 col-xl-offset-5 col-lg-offset-4 col-md-offset-3">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">account_circle</i></div>
+            <mat-card-title>{{'DASHBOARD.USER' | translate}}</mat-card-title>
+            <mat-card-subtitle>{{userAddForm.controls.username.value}}</mat-card-subtitle>
+        </mat-card-header>
+        <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content class="container-fluid">
+
+            <form class="example-form example-full-width" [formGroup]="userAddForm">
+                <div class="col-md-12">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'USERNAME' | translate}}" formControlName="username"/>
+                        <mat-error *ngIf="userAddForm.controls.username.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                </div>
+                <div formGroupName="passwordForm">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input type="password" matInput placeholder="{{'PASSWORD' | translate}}" formControlName="pw1"/>
+                            <mat-error *ngIf="userAddForm.controls.passwordForm.controls.pw1.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input type="password" matInput placeholder="{{'CONFIRM_PASS' | translate}}" formControlName="pw2"/>
+                            <!-- <mat-error *ngIf="userAddForm.controls.passwordForm.controls.pw2.value &&
+                            userAddForm.controls.passwordForm.controls.pw2.touched &&
+                            userAddForm.controls.passwordForm.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate">
+                            </mat-error> -->
+                            <mat-error *ngIf="userAddForm.controls.passwordForm.controls.pw2.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            <mat-error *ngIf="userAddForm.controls.passwordForm.controls.pw2.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <mat-error *ngIf="userAddForm.controls.passwordForm.controls.pw2.value &&
+                userAddForm.controls.passwordForm.controls.pw2.touched &&
+                userAddForm.controls.passwordForm.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate">
+                </mat-error> -->
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'GRID.NAME' | translate}}" formControlName="name"/>
+                        <mat-error *ngIf="userAddForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="{{'GRID.SURNAME' | translate}}" formControlName="surname"/>
+                        <mat-error *ngIf="userAddForm.controls.surname.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-12">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder=Email formControlName="email"/>
+                        <mat-error *ngIf="userAddForm.controls.email.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        <mat-error *ngIf="!userAddForm.controls.email.hasError('required') && userAddForm.controls.email.hasError('email')" [innerHTML]="'VALID_MAIL_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <mat-select placeholder="{{'DASHBOARD.USEROLE' | translate}}" formControlName="roles" multiple>
+                            <mat-select-trigger>
+                                {{userAddForm.controls.roles.value ? ('ROLES.'+userAddForm.controls.roles.value[0] | translate) : ''}}
+                                <span *ngIf="userAddForm.controls.roles.value?.length > 1" class="example-additional-selection">
+                                    (+{{userAddForm.controls.roles.value.length - 1}} {{ 'OTHERS' | translate }})
+                                </span>
+                            </mat-select-trigger>
+                            <mat-option *ngFor="let role of roleList" [value]="role" style="font-size:14px">{{('ROLES.'+role)|translate}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="userAddForm.controls.email.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+            <div class="col-md-12">
+                <button mat-button (click)="userAddForm.reset(); userAdded = false" class="btn-default danger_btn" >{{'RESET' | translate}}</button>
+                <button mat-button [disabled]="!userAddForm.valid" (click)="submitNewUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !userAddForm.valid ? '0.65' : '1'}">{{'SUBMIT' | translate}}</button>
+            </div>
+        </mat-card-content>
+        <!-- <mat-card-actions>
+            <button mat-button (click)="userAddForm.reset()">{{ 'DASHBOARD.RESET' | translate }}</button>
+            <button mat-button [disabled]="!userAddForm.valid" (click)="submitNewUser()">{{ 'DASHBOARD.CREATE_USER' | translate }}</button>
+        </mat-card-actions> -->
+    </mat-card>
+
+    <div class='alert-success message text-center' [ngStyle]="{'display':userAdded && !userAddForm.dirty ? 'block' : 'none'}" >
+        <i class="fa fa-check-circle" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_ADDED_MSG' | translate:{username: username}"></span>
+    </div>
+
+
+<!-- <div class="col-md-12">
+<button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
+<div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
+{{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
+
+</div>
+</div> -->
+
+
+</div>

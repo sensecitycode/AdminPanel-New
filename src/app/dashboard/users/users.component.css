@@ -1,0 +1,32 @@
+.plus{
+    background-color:#5cb85c;
+    font-size: 2.2em;
+}
+
+.minus{
+    background-color:#d2322d;
+    font-size: 2.2em;
+}
+
+
+/* not in use */
+.ag-cell-focus,.ag-cell-no-focus{
+border:none !important;
+}
+.ag-cell:focus{
+border:none !important;
+outline: none;
+}
+
+/* .btn-add {
+    background-color: #fff;
+    color:#5EBB5E
+} */
+
+.icon-add{
+    float:right;
+    background-color: #5cb85c;
+    font-size: 1.3em;
+    margin: 10px 1px;
+    font-weight: bold;
+}

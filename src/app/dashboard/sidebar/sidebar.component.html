@@ -1,0 +1,35 @@
+<!-- <div class="logo">
+    <a href="https://www.creative-tim.com" class="simple-text">
+        <i class="ion-ios-analytics-outline" style="left:-8px; top:1px; position:relative;"></i>sense.city
+    </a>
+</div> -->
+
+<!-- <div class="sidebar-wrapper">
+    <div class="nav-container">
+        <ul class="nav">
+            <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
+                <a  [routerLink]="[menuItem.path]">
+                    <i class="material-icons">{{menuItem.icon}}</i>
+                    <p>{{menuItem.title}}</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div> -->
+
+<nav id="sidebar" [ngClass]="{'active':isToggled == true}">
+    <div class="sidebar-header">
+        <h2 style="padding: 8px 10px; margin: 10px;"><a routerLink='./home'><i class="ion-ios-analytics-outline" style="margin-right:8px; top:1px; position:relative;"></i>sense.city</a></h2>
+        <strong><a routerLink='./home'><i class="ion-ios-analytics-outline"></i><br />sense city</a></strong>
+    </div>
+
+    <ul class="list-unstyled components">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems">
+            <a  [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                {{menuItem.title | translate}}
+            </a>
+        </li>
+    </ul>
+
+</nav>

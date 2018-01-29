@@ -1,0 +1,20 @@
+<app-header></app-header>
+<section style="min-height:100vh; min-width:350px; background: url('../assets/welcome_image.JPG'); background-size: 100% 100%;">
+   <div class="container">
+      <div class="row voffset15">
+         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 text-right"
+         style="background:rgba(0, 0, 0, 0.6); padding:2%;">
+            <div style="color:white;">
+               <h1 [innerHTML] = "'WELCOME.TITLE' | translate"></h1>
+               <h3 [innerHTML] = "'WELCOME.SUBTITLE' | translate"><br /></h3>
+               <div class="voffset20">
+                  <button mat-raised-button style="margin-right:2%" color="primary" routerLink="/login">{{'WELCOME.SIGN_IN' | translate}}</button>
+                  <button mat-raised-button style="margin-left:2%"color="warn" [routerLink]="['/signup']">{{'WELCOME.SIGN_UP' | translate}}</button>
+               </div>
+
+            </div>
+         </div>
+
+      </div>
+   </div>
+</section>

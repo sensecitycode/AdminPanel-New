@@ -1,0 +1,81 @@
+<div class="col-md-12">
+    <button mat-raised-button class="btn-default"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
+</div>
+<div class="col-xl-2 col-lg-4 col-md-6 col-xl-offset-5 col-lg-offset-4 col-md-offset-3">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">account_circle</i></div>
+            <mat-card-title>{{'DASHBOARD.USER' | translate}}</mat-card-title>
+            <mat-card-subtitle><strong>{{originalUsername}}</strong></mat-card-subtitle>
+        </mat-card-header>
+        <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content>
+            <form [formGroup]="userEditForm">
+
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'USERNAME' | translate}}</strong></td>
+                            <td><input type="text" class="form-control" formControlName="username"></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.NAME' | translate}}</strong></td>
+                            <td><input type="text" class="form-control" formControlName="name"></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.SURNAME' | translate}}</strong></td>
+                            <td><input type="text" class="form-control" formControlName="surname"></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>Email</strong></td>
+                            <td><input type="email" class="form-control" formControlName="email"></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
+                            <td>
+                                <mat-select formControlName="roles" multiple class="form-control">
+                                    <mat-select-trigger>
+                                        {{userEditForm.controls.roles.value ? ('ROLES.'+userEditForm.controls.roles.value[0] | translate) : ''}}
+                                        <span *ngIf="userEditForm.controls.roles.value?.length > 1" class="example-additional-selection">
+                                            (+{{userEditForm.controls.roles.value.length - 1}} {{ 'OTHERS' | translate }})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let role of roleList" [value]="role" style="font-size:14px">{{('ROLES.'+role)|translate}}</mat-option>
+                                </mat-select>
+                            </td>
+                            <!-- <td><input type="email" class="form-control" placeholder="" formControlName="roles"></td> -->
+
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.DEPARTMENTS' | translate}}</strong></td>
+                            <td>
+                                <input type="email" class="form-control" placeholder="">
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                        <td>{{'DASHBOARD.LAST_LOGIN' | translate}}</td>
+                        <td>{{ user.last_login | date: 'MMM d, HH:mm'}}</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </form>
+
+        <button mat-button (click)="onResetEdit()" class="btn-default danger_btn" >{{'RESET' | translate}}</button>
+        <button mat-button [disabled]="userEditForm.invalid ||
+        (originalValuesForm.username == userEditForm.controls.username.value &&
+        originalValuesForm.name == userEditForm.controls.name.value &&
+        originalValuesForm.surname == userEditForm.controls.surname.value &&
+        originalValuesForm.roles.join('') == userEditForm.controls.roles.value.join('') &&
+        originalValuesForm.email == userEditForm.controls.email.value) " (click)="submitEditedUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !userEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' | translate}}</button>
+        </mat-card-content>
+    </mat-card>
+
+<!-- <div class="col-md-12">
+<button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
+<div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
+{{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
+
+</div>
+</div> -->
+
+</div>

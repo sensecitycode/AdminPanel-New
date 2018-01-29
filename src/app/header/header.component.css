@@ -1,0 +1,50 @@
+.example-fill-remaining-space {
+   flex: 1 1 auto;
+}
+
+.translate-flag {
+   padding: 10px;
+   cursor: pointer;
+   height: 45px;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+
+.header ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height:auto;
+    overflow: hidden;
+}
+
+.header li {
+    float: left;
+}
+
+.header li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+
+
+.header li a:visited, li a:link{
+    color: white;
+    text-decoration: none;
+}
+
+.header li a:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
+}
+
+mat-toolbar {
+    box-shadow: 0 12px 20px -10px rgba(63, 81, 181,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(63, 81, 181,.2);
+}

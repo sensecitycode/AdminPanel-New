@@ -1,0 +1,52 @@
+<app-header></app-header>
+<!-- <section>
+<div [ngStyle]="{'visibility':wrongCredentials && !(loginForm.controls.username.dirty || loginForm.controls.password.dirty) ? 'visible' : 'hidden'}" class='alert-danger' >
+{{'LOGIN.CREDENTIALS_ERR' | translate}}
+</div>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate #f="ngForm">
+<mat-form-field  class="example-full-width">
+<input matInput placeholder="{{'USERNAME' | translate}}" formControlName="username"/>
+<mat-error *ngIf="loginForm.controls.username.hasError('required')">{{'LOGIN.REQ_ERR' | translate}}</mat-error>
+</mat-form-field>
+<mat-form-field  class="example-full-width">
+<input matInput type="password" placeholder="{{'PASSWORD' | translate}}" formControlName="password">
+<mat-error *ngIf="loginForm.controls.password.hasError('required')">{{'LOGIN.REQ_ERR' | translate}}</mat-error>
+</mat-form-field>
+<button color="primary" class="example-full-width" mat-raised-button>{{'LOGIN.SUBMIT' | translate}}</button>
+</form>
+</section> -->
+
+<div class="login-dialog" style="margin-top:10%;">
+    <div class="content">
+        <div class="header">
+            <h3 class="title"><i class="fa fa-user" style="margin-right:9px"></i> Log In</h3>
+        </div>
+        <div class="body">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate #f="ngForm">
+                <div class="form-field">
+                    <i class="fa fa-user-circle prefix"></i>
+                    <mat-form-field >
+                        <input matInput placeholder="{{'USERNAME' | translate}}" formControlName="username"/>
+                        <mat-error *ngIf="loginForm.controls.username.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="form-field">
+                    <i class="fa fa-lock prefix" style="padding:0 0.2em"></i>
+                    <mat-form-field >
+                        <input matInput type="password" placeholder="{{'PASSWORD' | translate}}" formControlName="password">
+                        <mat-error *ngIf="loginForm.controls.password.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="text-center">
+                    <button color="primary" mat-raised-button class="login_btn">{{'LOGIN.SUBMIT' | translate}} <i class="fa fa-sign-in"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="footer text-right">
+            <p>Forgot <a href="" style="text-decoration:none">Password?</a></p>
+        </div>
+    </div>
+</div>
+<div class='alert-danger message text-center' [ngStyle]="{'visibility':wrongCredentials && !(loginForm.controls.username.dirty || loginForm.controls.password.dirty) ? 'visible' : 'hidden'}" >
+    <strong>{{'LOGIN.CREDENTIALS_ERR' | translate}}</strong>
+</div>

@@ -1,0 +1,73 @@
+<div class="wrapper">
+    <app-sidebar [isToggled]="toggled"></app-sidebar>
+    <div class="main-content">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" id="sidebarCollapse" (click)="isToggled()" [ngClass]="{'active':toggled == true, 'navbar-btn':true}">
+                        <i class="material-icons">keyboard_arrow_left</i>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- <li><a><img class="translate-flag" src="assets/flags/el.png" (click)="langToEl()" /></a></li>
+                        <li><a><img class="translate-flag" src="assets/flags/en.png" (click)="langToEn()" /></a></li> -->
+                        <li style="margin:5px 0px 5px 20px">
+                        <!-- <button mat-icon-button (click)="onLangMenuTrigger()">
+                            <i class="material-icons">account_box</i>
+                        </button> -->
+                        <span><strong>{{username}}</strong></span>
+                        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+                            <i class="material-icons">arrow_drop_down</i>
+                        </button>
+
+                        <mat-menu #userMenu="matMenu">
+                            <button mat-menu-item routerLink="account">
+                                <i class="material-icons dropdown-item">settings</i>
+                                {{ 'DASHBOARD.SETTINGS' | translate }}
+                            </button>
+                            <button mat-menu-item (click)="authService.logout()">
+                                <i class="material-icons dropdown-item">power_settings_new</i>
+                                {{ 'DASHBOARD.LOGOUT' | translate }}
+                            </button>
+                        </mat-menu>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <!-- <li><a><img class="translate-flag" src="assets/flags/el.png" (click)="langToEl()" /></a></li>
+                        <li><a><img class="translate-flag" src="assets/flags/en.png" (click)="langToEn()" /></a></li> -->
+                        <li style="margin:5px 0px">
+                        <button mat-icon-button [matMenuTriggerFor]="langMenu">
+                            <i class="material-icons">language</i>
+                        </button>
+                        <span [matMenuTriggerFor]="langMenu">{{'LANGUAGE' | translate }}</span>
+                        <mat-menu #langMenu="matMenu">
+                            <button mat-menu-item (click)="langToEl()">
+                                <img class="translate-flag" src="assets/flags/el.ico" />
+                                <span [ngClass]="{'font-bold':currentLang == 'el'}">Ελληνικά</span>
+                            </button>
+                            <button mat-menu-item (click)="langToEn()">
+                                <img class="translate-flag" src="assets/flags/en.ico" />
+                                <span [ngClass]="{'font-bold':currentLang == 'en'}">English</span>
+                            </button>
+                        </mat-menu>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="container-fluid" style="padding:2% 4%">
+            <div class="row">
+                <div class="col-md-12">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

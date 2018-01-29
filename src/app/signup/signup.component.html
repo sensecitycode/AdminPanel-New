@@ -1,0 +1,89 @@
+<app-header></app-header>
+
+<section style="margin-top:4%">
+    <div class="text-center">
+        <h1> {{'SIGNUP.TITLE' | translate}} </h1>
+        <h2> {{'SIGNUP.SUBTITLE' | translate}} </h2>
+    </div>
+</section>
+
+<div class="container" style="margin-top:4%; padding:1%;">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-horizontal-stepper [linear]="false" style="background:rgb(220, 220, 220); min-height:400px">
+                <mat-step [stepControl]="personalInfoForm">
+                    <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
+                    <hr />
+                    <app-map-link></app-map-link>
+                    <div class="text-right" style="margin-top:2%">
+                        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
+                    </div>
+                </mat-step>
+                <mat-step [stepControl]="mapForm">
+                    <ng-template matStepLabel> {{'SIGNUP.STEP2_LABEL' | translate}} </ng-template>
+                    <hr />
+                    <app-personal-info></app-personal-info>
+                    <div class="text-right" style="margin-top:2%">
+                        <button color="primary" mat-raised-button matStepperPrevious> {{'BACK' | translate}} </button>
+                        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
+                    </div>
+                </mat-step>
+                <mat-step [stepControl]="accountForm">
+                    <ng-template matStepLabel> {{'SIGNUP.STEP3_LABEL' | translate}} </ng-template>
+                    <hr />
+                    <app-account-create></app-account-create>
+                    <div class="text-right" style="margin-top:2%">
+                        <button color="primary" mat-raised-button matStepperPrevious> {{'BACK' | translate}} </button>
+                        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel> {{'SIGNUP.STEP4_LABEL' | translate}} </ng-template>
+                    <hr />
+                    <h3 class="col-md-8 col-md-offset-2 text-center"> {{'SIGNUP.STEP4_FINISH' | translate}} </h3>
+                    <div style="margin-top:4%" class="col-md-6 col-md-offset-3 text-center">
+                        <form [formGroup]="submitForm" >
+                            <h4> {{'SIGNUP.STEP4_CLICK' | translate}} </h4>
+                            <div class="example-full-width">
+                                <mat-checkbox color="primary" id="city_acknowledge" name="city_acknowledge" formControlName="city_acknowledge"></mat-checkbox><strong style="margin-left:6px"> {{'SIGNUP.STEP4_CITY_ACKN' | translate}} </strong>
+                            </div>
+                            <div class="example-full-width">
+                                <mat-checkbox color="primary" id="terms_acknowledge" name="terms_acknowledge" formControlName="terms_acknowledge"></mat-checkbox>
+                                <strong style="margin-left:6px"><a target="_blank" href="https://sense.city/terms.html" rel="noopener noreferrer">{{'SIGNUP.STEP4_TERMS_ACKN' | translate}}</a></strong>
+                            </div>
+
+                            <div style="margin-top:4%">
+                                <button mat-button matStepperPrevious> {{'BACK' | translate}} </button>
+                            </div>
+                            <div>
+                                <button style="padding: 3px 40px; margin-top: 1%;"color="primary" mat-raised-button [disabled]="!(submitForm.controls.city_acknowledge.value == true && submitForm.controls.terms_acknowledge.value == true)" (click)="onSubmit()"> {{'SIGNUP.STEP4_LABEL' | translate}} </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </mat-step>
+            </mat-horizontal-stepper>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="container" style="margin-top:5%">
+<div class="row">
+<div class="col-md-6">
+<h2 class="text-center">1) Fill in the form!</h2>
+<app-personal-info></app-personal-info>
+</div>
+<div class="col-md-6">
+<h2 class="text-center">2) Mark the map!</h2>
+<app-map-link></app-map-link>
+</div>
+</div>
+</div>
+<div class="container" style="margin-top:3%">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<h2 class="text-center">3) Account creation & confirmation!</h2>
+<app-account-create></app-account-create>
+</div>
+</div>
+</div> -->

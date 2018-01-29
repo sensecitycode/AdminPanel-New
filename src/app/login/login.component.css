@@ -1,0 +1,130 @@
+/* section {
+	margin: 10em auto;
+}
+form {
+	width: 380px;
+	padding: 2em;
+	margin: 0 auto;
+	background: #fafafa;
+	border: 1px solid #ebebeb;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+
+div {
+	width: 380px;
+	margin: 1em auto;
+	padding: 1em;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+
+.example-full-width {
+   width: 100%;
+}
+
+input {
+	font-size: 18px;
+	-webkit-appearance: none;
+	display: block;
+	background: #fafafa;
+	color: #636363;
+	width: 100%;
+}
+
+mat-form-field {
+	font-size: 18px
+}
+button {
+	padding:0.3em 0em;
+	margin:1em 0em;
+	font-size: 16px;
+} */
+
+
+@media (min-width: 576px) {
+	.login-dialog {
+	    max-width: 500px;
+	    margin: 30px auto;
+	}
+
+	.message {
+		max-width: 450px;
+	}
+}
+
+.prefix {
+    font-size: 1.5em;
+	vertical-align: middle;
+}
+
+.login-dialog .content {
+    border: 0;
+	border-radius: 2px;
+	box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+	position: relative;
+	display: flex;
+    flex-direction: column;
+	pointer-events: auto;
+    background-color: #fff;
+}
+
+.login-dialog .header {
+	text-align: center;
+    margin: -2em 1em 1em 1em;
+    padding: 1.4em;
+    border: none;
+    flex-direction: column;
+	border-radius: 3px;
+	box-shadow: 0 5px 11px 0 rgba(0,0,0,.18), 0 4px 15px 0 rgba(0,0,0,.15);
+	/* background-color: #0277bd!important; */
+	background-color: #3f51b5;
+	color: #fff;
+}
+
+.login-dialog .title {
+	width: 100%;
+	margin-top: 0;
+    margin-bottom: 0;
+	font-size:1.4em;
+}
+
+.login-dialog .body {
+	color: #616161;
+	position: relative;
+    flex: 1 1 auto;
+    padding: 15px 2em 15px 2em;
+}
+
+.form-field {
+	/* position: relative;
+    margin-bottom: 1.5rem; */
+}
+
+mat-form-field {
+	margin-left: 0.9em;
+	padding-bottom: .2em;
+    padding-top: .2em;
+    line-height: 1.5;
+	width: calc(100% - 3em);
+}
+
+.login_btn {
+	font-size: 1em;
+    padding: 0.4em 2em;
+    margin: 6px;
+}
+
+.login-dialog .footer {
+    border-top: 1px solid #e9ecef;
+	padding: 15px 2em 15px 2em;
+
+}
+
+.footer p {
+	margin-bottom:0px;
+}
+
+.message {
+	margin: 1em auto;
+	padding: 1em;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}

@@ -1,0 +1,34 @@
+<div class="col-md-12">
+    <div class="card" >
+        <div class="card-header" data-background-color="red">
+            <!-- <button mat-fab type="button" rel="tooltip" style="float:right" class="btn-add"><i class="icon-add material-icons">add</i></button> -->
+            <!-- <button class="icon-add" #addButton mat-mini-fab routerLink="add">+</button> -->
+            <button class="icon-add" #addButton mat-mini-fab routerLink="add"><i class="fa fa-user-plus"></i></button>
+            <h4 class="title">{{'DASHBOARD.USERS' | translate}}</h4>
+            <p class="category">{{'DASHBOARD.USERS_DESC' | translate}}</p>
+        </div>
+        <div class="card-content container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- <div class="card-content table-responsive">
+            <div class="col-xl-2 col-lg-4 col-md-6 input-group">
+              <span class="input-group-addon"><i class="material-icons" style="display:flex; font-size:22px">search</i></span>
+              <input type="text" class="form-control" id="filter-text-box" placeholder="{{ 'FILTER' | translate }}..." (input)="onFilterTextBoxChanged()" aria-describedby="filter">
+            </div>
+            <div>
+                <ag-grid-angular #agGrid style="width: 100%; height: 1000px;" class="ag-theme-material"
+                    [gridOptions]="gridOptions"
+                    [enableColResize]=true
+                    [animateRows]=true
+                    [context]="context"
+                    [frameworkComponents]="frameworkComponents"
+                    [pagination]=true
+                    [paginationAutoPageSize]=true
+                    [localeText]="localeText"
+                    (gridSizeChanged)="onGridSizeChanged($event)"
+                    (gridReady)="onGridReady($event)">
+                </ag-grid-angular>
+            </div>
+        </div> -->
+    </div>
+</div>
