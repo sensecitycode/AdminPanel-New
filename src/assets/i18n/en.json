@@ -111,6 +111,8 @@
         "SURNAME":"Surname",
         "LAST_LOGIN":"Last login",
         "USEROLE":"User role",
-        "USER_ADDED_MSG":"User <strong>{{username}}</strong> successfully added!"
+        "USER_ADDED_MSG":"User <strong>{{username}}</strong> successfully added!",
+        "USERNAME_EXISTS_MSG":"Username <strong>{{username}}</strong> is not available!",
+        "EMAIL_EXISTS_MSG":"Email <strong>{{email}}</strong> is not available!"
     }
 }

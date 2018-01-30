@@ -37,10 +37,6 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <!-- <mat-error *ngIf="userAddForm.controls.passwordForm.controls.pw2.value &&
-                userAddForm.controls.passwordForm.controls.pw2.touched &&
-                userAddForm.controls.passwordForm.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate">
-                </mat-error> -->
                 <div class="col-md-6">
                     <mat-form-field class="example-full-width">
                         <input matInput placeholder="{{'GRID.NAME' | translate}}" formControlName="name"/>
@@ -60,11 +56,11 @@
                         <mat-error *ngIf="!userAddForm.controls.email.hasError('required') && userAddForm.controls.email.hasError('email')" [innerHTML]="'VALID_MAIL_ERR' | translate"></mat-error>
                     </mat-form-field>
                     <mat-form-field class="example-full-width">
-                        <mat-select placeholder="{{'DASHBOARD.USEROLE' | translate}}" formControlName="roles" multiple>
+                        <mat-select placeholder="{{'DASHBOARD.USEROLE' | translate}}" formControlName="role_name" multiple>
                             <mat-select-trigger>
-                                {{userAddForm.controls.roles.value ? ('ROLES.'+userAddForm.controls.roles.value[0] | translate) : ''}}
-                                <span *ngIf="userAddForm.controls.roles.value?.length > 1" class="example-additional-selection">
-                                    (+{{userAddForm.controls.roles.value.length - 1}} {{ 'OTHERS' | translate }})
+                                {{userAddForm.controls.role_name.value ? ('ROLES.'+userAddForm.controls.role_name.value[0] | translate) : ''}}
+                                <span *ngIf="userAddForm.controls.role_name.value?.length > 1" class="example-additional-selection">
+                                    (+{{userAddForm.controls.role_name.value.length - 1}} {{ 'OTHERS' | translate }})
                                 </span>
                             </mat-select-trigger>
                             <mat-option *ngFor="let role of roleList" [value]="role" style="font-size:14px">{{('ROLES.'+role)|translate}}</mat-option>
@@ -74,7 +70,7 @@
                 </div>
             </form>
             <div class="col-md-12">
-                <button mat-button (click)="userAddForm.reset(); userAdded = false" class="btn-default danger_btn" >{{'RESET' | translate}}</button>
+                <button mat-button (click)="userAddForm.reset(); userServiceMsg = ''" class="btn-default danger_btn" >{{'RESET' | translate}}</button>
                 <button mat-button [disabled]="!userAddForm.valid" (click)="submitNewUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !userAddForm.valid ? '0.65' : '1'}">{{'SUBMIT' | translate}}</button>
             </div>
         </mat-card-content>
@@ -84,9 +80,16 @@
         </mat-card-actions> -->
     </mat-card>
 
-    <div class='alert-success message text-center' [ngStyle]="{'display':userAdded && !userAddForm.dirty ? 'block' : 'none'}" >
-        <i class="fa fa-check-circle" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_ADDED_MSG' | translate:{username: username}"></span>
+    <div class='alert-success message text-center' [ngStyle]="{'display':(userServiceMsg == 'success') && !userAddForm.dirty ? 'block' : 'none'}" >
+        <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_ADDED_MSG' | translate:{username: username}"></span>
     </div>
+    <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'duplicate_username') && !userAddForm.dirty ? 'block' : 'none'}" >
+        <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USERNAME_EXISTS_MSG' | translate:{username: username}"></span>
+    </div>
+    <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'duplicate_email') && !userAddForm.dirty ? 'block' : 'none'}" >
+        <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.EMAIL_EXISTS_MSG' | translate:{email: email}"></span>
+    </div>
+
 
 
 <!-- <div class="col-md-12">

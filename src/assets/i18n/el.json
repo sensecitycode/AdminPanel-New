@@ -110,6 +110,8 @@
         "SURNAME":"Επώνυμο",
         "LAST_LOGIN":"Τελευταία είσοδος",
         "USEROLE":"Ρόλος χρήστη",
-        "USER_ADDED_MSG":"O χρήστης <strong>{{username}}</strong> προστέθηκε επιτυχώς!"
+        "USER_ADDED_MSG":"O χρήστης <strong>{{username}}</strong> προστέθηκε επιτυχώς!",
+        "USERNAME_EXISTS_MSG":"To όνομα χρήστη <strong>{{username}}</strong> δεν είναι διαθέσιμο!",
+        "EMAIL_EXISTS_MSG":"Το email <strong>{{email}}</strong> δεν είναι διαθέσιμο!"
     }
 }

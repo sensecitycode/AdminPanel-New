@@ -20,9 +20,9 @@ export class EditUserComponent implements OnInit {
     subscription: Subscription;
     user:any;
     originalUsername:string;
-    originalValuesForm: any;
     userEditForm: FormGroup;
     roleList: [string];
+    userServiceMsg:string;
 
 
     ngOnInit() {
@@ -31,7 +31,7 @@ export class EditUserComponent implements OnInit {
             'surname': ['',Validators.required],
             'username': ['',Validators.required],
             'email': ['', [Validators.required,Validators.email]],
-            'roles': ['',Validators.required]
+            'role_name': ['',Validators.required]
         })
 
         this.originalUsername = this.activatedRoute.snapshot.url[0].path;
@@ -46,11 +46,8 @@ export class EditUserComponent implements OnInit {
                         'surname': this.user.surname,
                         'username': this.user.username,
                         'email': this.user.email,
-                        'roles': this.user.role_name
+                        'role_name': this.user.role_name
                     })
-                    this.originalValuesForm = this.userEditForm.value;
-                    console.log(this.originalValuesForm.username);
-
                 }
             }
         );
@@ -62,18 +59,44 @@ export class EditUserComponent implements OnInit {
 
 
     submitEditedUser() {
-        console.log(this.userEditForm);
+        let editedUser =
+        {
+          	'id': this.user._id,
+          	'name': this.userEditForm.get('name').value,
+          	'surname': this.userEditForm.get('surname').value,
+          	'email': this.userEditForm.get('email').value,
+          	'username': this.userEditForm.get('username').value,
+          	'role_name':this.userEditForm.get('role_name').value,
+          	'city': this.user.city
+        };
+        this.usersServ.edit_user(editedUser).subscribe(
+          data => {console.log(data)},
+          error => {
+            console.log(error);
+            if (error.error == "duplicate_surname") {
+              this.userServiceMsg = 'duplicate_username';
+              this.userEditForm.get('username').setErrors({usernameExists: true});
+            }
+            if (error.error == "duplicate_email") {
+              this.userServiceMsg = 'duplicate_email';
+              this.userEditForm.get('email').setErrors({emailExists: true});
+            }
+          },
+          () => {
+            this.userServiceMsg = 'success';
+            this.originalUsername = editedUser.username;
+          }
+        )
 
     }
 
     onResetEdit() {
-        console.log(this.userEditForm);
         this.userEditForm.setValue({
             'name':this.user.name,
             'surname':this.user.surname,
             'username':this.user.username,
             'email':this.user.email,
-            'roles':this.user.role_name
+            'role_name':this.user.role_name
         })
     }
 

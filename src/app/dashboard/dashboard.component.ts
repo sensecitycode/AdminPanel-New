@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
 import { UsersService } from './users/users.service';
 import { TranslationService } from '../shared/translation.service';
 import { MatMenuTrigger } from '@angular/material/menu';
@@ -26,14 +27,15 @@ export class DashboardComponent implements OnInit {
     city:string = sessionStorage.getItem('city');
     username:string = sessionStorage.getItem('username');
     currentLang:string = 'el';
+    subscription = new Subscription;
     ngOnInit() {
         this.usersServ.role = this.role;
         this.usersServ.uuid = this.uuid;
         this.usersServ.city = this.city;
 
-        this.usersServ.usersChanged.subscribe(
+        this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {console.log("usersChanged: " + status);}
-        );
+        ));
         // this.usersServ.populate_userArray();
         // this.usersServ.get_userRoles();
     }
@@ -52,5 +54,9 @@ export class DashboardComponent implements OnInit {
     toggled = false;
     isToggled(){
         this.toggled = !this.toggled;
+    }
+
+    ngOnDestroy() {
+      this.subscription.unsubscribe();
     }
 }

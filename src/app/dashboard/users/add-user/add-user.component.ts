@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { Subscription } from 'rxjs/Subscription';
 
 import { UsersService } from '../users.service';
 
@@ -18,9 +17,9 @@ export class AddUserComponent implements OnInit {
 
     userAddForm: FormGroup;
     roleList: [string];
-    subscription= new Subscription;
-    userAdded:boolean = false;
+    userServiceMsg:string;
     username:string;
+    email:string;
     ngOnInit() {
         this.roleList = ['cityAdmin','cityManager','departmentAdmin','departmentUser'];
         this.userAddForm = this.formBuilder.group({
@@ -32,45 +31,51 @@ export class AddUserComponent implements OnInit {
                 'pw2':['',Validators.required]
             }, {validator: this.noMatchingPassword} ),
             'email': ['', [Validators.required,Validators.email]],
-            'roles': ['',Validators.required]
+            'role_name': ['',Validators.required]
         })
-        console.log(this.userAddForm);
     }
 
     noMatchingPassword(AC: AbstractControl) {
-        console.log(AC);
+        // console.log(AC);
         let pass = AC.get('pw1');
         let confirmPass = AC.get('pw2');
 
-        // if (!pass|| !confirmPass) return null;
-
         if (pass.value != confirmPass.value) {
             confirmPass.setErrors({noMatchingPassword: true});
-            console.log(false);
         } else {
             confirmPass.setErrors(null);
-            console.log(true);
             return null
         }
     }
 
     submitNewUser() {
         this.username = this.userAddForm.get('username').value;
-        console.log(this.username)
-        this.subscription.add(this.usersServ.usersChanged.subscribe(
-            status => {
-                console.log(`status = ${status}`)
-                if (status == "userAdded") {
-                    this.userAdded = true;
-                    this.userAddForm.reset();
-                }
+        this.email = this.userAddForm.get('email').value;
+        let toAddUser = this.userAddForm.value;
+        toAddUser.password = this.userAddForm.controls.passwordForm.get("pw1").value;
+        delete toAddUser.passwordForm;
+        this.usersServ.add_user(toAddUser).subscribe(
+          data => {},
+          error => {
+            this.userAddForm.markAsPristine();
+            if (error.error == "duplicate_surname") {
+              this.userServiceMsg = 'duplicate_username';
+              this.userAddForm.get('username').setErrors({usernameExists: true});
             }
-        ));
-        this.usersServ.add_user(this.userAddForm.value);
+            if (error.error == "duplicate_email") {
+              this.userServiceMsg = 'duplicate_email';
+              this.userAddForm.get('email').setErrors({emailExists: true});
+            }
+          },
+          () => {
+            this.userServiceMsg = 'success';
+            this.userAddForm.reset();
+          }
+        )
     }
 
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
-    }
+    // ngOnDestroy() {
+    //     this.subscription.unsubscribe();
+    // }
 
 }

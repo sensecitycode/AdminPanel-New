@@ -32,7 +32,7 @@ export class UsersService {
             })
             .subscribe(
                 data => { this.users = data;},
-                error => {console.log('error occured populating UserArray')},
+                error => {console.log('error occured populating UserArray');},
                 () =>
                     {
                     clearTimeout(fetchUsers_canc);
@@ -106,45 +106,24 @@ export class UsersService {
 
 
     add_user(user) {
-        console.log(user);
-        user.city = this.city;
-        console.log(user);
+      user.city = this.city;
+      const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+      return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/add_user`,
+        user,
+        {
+          headers: reqheaders
+        })
+    }
 
+
+    edit_user(user) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        const addUser = this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/users`,
-            {
-                headers: reqheaders
-            })
-            .subscribe(
-                data => { data},
-                error => {alert("Adding Users Service not working!");},
-                () =>
-                    {
-                    clearTimeout(addUser_canc);
-                    this.usersChanged.next("userAdded");
-                    }
-            )
+        return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/edit_user`,
+          user,
+          {
+            headers: reqheaders
+          })
+          // this.usersChanged.next("userEdited");
+      }
 
-        let addUser_canc = setTimeout(() => {
-           addUser.unsubscribe();
-           alert("Adding Users Service not working!");
-        }, 10000);
-    }
-
-
-
-
-
-    edit_user(originalUsername, editedData) {
-        var indexOfEdit = this.users.findIndex(i => i.username == originalUsername);
-        // console.log(this.users);
-        // console.log(indexOfEdit);
-        // console.log(originalUsername);
-        console.log(editedData);
-
-        this.usersChanged.next("userEdited");
-        this.users[indexOfEdit].username = editedData.username;
-        this.users[indexOfEdit].email = editedData.email;
-        console.log(this.users[indexOfEdit]);
-    }
 }
