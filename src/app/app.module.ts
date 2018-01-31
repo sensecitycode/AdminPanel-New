@@ -7,7 +7,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from './shared/translation.service';
-import { UsersService } from './dashboard/users/users.service';
+// import { UsersService } from './dashboard/users/users.service';
+// import { DepartmentsService } from './dashboard/departments/departments.service';
 import { AgGridModule } from 'ag-grid-angular/main';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -108,7 +109,7 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         }),
         AgGridModule.withComponents([EditRendererComponent, DialogsComponent])
     ],
-    providers: [TranslationService,UsersService],
+    providers: [TranslationService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

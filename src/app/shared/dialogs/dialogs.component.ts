@@ -63,7 +63,7 @@ export class DialogsComponent implements OnInit {
     }
 
     onSubmitEditUser() {
-        this.usersServ.edit_user(this.originalNameField, this.userEditForm.value);
+        // this.usersServ.edit_user(this.originalNameField, this.userEditForm.value);
         this.dialogRef.close(this.userEditForm.value);
     }
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { UsersService } from '../users/users.service';
+import { DepartmentsService } from './departments/departments.service';
+
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -12,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private usersServ: UsersService) { }
+    constructor(private usersServ: UsersService, private depServ: DepartmentsService) { }
 
     users =[];
     departments =[];
@@ -26,6 +28,16 @@ export class HomeComponent implements OnInit {
                 }
             });
         this.usersServ.populate_userArray();
+
+        this.subscription = this.depServ.usersChanged.subscribe(
+            (status:string) => {
+                if (status == "departmentsArrayPopulated"){
+                    console.log("status == departmentsArrayPopulated");
+                    this.departments = this.depServ.return_departmentsArray();
+                }
+            });
+        this.depServ.populate_departmentsArray();
+
     }
 
     ngOnDestroy() {
