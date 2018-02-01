@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AppBootStrapComponent } from './app-bootstrap.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
@@ -15,36 +16,43 @@ import { DepartmentsComponent } from './dashboard/departments/departments.compon
 import { BoundariesComponent } from './dashboard/boundaries/boundaries.component';
 import { PolicyComponent } from './dashboard/policy/policy.component';
 import { AccountComponent } from './dashboard/account/account.component';
-
+import { ListDepartmentsComponent } from './dashboard/departments/list-departments/list-departments.component';
+import { AddDepartmentComponent } from './dashboard/departments/add-department/add-department.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { EnvironmentSpecificResolver } from './envSpecific/environment-specific-resolver';
+import { EnvironmentSpecificService } from './envSpecific/environment-specific-service';
 
 const appRoutes: Routes = [
-    { path: 'welcome', component: WelcomeComponent},
-    { path: 'signup', component: SignupComponent},
-    { path: 'login', component: LoginComponent},
-    { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuardService], children:[
-        {path: 'home', component: HomeComponent},
-        {path: 'users', component: UsersComponent, children:[
-            {path: '', component: ListUsersComponent},
-            {path: 'add', component: AddUserComponent},
-            {path: ':name', component: DisplayUserComponent},
-            {path: ':name/edit', component: EditUserComponent}
+    { path: '', component: AppBootStrapComponent, resolve: { envSpecific: EnvironmentSpecificResolver }, children:[
+        { path: 'welcome', component: WelcomeComponent},
+        { path: 'signup', component: SignupComponent},
+        { path: 'login', component: LoginComponent},
+        { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuardService], children:[
+            {path: 'home', component: HomeComponent},
+            {path: 'users', component: UsersComponent, children:[
+                {path: '', component: ListUsersComponent},
+                {path: 'add', component: AddUserComponent},
+                {path: ':name', component: DisplayUserComponent},
+                {path: ':name/edit', component: EditUserComponent}
+            ]},
+            {path: 'departments', component: DepartmentsComponent, children:[
+                {path: '', component: ListDepartmentsComponent},
+                {path: 'add', component: AddDepartmentComponent}
+            ]},
+            {path: 'boundaries', component: BoundariesComponent},
+            {path: 'policy', component: PolicyComponent},
+            {path: 'account', component: AccountComponent},
+            {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
-        {path: 'departments', component: DepartmentsComponent},
-        {path: 'boundaries', component: BoundariesComponent},
-        {path: 'policy', component: PolicyComponent},
-        {path: 'account', component: AccountComponent},
-        {path: '**', redirectTo: 'home', pathMatch: 'full'}
-    ]},
-    { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
-
+        { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+    ]}
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(appRoutes)],
     exports: [RouterModule],
-    providers: [AuthService, AuthGuardService]
+    providers: [AuthService, AuthGuardService, EnvironmentSpecificResolver, EnvironmentSpecificService]
 })
 export class AppRoutingModule {
 }

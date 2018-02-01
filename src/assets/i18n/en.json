@@ -31,6 +31,7 @@
         "SURNAME":"Surname",
         "DEPARTMENTS":"Departments",
         "USEROLE":"User role",
+        "POSITION":"Position",
         "PAGE":"Page",
         "MORE":"More",
         "TO":"to",
@@ -38,7 +39,9 @@
         "NEXT":"Next",
         "LAST":"Last",
         "FIRST":"First",
-        "PREVIOUS":"Previous"
+        "PREVIOUS":"Previous",
+        "DEP_MANAGER":"Manager",
+        "DEP_CCLIST":"Notified"
     },
 
     "WELCOME":
@@ -93,6 +96,7 @@
         "USERS":"Users",
         "USERS_DESC":"Create and edit users that manage city's issues",
         "CITY_MANAGER":"City Manager",
+        "DEPARTMENT":"Department",
         "DEPARTMENTS":"Departments",
         "DEP_DESC":"Create and edit departments that manage city's issues",
         "BOUNDARIES":"Boundaries",
@@ -107,8 +111,8 @@
         "RESET":"Reset",
         "RESET_PASSWORD":"Reset Password",
         "RESET_PASSWORD_MSG":"A new password was sent at",
-        "NAME":"Name",
-        "SURNAME":"Surname",
+        "NAME_OPT":"Name (optional)",
+        "SURNAME_OPT":"Surname (optional)",
         "LAST_LOGIN":"Last login",
         "USEROLE":"User role",
         "USER_ADDED_MSG":"User <strong>{{username}}</strong> successfully added!",

@@ -15,7 +15,7 @@ export class DepartmentsService {
     role:string;
     uuid:string;
     city:string;
-
+    API:string;
 
     private roleslist = [];
     private users = [];
@@ -28,12 +28,12 @@ export class DepartmentsService {
     populate_departmentsArray() {
         console.log("populate_departmentsArray()");
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        const fetchDepartments = this.httpClient.get<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/departments`,
+        const fetchDepartments = this.httpClient.get<any>(`${this.API}/admin/departments`,
             {
                 headers: reqheaders
             })
             .subscribe(
-                data => { this.departments = data; console.log(data)},
+                data => { this.departments = data.products[0].components},
                 error => {
                     console.log('error occured populating departmentsArray');
                     alert("Fetch Departments Service not working!");
@@ -47,7 +47,7 @@ export class DepartmentsService {
 
     get_userDetails (username) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserDetails = this.httpClient.get<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/user/${username}`,
+        const fetchUserDetails = this.httpClient.get<[object]>(`${this.API}/admin/user/${username}`,
             {
                 headers: reqheaders
             })
@@ -69,7 +69,7 @@ export class DepartmentsService {
 
     get_userRoles() {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserRoles = this.httpClient.get<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/roles`,
+        const fetchUserRoles = this.httpClient.get<[object]>(`${this.API}/admin/roles`,
             {
                 headers: reqheaders
             })
@@ -111,7 +111,7 @@ export class DepartmentsService {
     add_user(user) {
       user.city = this.city;
       const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-      return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/add_user`,
+      return this.httpClient.post<[object]>(`${this.API}/admin/add_user`,
         user,
         {
           headers: reqheaders
@@ -121,7 +121,7 @@ export class DepartmentsService {
 
     edit_user(user) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/edit_user`,
+        return this.httpClient.post<[object]>(`${this.API}/admin/edit_user`,
           user,
           {
             headers: reqheaders

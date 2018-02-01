@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { UsersService } from '../users/users.service';
-import { DepartmentsService } from './departments/departments.service';
+import { DepartmentsService } from '../departments/departments.service';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -16,26 +16,29 @@ export class HomeComponent implements OnInit {
 
     constructor(private usersServ: UsersService, private depServ: DepartmentsService) { }
 
-    users =[];
-    departments =[];
-    subscription: Subscription;
+    users = [];
+    departments = [];
+    subscription = new Subscription;
     ngOnInit() {
-        this.subscription = this.usersServ.usersChanged.subscribe(
+        this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {
                 if (status == "userArrayPopulated"){
                     console.log("status == userArrayPopulated");
                     this.users = this.usersServ.return_userArray();
                 }
-            });
+            }
+        ));
         this.usersServ.populate_userArray();
 
-        this.subscription = this.depServ.usersChanged.subscribe(
+        this.subscription.add(this.depServ.departmentsChanged.subscribe(
             (status:string) => {
                 if (status == "departmentsArrayPopulated"){
                     console.log("status == departmentsArrayPopulated");
                     this.departments = this.depServ.return_departmentsArray();
+                    console.log(this.departments);
                 }
-            });
+            }
+        ));
         this.depServ.populate_departmentsArray();
 
     }

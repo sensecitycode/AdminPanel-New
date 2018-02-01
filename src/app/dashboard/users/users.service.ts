@@ -15,8 +15,7 @@ export class UsersService {
     role:string;
     uuid:string;
     city:string;
-
-
+    API:string;
     private roleslist = [];
     private users = [];
     private userDetails:[object];
@@ -26,7 +25,7 @@ export class UsersService {
     populate_userArray() {
         console.log("populate_userArray()");
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        const fetchUsers = this.httpClient.get<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/users`,
+        const fetchUsers = this.httpClient.get<[object]>(`${this.API}/admin/users`,
             {
                 headers: reqheaders
             })
@@ -48,7 +47,7 @@ export class UsersService {
 
     get_userDetails (username) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserDetails = this.httpClient.get<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/user/${username}`,
+        const fetchUserDetails = this.httpClient.get<[object]>(`${this.API}/admin/user/${username}`,
             {
                 headers: reqheaders
             })
@@ -70,7 +69,7 @@ export class UsersService {
 
     get_userRoles() {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserRoles = this.httpClient.get<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/roles`,
+        const fetchUserRoles = this.httpClient.get<[object]>(`${this.API}/admin/roles`,
             {
                 headers: reqheaders
             })
@@ -108,7 +107,7 @@ export class UsersService {
     add_user(user) {
       user.city = this.city;
       const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-      return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/add_user`,
+      return this.httpClient.post<[object]>(`${this.API}/admin/add_user`,
         user,
         {
           headers: reqheaders
@@ -118,7 +117,7 @@ export class UsersService {
 
     edit_user(user) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/admin/edit_user`,
+        return this.httpClient.post<[object]>(`${this.API}/admin/edit_user`,
           user,
           {
             headers: reqheaders

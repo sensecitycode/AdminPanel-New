@@ -27,11 +27,12 @@ export class EditUserComponent implements OnInit {
 
     ngOnInit() {
         this.userEditForm = this.formBuilder.group({
-            'name': ['',Validators.required],
-            'surname': ['',Validators.required],
+            'name': [''/*,Validators.required*/],
+            'surname': [''/*,Validators.required*/],
             'username': ['',Validators.required],
             'email': ['', [Validators.required,Validators.email]],
-            'role_name': ['',Validators.required]
+            'role_name': ['',Validators.required],
+            'position': ['',Validators.required]
         })
 
         this.originalUsername = this.activatedRoute.snapshot.url[0].path;
@@ -46,7 +47,8 @@ export class EditUserComponent implements OnInit {
                         'surname': this.user.surname,
                         'username': this.user.username,
                         'email': this.user.email,
-                        'role_name': this.user.role_name
+                        'role_name': this.user.role_name,
+                        'position': 'this.user.position'
                     })
                 }
             }
@@ -96,7 +98,8 @@ export class EditUserComponent implements OnInit {
             'surname':this.user.surname,
             'username':this.user.username,
             'email':this.user.email,
-            'role_name':this.user.role_name
+            'role_name':this.user.role_name,
+            'position': 'this.user.position'
         })
     }
 

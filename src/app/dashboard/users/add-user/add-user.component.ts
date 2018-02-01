@@ -23,15 +23,16 @@ export class AddUserComponent implements OnInit {
     ngOnInit() {
         this.roleList = ['cityAdmin','cityManager','departmentAdmin','departmentUser'];
         this.userAddForm = this.formBuilder.group({
-            'name': ['',Validators.required],
-            'surname': ['',Validators.required],
+            'name': [''/*,Validators.required*/],
+            'surname': [''/*,Validators.required*/],
             'username': ['',Validators.required],
             'passwordForm': this.formBuilder.group({
                 'pw1':['',Validators.required],
                 'pw2':['',Validators.required]
             }, {validator: this.noMatchingPassword} ),
             'email': ['', [Validators.required,Validators.email]],
-            'role_name': ['',Validators.required]
+            'role_name': ['',Validators.required],
+            'position': ['',Validators.required]
         })
     }
 
@@ -58,7 +59,7 @@ export class AddUserComponent implements OnInit {
           data => {},
           error => {
             this.userAddForm.markAsPristine();
-            if (error.error == "duplicate_surname") {
+            if (error.error == "duplicate_username") {
               this.userServiceMsg = 'duplicate_username';
               this.userAddForm.get('username').setErrors({usernameExists: true});
             }

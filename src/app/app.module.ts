@@ -28,6 +28,7 @@ import { MatFormFieldModule,
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { AppBootStrapComponent } from './app-bootstrap.component';
 import { HeaderComponent } from './header/header.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SignupComponent } from './signup/signup.component';
@@ -49,6 +50,11 @@ import { EditUserComponent } from './dashboard/users/display-user/edit-user/edit
 import { AddUserComponent } from './dashboard/users/add-user/add-user.component';
 import { ListUsersComponent } from './dashboard/users/list-users/list-users.component';
 import { AccountComponent } from './dashboard/account/account.component';
+import { ListDepartmentsComponent } from './dashboard/departments/list-departments/list-departments.component';
+import { AddDepartmentComponent } from './dashboard/departments/add-department/add-department.component';
+import { depEditRendererComponent } from './dashboard/departments/list-departments/dep-edit-renderer.component';
+import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
+
 
 
 export function HttpLoaderFactory(httpclient:HttpClient) {
@@ -58,6 +64,7 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
 @NgModule({
     declarations: [
         AppComponent,
+        AppBootStrapComponent,
         HeaderComponent,
         WelcomeComponent,
         SignupComponent,
@@ -79,6 +86,10 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         AddUserComponent,
         ListUsersComponent,
         AccountComponent,
+        ListDepartmentsComponent,
+        AddDepartmentComponent,
+        depEditRendererComponent,
+        DisplayDepartmentComponent
     ],
     imports: [
         BrowserModule,
@@ -107,7 +118,7 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        AgGridModule.withComponents([EditRendererComponent, DialogsComponent])
+        AgGridModule.withComponents([EditRendererComponent, DialogsComponent, depEditRendererComponent])
     ],
     providers: [TranslationService],
     bootstrap: [AppComponent]
