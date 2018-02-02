@@ -11,7 +11,7 @@ import { UsersService } from '../../users.service';
     selector: 'app-edit-user',
     templateUrl: './edit-user.component.html',
     styleUrls: ['./edit-user.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class EditUserComponent implements OnInit {
 

@@ -9,7 +9,7 @@ import { UsersService } from '../users.service';
     selector: 'app-add-user',
     templateUrl: './add-user.component.html',
     styleUrls: ['./add-user.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class AddUserComponent implements OnInit {
 

@@ -40,7 +40,8 @@
         "FIRST":"Πρώτη",
         "PREVIOUS":"Προηγούμενη",
         "DEP_MANAGER":"Υπεύθυνος",
-        "DEP_CCLIST":"Ενημερώνονται"
+        "DEP_CCLIST":"Eπίσης ενημερώνονται",
+        "DEP_ISSUE_ADMIN":"Διαχείριση αιτημάτων"
     },
 
     "WELCOME":

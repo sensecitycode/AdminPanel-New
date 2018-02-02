@@ -9,13 +9,15 @@ import { UsersService } from '../../users/users.service';
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
   styleUrls: ['./add-department.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class AddDepartmentComponent implements OnInit {
+
     constructor(private formBuilder: FormBuilder, private depServ: DepartmentsService, private usersServ: UsersService) { }
 
     subscription = new Subscription;
     users = [];
+    departmentUsers = [];
     departmentAddForm: FormGroup;
     roleList: [string];
     departmentServiceMsg:string;
@@ -26,6 +28,7 @@ export class AddDepartmentComponent implements OnInit {
 
         this.departmentAddForm = this.formBuilder.group({
             'name': ['',Validators.required],
+            'users':['', Validators.required],
             'manager': ['',Validators.required],
             'cclist': ['']
         })
@@ -39,8 +42,24 @@ export class AddDepartmentComponent implements OnInit {
             }
         ));
         this.usersServ.populate_userArray();
+        console.log(this.departmentUsers);
+        console.log(this.departmentUsers.length);
     }
 
+
+    onAddUser(){
+        let user = this.departmentAddForm.get('users').value;
+        this.departmentUsers = [];
+        this.departmentUsers.push(...user);
+        this.departmentAddForm.patchValue({users:user});
+        console.log(this.departmentUsers.length);
+    }
+
+    onRemoveUser(index){
+        console.log(index);
+        this.departmentUsers.splice(index, 1);
+        this.departmentAddForm.patchValue({users:this.departmentUsers});
+    }
 
     submitNewDepartment() {
         console.log(this.departmentAddForm);
@@ -66,6 +85,17 @@ export class AddDepartmentComponent implements OnInit {
         //     this.departmentAddForm.reset();
         //   }
         // )
+    }
+
+    onReset() {
+        this.departmentAddForm.setValue({
+            'name': '',
+            'users':'',
+            'manager': '',
+            'cclist': ''
+        })
+        this.departmentUsers = [];
+        this.departmentServiceMsg = '';
     }
 
     ngOnDestroy() {

@@ -11,7 +11,7 @@ import { UsersService } from '../users.service';
     selector: 'app-display-user',
     templateUrl: './display-user.component.html',
     styleUrls: ['./display-user.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class DisplayUserComponent implements OnInit {
 

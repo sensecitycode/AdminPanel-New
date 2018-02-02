@@ -41,7 +41,8 @@
         "FIRST":"First",
         "PREVIOUS":"Previous",
         "DEP_MANAGER":"Manager",
-        "DEP_CCLIST":"Notified"
+        "DEP_CCLIST":"Also notified",
+        "DEP_ISSUE_ADMIN":"Issue administration"
     },
 
     "WELCOME":

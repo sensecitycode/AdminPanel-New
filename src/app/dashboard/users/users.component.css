@@ -9,19 +9,6 @@
 }
 
 
-/* not in use */
-.ag-cell-focus,.ag-cell-no-focus{
-border:none !important;
-}
-.ag-cell:focus{
-border:none !important;
-outline: none;
-}
-
-/* .btn-add {
-    background-color: #fff;
-    color:#5EBB5E
-} */
 
 .icon-add{
     float:right;
