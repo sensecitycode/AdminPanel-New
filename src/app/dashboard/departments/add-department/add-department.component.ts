@@ -19,7 +19,7 @@ export class AddDepartmentComponent implements OnInit {
     users = [];
     possibleAdminUsers = [];
     issueAdmins = [];
-    otherDepartmentUsers = [];
+    nonIssueAdmins = [];
     allDepartmentUsers = [];
     departmentAddForm: FormGroup;
     roleList: [string];
@@ -42,56 +42,71 @@ export class AddDepartmentComponent implements OnInit {
                 if (status == "userArrayPopulated"){
                     console.log("status == userArrayPopulated");
                     this.users = this.usersServ.return_userArray();
-                    this.possibleAdminUsers = this.users;
-                    for (let user of this.users){
+                    this.possibleAdminUsers = this.users.slice();
+                    for (let user of this.possibleAdminUsers){
                         if (user.role_name.length == 1 && user.role_name[0] == "cityAdmin") {
-                            this.possibleAdminUsers.splice(this.users.indexOf(user), 1);
+                            this.possibleAdminUsers.splice(this.users.indexOf(user), 1); // cityAdmins do NOT manage city issues
                         } else {
                             for (let role of user.role_name) {
                                 if (role == "cityManager") {
-                                    // user.cityManager = true;
+                                    user.isCityManager = true; // has 'cityManager' in rolelist
                                     this.issueAdmins.push(user);
                                     break;
                                 }
-                                // if (role == "cityAdmin") {
-                                //     this.possibleAdminUsers.splice(this.users.indexOf(user), 1);
-                                //     break;
-                                // }
                             }
                         }
                     }
+
+
                     console.log(this.users);
                     this.departmentAddForm.patchValue({users:this.issueAdmins});
                     this.allDepartmentUsers = this.issueAdmins;
 
-                    // this.departmentUsers.push(...this.issueAdmins);
 
                     console.log(this.possibleAdminUsers);
                 }
             }
         ));
+
+
         this.usersServ.populate_userArray();
     }
 
 
     onAddUser(){
-        let user = this.departmentAddForm.get('users').value;
-        console.log(user);
+        let selectedUsers = this.departmentAddForm.get('users').value;
+        console.log(selectedUsers);
+        console.log(this.issueAdmins);
 
-        this.otherDepartmentUsers = [];
+        this.nonIssueAdmins = [];
+        for (let selUser of selectedUsers) {
+            let matchFound = false;
+            for (let issueAdmin of this.issueAdmins) {
+                if (issueAdmin._id == selUser._id) {
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (matchFound == false) {
+                this.nonIssueAdmins.push(selUser)
+            }
+            console.log(this.nonIssueAdmins);
+        }
         // this.departmentUsers.push(...this.issueAdmins);
-        this.otherDepartmentUsers.push(...user);
-        this.departmentAddForm.patchValue({users:user});
-        this.allDepartmentUsers = this.issueAdmins.concat(this.otherDepartmentUsers);
+        // this.nonIssueAdmins.push(...selectedUsers);
+        // this.departmentAddForm.patchValue({users:selectedUsers});
+        this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
         console.log(this.allDepartmentUsers.length);
         console.log(this.allDepartmentUsers);
     }
 
     onRemoveUser(index){
         console.log(index);
-        this.otherDepartmentUsers.splice(index, 1);
-        this.departmentAddForm.patchValue({users:this.otherDepartmentUsers});
-        this.allDepartmentUsers = this.issueAdmins.concat(this.otherDepartmentUsers);
+        console.log(this.issueAdmins.length);
+        console.log(this.issueAdmins.length+index);
+        this.nonIssueAdmins.splice(index, 1);
+        this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
+        this.departmentAddForm.patchValue({users:this.allDepartmentUsers});
     }
 
     submitNewDepartment() {
@@ -127,7 +142,9 @@ export class AddDepartmentComponent implements OnInit {
             'manager': '',
             'cclist': ''
         })
-        this.otherDepartmentUsers = [];
+        this.nonIssueAdmins = [];
+        this.departmentAddForm.patchValue({users:this.issueAdmins});
+        this.allDepartmentUsers = this.issueAdmins;
         this.departmentServiceMsg = '';
     }
 

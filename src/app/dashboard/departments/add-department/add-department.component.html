@@ -20,7 +20,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-8">
                         <mat-form-field class="example-full-width">
                             <mat-select placeholder="{{'GRID.DEP_ISSUE_ADMIN' | translate}}" formControlName="users" multiple>
@@ -28,12 +28,11 @@
                                     <span *ngIf="departmentAddForm.controls.users.value?.length == 1" class="example-additional-selection">
                                         {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
                                     </span>
-                                    <!-- {{departmentAddForm.controls.users.value ? (departmentAddForm.controls.users.value.length ('DASHBOARD.USER'|translate)) : ''}} -->
                                     <span *ngIf="departmentAddForm.controls.users.value?.length > 1" class="example-additional-selection">
                                         {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
                                     </span>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let user of users" [value]="user" style="font-size:14px">
+                                <mat-option *ngFor="let user of users" [value]="user" [disabled]="user.isCityManager" style="font-size:14px">
                                     {{user.username}} (<strong *ngFor="let role of user.role_name">{{('ROLES.'+role)|translate}}</strong>)
                                 </mat-option>
                             </mat-select>
@@ -43,8 +42,7 @@
                     <div class="col-md-4 text-right">
                         <button type='button' mat-raised-button class="btn-default" (click) = "onAddUser()">add +</button>
                     </div>
-                </div>
-
+                </div> -->
                 <div class="row">
                     <div class="col-md-12">
                         <div  #panelDivElement>
@@ -54,7 +52,7 @@
                                 </div>
                             </div>
 
-                            <div *ngFor='let user of otherDepartmentUsers; let idx = index' class="panel panel-default">
+                            <div *ngFor='let user of nonIssueAdmins; let idx = index' class="panel panel-default">
                                 <div class="panel-body">
                                     {{user.username}}
                                     <button type='button' rel="tooltip" title="Remove" class="btn btn-danger btn-xs" (click)='onRemoveUser(idx)'>
@@ -63,7 +61,33 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="col-md-8">
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="{{'GRID.DEP_ISSUE_ADMIN' | translate}}" formControlName="users" multiple>
+                                <mat-select-trigger>
+                                    <span *ngIf="departmentAddForm.controls.users.value?.length == 1" class="example-additional-selection">
+                                        {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
+                                    </span>
+                                    <span *ngIf="departmentAddForm.controls.users.value?.length > 1" class="example-additional-selection">
+                                        {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
+                                    </span>
+                                </mat-select-trigger>
+                                <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
+                                    {{user.username}} (<strong *ngFor="let role of user.role_name">{{('ROLES.'+role)|translate}}</strong>)
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="departmentAddForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 text-right" style="margin: 13px 0px;">
+                        <button type='button' mat-raised-button class="btn-default" (click) = "onAddUser()">add +</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
                         <mat-form-field class="example-full-width">
                             <mat-select placeholder="{{'GRID.DEP_MANAGER' | translate}}" formControlName="manager" [disabled]='allDepartmentUsers.length==0'>
                                 <mat-select-trigger>
@@ -94,7 +118,6 @@
                             <mat-error *ngIf="departmentAddForm.controls.cclist.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                         </mat-form-field>
                     </div>
-
                 </div>
 
             </form>
@@ -128,6 +151,3 @@
 
 </div>
 </div> -->
-
-
-</div>
