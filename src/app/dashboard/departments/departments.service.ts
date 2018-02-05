@@ -33,7 +33,7 @@ export class DepartmentsService {
                 headers: reqheaders
             })
             .subscribe(
-                data => { this.departments = data.products[0].components},
+                data => { this.departments = data},
                 error => {
                     console.log('error occured populating departmentsArray');
                     alert("Fetch Departments Service not working!");

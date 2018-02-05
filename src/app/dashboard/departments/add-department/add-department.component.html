@@ -48,7 +48,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div  #panelDivElement>
-                            <div *ngFor='let user of departmentUsers; let idx = index' class="panel panel-default">
+                            <div *ngFor='let user of issueAdmins' class="panel panel-default">
+                                <div class="panel-body">
+                                    {{user.username}}
+                                </div>
+                            </div>
+
+                            <div *ngFor='let user of otherDepartmentUsers; let idx = index' class="panel panel-default">
                                 <div class="panel-body">
                                     {{user.username}}
                                     <button type='button' rel="tooltip" title="Remove" class="btn btn-danger btn-xs" (click)='onRemoveUser(idx)'>
@@ -59,14 +65,14 @@
                         </div>
 
                         <mat-form-field class="example-full-width">
-                            <mat-select placeholder="{{'GRID.DEP_MANAGER' | translate}}" formControlName="manager" [disabled]='departmentUsers.length==0'>
+                            <mat-select placeholder="{{'GRID.DEP_MANAGER' | translate}}" formControlName="manager" [disabled]='allDepartmentUsers.length==0'>
                                 <mat-select-trigger>
                                     {{departmentAddForm.controls.manager.value.username}}
                                     <span *ngIf="departmentAddForm.controls.manager.value?.length > 1" class="example-additional-selection">
                                         (+{{departmentAddForm.controls.manager.value.length - 1}} {{ 'OTHERS' | translate }})
                                     </span>
                                 </mat-select-trigger>
-                                <mat-option *ngFor="let user of departmentUsers" [value]="user" style="font-size:14px">
+                                <mat-option *ngFor="let user of allDepartmentUsers" [value]="user" style="font-size:14px">
                                     {{user.username}} (<strong *ngFor="let role of user.role_name">{{('ROLES.'+role)|translate}}</strong>)
                                 </mat-option>
                             </mat-select>

@@ -17,7 +17,10 @@ export class AddDepartmentComponent implements OnInit {
 
     subscription = new Subscription;
     users = [];
-    departmentUsers = [];
+    possibleAdminUsers = [];
+    issueAdmins = [];
+    otherDepartmentUsers = [];
+    allDepartmentUsers = [];
     departmentAddForm: FormGroup;
     roleList: [string];
     departmentServiceMsg:string;
@@ -33,32 +36,62 @@ export class AddDepartmentComponent implements OnInit {
             'cclist': ['']
         })
 
+
         this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {
                 if (status == "userArrayPopulated"){
                     console.log("status == userArrayPopulated");
                     this.users = this.usersServ.return_userArray();
+                    this.possibleAdminUsers = this.users;
+                    for (let user of this.users){
+                        if (user.role_name.length == 1 && user.role_name[0] == "cityAdmin") {
+                            this.possibleAdminUsers.splice(this.users.indexOf(user), 1);
+                        } else {
+                            for (let role of user.role_name) {
+                                if (role == "cityManager") {
+                                    // user.cityManager = true;
+                                    this.issueAdmins.push(user);
+                                    break;
+                                }
+                                // if (role == "cityAdmin") {
+                                //     this.possibleAdminUsers.splice(this.users.indexOf(user), 1);
+                                //     break;
+                                // }
+                            }
+                        }
+                    }
+                    console.log(this.users);
+                    this.departmentAddForm.patchValue({users:this.issueAdmins});
+                    this.allDepartmentUsers = this.issueAdmins;
+
+                    // this.departmentUsers.push(...this.issueAdmins);
+
+                    console.log(this.possibleAdminUsers);
                 }
             }
         ));
         this.usersServ.populate_userArray();
-        console.log(this.departmentUsers);
-        console.log(this.departmentUsers.length);
     }
 
 
     onAddUser(){
         let user = this.departmentAddForm.get('users').value;
-        this.departmentUsers = [];
-        this.departmentUsers.push(...user);
+        console.log(user);
+
+        this.otherDepartmentUsers = [];
+        // this.departmentUsers.push(...this.issueAdmins);
+        this.otherDepartmentUsers.push(...user);
         this.departmentAddForm.patchValue({users:user});
-        console.log(this.departmentUsers.length);
+        this.allDepartmentUsers = this.issueAdmins.concat(this.otherDepartmentUsers);
+        console.log(this.allDepartmentUsers.length);
+        console.log(this.allDepartmentUsers);
     }
 
     onRemoveUser(index){
         console.log(index);
-        this.departmentUsers.splice(index, 1);
-        this.departmentAddForm.patchValue({users:this.departmentUsers});
+        this.otherDepartmentUsers.splice(index, 1);
+        this.departmentAddForm.patchValue({users:this.otherDepartmentUsers});
+        this.allDepartmentUsers = this.issueAdmins.concat(this.otherDepartmentUsers);
     }
 
     submitNewDepartment() {
@@ -94,7 +127,7 @@ export class AddDepartmentComponent implements OnInit {
             'manager': '',
             'cclist': ''
         })
-        this.departmentUsers = [];
+        this.otherDepartmentUsers = [];
         this.departmentServiceMsg = '';
     }
 

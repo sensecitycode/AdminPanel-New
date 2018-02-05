@@ -85,8 +85,8 @@ export class EditUserComponent implements OnInit {
             }
           },
           () => {
-            this.userServiceMsg = 'success';
-            this.originalUsername = editedUser.username;
+              this.originalUsername = editedUser.username;
+              this.userServiceMsg = 'success';
           }
         )
 

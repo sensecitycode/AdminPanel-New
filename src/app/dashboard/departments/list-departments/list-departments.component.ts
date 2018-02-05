@@ -53,7 +53,7 @@ export class ListDepartmentsComponent implements OnInit {
                         for (let person of dep.default_cc_list) {
                             cclist.push(person.login_name);
                         }
-                        rowData.push({departments: dep.name, manager: dep.default_assigned_to, cclist: cclist})
+                        rowData.push({departments: dep.component_name, manager: dep.default_assigned_email, cclist: cclist})
                     }
 
                     // this.subscriptions.add(this.translationService.get('ROLES')
