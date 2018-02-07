@@ -56,22 +56,25 @@ export class AddUserComponent implements OnInit {
         toAddUser.password = this.userAddForm.controls.passwordForm.get("pw1").value;
         delete toAddUser.passwordForm;
         this.usersServ.add_user(toAddUser).subscribe(
-          data => {},
-          error => {
-            this.userAddForm.markAsPristine();
-            if (error.error == "duplicate_username") {
-              this.userServiceMsg = 'duplicate_username';
-              this.userAddForm.get('username').setErrors({usernameExists: true});
+            data => {},
+            error => {
+                this.userAddForm.markAsPristine();
+                if (error.error == "duplicate_username") {
+                    this.userServiceMsg = 'duplicate_username';
+                    this.userAddForm.get('username').setErrors({usernameExists: true});
+                }
+                else if (error.error == "duplicate_email") {
+                    this.userServiceMsg = 'duplicate_email';
+                    this.userAddForm.get('email').setErrors({emailExists: true});
+                }
+                else {
+                    this.userServiceMsg = 'services_error';
+                }
+            },
+            () => {
+                this.userServiceMsg = 'success';
+                this.userAddForm.reset();
             }
-            if (error.error == "duplicate_email") {
-              this.userServiceMsg = 'duplicate_email';
-              this.userAddForm.get('email').setErrors({emailExists: true});
-            }
-          },
-          () => {
-            this.userServiceMsg = 'success';
-            this.userAddForm.reset();
-          }
         )
     }
 

@@ -70,7 +70,7 @@ export class ListUsersComponent implements OnInit {
                                             roles.push(translatedStr[role]);
                                         }
                                     }
-                                    rowData.push({username: user.username, name:user.name, surname:user.surname, roles: roles, departments: departments})
+                                    rowData.push({username: user.username, position:user.position, roles: roles, departments: departments})
                                 }
                             }
                         )
@@ -103,13 +103,8 @@ export class ListUsersComponent implements OnInit {
                             filter: "text",
                         },
                         {
-                            headerName: translatedStr.NAME,
-                            field: "name",
-                            filter: "text",
-                        },
-                        {
-                            headerName: translatedStr.SURNAME,
-                            field: "surname",
+                            headerName: translatedStr.POSITION,
+                            field: "position",
                             filter: "text",
                         },
 
@@ -144,8 +139,7 @@ export class ListUsersComponent implements OnInit {
                 {
                     let usernameColDef = this.gridColumnApi.getColumn("username").getColDef();
                     let departmentsColDef = this.gridColumnApi.getColumn("departments").getColDef();
-                    let nameColDef = this.gridColumnApi.getColumn("name").getColDef();
-                    let surnameColDef = this.gridColumnApi.getColumn("surname").getColDef();
+                    let positionColDef = this.gridColumnApi.getColumn("position").getColDef();
                     let rolesColDef = this.gridColumnApi.getColumn("roles").getColDef();
 
                     this.translationService.get('GRID')
@@ -153,8 +147,7 @@ export class ListUsersComponent implements OnInit {
                         {
                             usernameColDef.headerName = translatedStr.USERNAME;
                             departmentsColDef.headerName = translatedStr.DEPARTMENTS;
-                            nameColDef.headerName = translatedStr.NAME;
-                            surnameColDef.headerName = translatedStr.SURNAME;
+                            positionColDef.headerName = translatedStr.POSITION;
                             rolesColDef.headerName = translatedStr.USEROLE;
                             this.gridApi.refreshHeader();
                             // this.localeText = {

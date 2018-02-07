@@ -94,6 +94,10 @@
     <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'duplicate_email') && !userAddForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.EMAIL_EXISTS_MSG' | translate:{email: email}"></span>
     </div>
+    <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'services_error') && !userAddForm.dirty ? 'block' : 'none'}" >
+        <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
+    </div>
+
 
 
 

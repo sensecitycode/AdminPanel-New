@@ -108,11 +108,10 @@ export class DepartmentsService {
 
 
 
-    add_user(user) {
-      user.city = this.city;
+    add_department(department) {
       const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-      return this.httpClient.post<[object]>(`${this.API}/admin/add_user`,
-        user,
+      return this.httpClient.post<[object]>(`${this.API}/admin/add_departments`,
+        department,
         {
           headers: reqheaders
         })

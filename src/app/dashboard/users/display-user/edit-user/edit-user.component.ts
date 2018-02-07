@@ -48,7 +48,7 @@ export class EditUserComponent implements OnInit {
                         'username': this.user.username,
                         'email': this.user.email,
                         'role_name': this.user.role_name,
-                        'position': 'this.user.position'
+                        'position': this.user.position
                     })
                 }
             }
@@ -69,23 +69,27 @@ export class EditUserComponent implements OnInit {
           	'email': this.userEditForm.get('email').value,
           	'username': this.userEditForm.get('username').value,
           	'role_name':this.userEditForm.get('role_name').value,
+            'position':this.userEditForm.get('position').value,
           	'city': this.user.city
         };
         this.usersServ.edit_user(editedUser).subscribe(
           data => {console.log(data)},
           error => {
             console.log(error);
-            if (error.error == "duplicate_surname") {
-              this.userServiceMsg = 'duplicate_username';
-              this.userEditForm.get('username').setErrors({usernameExists: true});
-            }
-            if (error.error == "duplicate_email") {
-              this.userServiceMsg = 'duplicate_email';
-              this.userEditForm.get('email').setErrors({emailExists: true});
-            }
+            this.userServiceMsg = 'error';
+            this.userEditForm.markAsPristine();
+            // if (error.error == "duplicate_surname") {
+            //   this.userServiceMsg = 'duplicate_username';
+            //   this.userEditForm.get('username').setErrors({usernameExists: true});
+            // }
+            // if (error.error == "duplicate_email") {
+            //   this.userServiceMsg = 'duplicate_email';
+            //   this.userEditForm.get('email').setErrors({emailExists: true});
+            // }
           },
           () => {
               this.originalUsername = editedUser.username;
+              this.userEditForm.markAsPristine();
               this.userServiceMsg = 'success';
           }
         )
@@ -99,7 +103,7 @@ export class EditUserComponent implements OnInit {
             'username':this.user.username,
             'email':this.user.email,
             'role_name':this.user.role_name,
-            'position': 'this.user.position'
+            'position': this.user.position
         })
     }
 

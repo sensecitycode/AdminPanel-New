@@ -13,6 +13,7 @@
     "REQ_ERR":"Field is <strong>required</strong>",
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
+    "SERVICES_ERROR_MSG":"Some services are not responding! Please try again later.",
 
     "ROLES":
     {
@@ -116,8 +117,13 @@
         "SURNAME_OPT":"Surname (optional)",
         "LAST_LOGIN":"Last login",
         "USEROLE":"User role",
-        "USER_ADDED_MSG":"User <strong>{{username}}</strong> successfully added!",
+        "USER_ADDED_MSG":"User <strong>{{username}}</strong> was successfully added!",
         "USERNAME_EXISTS_MSG":"Username <strong>{{username}}</strong> is not available!",
-        "EMAIL_EXISTS_MSG":"Email <strong>{{email}}</strong> is not available!"
+        "EMAIL_EXISTS_MSG":"Email <strong>{{email}}</strong> is not available!",
+        "USER_EDIT_MSG":"User <strong>{{username}}</strong> successfully edited!",
+        "USER_EDIT_ERROR_MSG":"An error occured editing user <strong>{{username}}</strong>!",
+        "DEPARTMENT_ADD_INFO":"<strong>Ιnformation</strong><li>'Issues Administrators' of a city are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
+        "DEP_ADDED_MSG":"<strong>{{name}}</strong> was successfully added!",
+        "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!"
     }
 }

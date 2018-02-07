@@ -13,6 +13,7 @@
     "REQ_ERR":"Το πεδίο είναι <strong>απαραίτητο</strong>",
     "VALID_MAIL_ERR":"Η διεύθυνση email <strong>δεν είναι έγκυρη</strong>",
     "MATCHING_PASS_ERR":"Οι κωδικοί <strong>δεν ταιριάζουν</strong>",
+    "SERVICES_ERROR_MSG":"Κάποιες υπηρεσίες δεν ανταποκρίνονται! Παρακαλώ δοκιμάστε αργότερα.",
 
     "ROLES":
     {
@@ -20,7 +21,8 @@
         "cityAdmin":"Διαχειριστής Πόλης",
         "cityManager":"Διαχειριστής Προβλημάτων",
         "departmentAdmin":"Διαχειριστής Τμήματος",
-        "departmentUser":"Χρήστης Τμήματος"
+        "departmentUser":"Χρήστης Τμήματος",
+        "Anonymous":"Ανώνυμος Χρήστης"
     },
 
     "GRID":
@@ -117,6 +119,11 @@
         "USEROLE":"Ρόλος χρήστη",
         "USER_ADDED_MSG":"O χρήστης <strong>{{username}}</strong> προστέθηκε επιτυχώς!",
         "USERNAME_EXISTS_MSG":"To όνομα χρήστη <strong>{{username}}</strong> δεν είναι διαθέσιμο!",
-        "EMAIL_EXISTS_MSG":"Το email <strong>{{email}}</strong> δεν είναι διαθέσιμο!"
+        "EMAIL_EXISTS_MSG":"Το email <strong>{{email}}</strong> δεν είναι διαθέσιμο!",
+        "USER_EDIT_MSG":"O χρήστης <strong>{{username}}</strong> τροποποιήθηκε επιτυχώς!",
+        "USER_EDIT_ERROR_MSG":"Προέκυψε σφάλμα κατά την τροποποίηση του χρήστη <strong>{{username}}</strong>!",
+        "DEPARTMENT_ADD_INFO":"<strong>Πληροφορίες</strong><li>Οι 'Διαχειριστές Προβλημάτων' της πόλης προεπιλέγονται ως διαχειριστές αιτημάτων κάθε τμήματος.</li><li>Δεν είναι δυνατή η επιλογή 'Χρήστη Τμήματος' σε περίπτωση που του έχει ανατεθεί ήδη κάποιο τμήμα. Ενδεχομένως απαιτείται αλλαγή ρόλου.</li><li>'Υπεύθυνος τμήματος' ορίζεται ένας εκ των διαχειριστών αιτημάτων. Επιπρόσθετα λαμβάνει email ειδοποίησης νέων αιτημάτων.</li><li>Επιλογή χρηστών της πόλης που 'επίσης ενημερώνονται' με email.",
+        "DEP_ADDED_MSG":"To <strong>{{name}}</strong> προστέθηκε επιτυχώς!",
+        "DEP_NAME_EXISTS_MSG":"Το όνομα τμήματος <strong>{{name}}</strong> δεν είναι διαθέσιμο!"
     }
 }

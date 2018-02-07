@@ -110,29 +110,30 @@ export class AddDepartmentComponent implements OnInit {
     }
 
     submitNewDepartment() {
-        console.log(this.departmentAddForm);
-        // this.username = this.userAddForm.get('username').value;
-        // this.email = this.userAddForm.get('email').value;
-        // let toAddUser = this.userAddForm.value;
-        // toAddUser.password = this.userAddForm.controls.passwordForm.get("pw1").value;
-        // this.usersServ.add_user(toAddUser).subscribe(
-        //   data => {},
-        //   error => {
-        //     this.departmentAddForm.markAsPristine();
-        //     if (error.error == "duplicate_username") {
-        //       this.departmentServiceMsg = 'duplicate_username';
-        //       this.departmentAddForm.get('username').setErrors({usernameExists: true});
-        //     }
-        //     if (error.error == "duplicate_email") {
-        //       this.departmentServiceMsg = 'duplicate_email';
-        //       this.departmentAddForm.get('email').setErrors({emailExists: true});
-        //     }
-        //   },
-        //   () => {
-        //     this.departmentServiceMsg = 'success';
-        //     this.departmentAddForm.reset();
-        //   }
-        // )
+        console.log(this.departmentAddForm.value);
+        let form = this.departmentAddForm.value;
+        let tobeAddedDepartment = {
+            department:form.name,
+            default_assignee:form.manager.email,
+            default_cc:form.cclist.map(idx => idx.email),
+            cp_access:form.users.map(idx => idx.email)
+        }
+        console.log(tobeAddedDepartment);
+        this.depServ.add_department(tobeAddedDepartment).subscribe(
+            data => {console.log(data)},
+            error => {
+                this.departmentAddForm.markAsPristine();
+                console.log(error);
+                if (error.error == "DUPLICATE_DEPARTMENT") {
+                    this.departmentServiceMsg = 'duplicate_name';
+                    this.departmentAddForm.get('name').setErrors({nameExists: true});
+                }
+            },
+            () => {
+                this.departmentServiceMsg = 'success';
+                this.onReset();
+            }
+        )
     }
 
     onReset() {
@@ -145,7 +146,7 @@ export class AddDepartmentComponent implements OnInit {
         this.nonIssueAdmins = [];
         this.departmentAddForm.patchValue({users:this.issueAdmins});
         this.allDepartmentUsers = this.issueAdmins;
-        this.departmentServiceMsg = '';
+        this.departmentAddForm.markAsPristine();
     }
 
     ngOnDestroy() {
