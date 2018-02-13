@@ -41,6 +41,7 @@
         "LAST":"Last",
         "FIRST":"First",
         "PREVIOUS":"Previous",
+        "DEP_NAME":"Naming",
         "DEP_MANAGER":"Manager",
         "DEP_CCLIST":"Also notified",
         "DEP_ISSUE_ADMIN":"Issue administration"
@@ -110,6 +111,7 @@
         "EDIT_USER":"Edit user",
         "CREATE_USER":"Create user",
         "CREATING_USER":"Creating user",
+        "EDIT_DEP":"Edit department",
         "RESET":"Reset",
         "RESET_PASSWORD":"Reset Password",
         "RESET_PASSWORD_MSG":"A new password was sent at",
@@ -125,5 +127,11 @@
         "DEPARTMENT_ADD_INFO":"<strong>Ιnformation</strong><li>'Issues Administrators' of a city are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
         "DEP_ADDED_MSG":"<strong>{{name}}</strong> was successfully added!",
         "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!"
+    },
+
+    "CITIES":
+    {
+        "testcity1":"Testcity1",
+        "patras":"Patras"
     }
 }

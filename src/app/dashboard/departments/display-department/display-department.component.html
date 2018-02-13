@@ -1,3 +1,52 @@
-<p>
-  display-department works!
-</p>
+<div class="col-md-12">
+    <button mat-raised-button class="btn-default"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
+</div>
+<div class="col-xl-2 col-lg-4 col-md-6 col-xl-offset-5 col-lg-offset-4 col-md-offset-3">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
+            <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
+            <mat-card-subtitle>{{department?.name}}</mat-card-subtitle>
+        </mat-card-header>
+        <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content>
+
+            <table class="table table-user-information">
+                <tbody>
+                    <tr>
+                        <td><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
+                        <td>{{department?.name}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
+                        <td>{{department?.issueAdmin}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
+                        <td>{{department?.manager}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
+                        <td>{{department?.ccList}}</td>
+                    </tr>
+                    <!-- <tr>
+                        <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
+                        <td>
+                        <div *ngFor="let role of user?.role_name">{{ ('ROLES.' + role) | translate }}</div>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+            <button mat-button [routerLink]="['edit']" class="btn-default" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons">edit</i> {{'DASHBOARD.EDIT_DEP' | translate}}</button>
+        </mat-card-content>
+    </mat-card>
+
+    <!-- <div class="col-md-12">
+    <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
+    <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
+    {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
+
+</div>
+</div> -->
+
+</div>

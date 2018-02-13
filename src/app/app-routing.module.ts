@@ -18,6 +18,8 @@ import { PolicyComponent } from './dashboard/policy/policy.component';
 import { AccountComponent } from './dashboard/account/account.component';
 import { ListDepartmentsComponent } from './dashboard/departments/list-departments/list-departments.component';
 import { AddDepartmentComponent } from './dashboard/departments/add-department/add-department.component';
+import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
+import { EditDepartmentComponent } from './dashboard/departments/display-department/edit-department/edit-department.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { EnvironmentSpecificResolver } from './envSpecific/environment-specific-resolver';
@@ -38,7 +40,9 @@ const appRoutes: Routes = [
             ]},
             {path: 'departments', component: DepartmentsComponent, children:[
                 {path: '', component: ListDepartmentsComponent},
-                {path: 'add', component: AddDepartmentComponent}
+                {path: 'add', component: AddDepartmentComponent},
+                {path: ':name', component: DisplayDepartmentComponent},
+                {path: ':name/edit', component: EditDepartmentComponent}
             ]},
             {path: 'boundaries', component: BoundariesComponent},
             {path: 'policy', component: PolicyComponent},

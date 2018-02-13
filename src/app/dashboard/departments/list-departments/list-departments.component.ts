@@ -192,16 +192,17 @@ export class ListDepartmentsComponent implements OnInit {
         this.gridApi.setQuickFilter(this.renderer.selectRootElement('#filter-text-box').value);
     }
 
-    onDisplayUserDetails(cell) {
+    onDisplayDepartmentDetails(cell) {
         let data = {
             // rowData: this.gridApi.getModel().rowsToDisplay[cell].data,
             rowNode: this.gridApi.getDisplayedRowAtIndex(cell),
-            user: this.users[this.gridApi.getDisplayedRowAtIndex(cell).id],
+            department: this.departments[this.gridApi.getDisplayedRowAtIndex(cell).id],
             // row: cell,
             gridApi: this.gridApi,
         }
+        console.log(data);
         // this.usersServ.set_userDetails(data);
-        this.router.navigate([data.user.username], {relativeTo: this.activatedRoute});
+        this.router.navigate([data.department.component_name], {relativeTo: this.activatedRoute});
 
         // this.gridApi.getDisplayedRowAtIndex(cell).setData(returnedData);
         // // this.gridApi.refreshInMemoryRowModel("sort");

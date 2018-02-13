@@ -54,6 +54,7 @@ import { ListDepartmentsComponent } from './dashboard/departments/list-departmen
 import { AddDepartmentComponent } from './dashboard/departments/add-department/add-department.component';
 import { depEditRendererComponent } from './dashboard/departments/list-departments/dep-edit-renderer.component';
 import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
+import { EditDepartmentComponent } from './dashboard/departments/display-department/edit-department/edit-department.component';
 
 
 
@@ -89,7 +90,8 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         ListDepartmentsComponent,
         AddDepartmentComponent,
         depEditRendererComponent,
-        DisplayDepartmentComponent
+        DisplayDepartmentComponent,
+        EditDepartmentComponent
     ],
     imports: [
         BrowserModule,
