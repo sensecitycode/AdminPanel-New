@@ -150,6 +150,8 @@ export class ListUsersComponent implements OnInit {
                             positionColDef.headerName = translatedStr.POSITION;
                             rolesColDef.headerName = translatedStr.USEROLE;
                             this.gridApi.refreshHeader();
+                            this.gridApi.refreshCells();
+
                             // this.localeText = {
                             //
                             //         // for filter panel

@@ -18,7 +18,6 @@ export class UsersService {
     API:string;
     private roleslist = [];
     private users = [];
-    private userDetails:[object];
     usersChanged = new Subject();
 
 
@@ -47,24 +46,10 @@ export class UsersService {
 
     get_userDetails (username) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserDetails = this.httpClient.get<[object]>(`${this.API}/admin/user/${username}`,
+        return this.httpClient.get<[object]>(`${this.API}/admin/user/${username}`,
             {
                 headers: reqheaders
             })
-            .subscribe(
-                data => {this.userDetails = data;},
-                error => {console.log('error occured fetching user details')},
-                () =>
-                    {
-                        clearTimeout(fetchUserDetails_canc);
-                        this.usersChanged.next("userDetailsFetched");
-                    }
-            )
-
-        let fetchUserDetails_canc = setTimeout(()=>{
-            fetchUserDetails.unsubscribe();
-            alert("Fetch User Details Service not working!");
-        }, 10000);
     }
 
     get_userRoles() {
@@ -96,10 +81,6 @@ export class UsersService {
 
     return_userArray() {
         return this.users.slice();
-    }
-
-    return_userDetails() {
-        return this.userDetails[0];
     }
 
 

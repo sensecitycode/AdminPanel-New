@@ -43,6 +43,8 @@
         "PREVIOUS":"Προηγούμενη",
         "DEP_NAME":"Ονομασία",
         "DEP_MANAGER":"Υπεύθυνος",
+        "DEP_MANAGER_POSITION":"Θέση υπευθύνου",
+        "ISSUES_ADMINS":"Πρόσβαση στη διαχείριση αιτημάτων",
         "DEP_CCLIST":"Eπίσης ενημερώνονται",
         "DEP_ISSUE_ADMIN":"Διαχείριση αιτημάτων"
     },

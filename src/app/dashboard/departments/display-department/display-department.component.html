@@ -1,12 +1,12 @@
 <div class="col-md-12">
     <button mat-raised-button class="btn-default"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
 </div>
-<div class="col-xl-2 col-lg-4 col-md-6 col-xl-offset-5 col-lg-offset-4 col-md-offset-3">
+<div class="col-xl-4 col-lg-6 col-md-8col-xl-offset-4 col-lg-offset-3 col-md-offset-2">
     <mat-card class="example-card">
         <mat-card-header>
             <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
             <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
-            <mat-card-subtitle>{{department?.name}}</mat-card-subtitle>
+            <mat-card-subtitle><span>{{department?.name}}</span></mat-card-subtitle>
         </mat-card-header>
         <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
         <mat-card-content>
@@ -19,15 +19,19 @@
                     </tr>
                     <tr>
                         <td><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
-                        <td>{{department?.issueAdmin}}</td>
+                        <td>
+                            <div *ngFor="let issueAdmin of department?.issueAdmins">{{issueAdmin.username}}</div>
+                        </td>
                     </tr>
                     <tr>
                         <td><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
-                        <td>{{department?.manager}}</td>
+                        <td>{{department?.manager.username}}</td>
                     </tr>
                     <tr>
                         <td><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
-                        <td>{{department?.ccList}}</td>
+                        <td>
+                            <div *ngFor="let user of department?.ccList">{{user.username}}</div>
+                        </td>
                     </tr>
                     <!-- <tr>
                         <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
 
 
 
@@ -17,28 +16,19 @@ export class DisplayUserComponent implements OnInit {
 
     constructor(private usersServ: UsersService, private activatedRoute: ActivatedRoute) { }
 
-    subscription: Subscription;
+    username:string;
     user:object;
+    userServiceMsg:string;
 
     ngOnInit() {
 
-        let username = this.activatedRoute.snapshot.url[0].path;
-        this.subscription = this.usersServ.usersChanged.subscribe(
-            (status:string) => {
-                if (status == "userDetailsFetched"){
-                    console.log(`status == ${status}`);
-                    this.user = this.usersServ.return_userDetails();
-                }
-            }
-        );
-
-        this.usersServ.get_userDetails(username);
-
-
-
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.username = this.activatedRoute.snapshot.url[0].path;
+        console.log(this.username);
+        this.usersServ.get_userDetails(this.username)
+            .subscribe(
+                data => {this.user = data[0]},
+                error => {console.log('error occured fetching user details'); this.userServiceMsg = 'error';},
+                () => {}
+            )
     }
 }

@@ -16,7 +16,7 @@
                     <tbody>
                         <tr>
                             <td style="vertical-align:middle"><strong>{{'USERNAME' | translate}}</strong></td>
-                            <td>{{user?.username}}</td>
+                            <td><input type="text" class="form-control" formControlName="username"></td>
                         </tr>
                         <tr>
                             <td style="vertical-align:middle"><strong>{{'DASHBOARD.NAME_OPT' | translate}}</strong></td>
@@ -69,17 +69,22 @@
         (user.username == userEditForm.controls.username.value &&
         user.name == userEditForm.controls.name.value &&
         user.surname == userEditForm.controls.surname.value &&
+        user.position == userEditForm.controls.position.value &&
         user.role_name.join('') == userEditForm.controls.role_name.value.join('') &&
-        user.email == userEditForm.controls.email.value) " (click)="submitEditedUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !userEditForm.valid || (user.username == userEditForm.controls.username.value && user.name == userEditForm.controls.name.value && user.surname == userEditForm.controls.surname.value && user.role_name.join('') == userEditForm.controls.role_name.value.join('') && user.email == userEditForm.controls.email.value)? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
+        user.email == userEditForm.controls.email.value) " (click)="submitEditedUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !userEditForm.valid || (user.username == userEditForm.controls.username.value && user.name == userEditForm.controls.name.value && user.surname == userEditForm.controls.surname.value && user.position == userEditForm.controls.position.value && user.role_name.join('') == userEditForm.controls.role_name.value.join('') && user.email == userEditForm.controls.email.value)? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
         </mat-card-content>
     </mat-card>
 
     <div class='alert-success message text-center' [ngStyle]="{'display':(userServiceMsg == 'success') && !userEditForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_EDIT_MSG' | translate:{username: originalUsername}"></span>
     </div>
-    <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'error') && !userEditForm.dirty ? 'block' : 'none'}" >
+    <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'duplicate_username') && !userEditForm.dirty ? 'block' : 'none'}" >
+        <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USERNAME_EXISTS_MSG' | translate:{username: userEditForm.controls.username.value}"></span>
+    </div>
+    <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'services_error') && !userEditForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
     </div>
+
 
 
 <!-- <div class="col-md-12">

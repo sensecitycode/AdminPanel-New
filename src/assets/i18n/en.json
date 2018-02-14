@@ -43,6 +43,8 @@
         "PREVIOUS":"Previous",
         "DEP_NAME":"Naming",
         "DEP_MANAGER":"Manager",
+        "DEP_MANAGER_POSITION":"Manager position",
+        "ISSUES_ADMINS":"Ιssues administration access",
         "DEP_CCLIST":"Also notified",
         "DEP_ISSUE_ADMIN":"Issue administration"
     },

@@ -19,6 +19,7 @@ export class EditDepartmentComponent implements OnInit {
     constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private depServ: DepartmentsService, private usersServ: UsersService) { }
 
     originalDepName:string;
+    dep_id:string;
     depEditForm: FormGroup;
     originalDepFormValue: object;
     department:object;
@@ -28,7 +29,9 @@ export class EditDepartmentComponent implements OnInit {
     users = [];
     possibleAdminUsers = [];
     issueAdmins = [];
+    originalNonIssueAdmins = [];
     nonIssueAdmins = [];
+    originalAllDepartmentUsers = [];
     allDepartmentUsers = [];
 
 
@@ -40,93 +43,75 @@ export class EditDepartmentComponent implements OnInit {
             'cclist': ['']
         })
 
-        this.department = {
-            "default_assigned_email": "test1@hotmail.com",
-            "default_cc_list": [
-                {
-                    "disabledtext": "",
-                    "login_name": "info@sense.city",
-                    "disable_mail": "0",
-                    "extern_id": null,
-                    "last_seen_date": "2018-02-12",
-                    "is_enabled": "1",
-                    "realname": "info@sense.city",
-                    "userid": "11",
-                    "showmybugslink": "1"
-                },
-                {
-                    "disable_mail": "0",
-                    "login_name": "sxediasmou_mel@sense.city",
-                    "disabledtext": "",
-                    "userid": "118",
-                    "realname": "surname13 name13",
-                    "is_enabled": "1",
-                    "extern_id": null,
-                    "last_seen_date": null,
-                    "showmybugslink": "1"
-                }
-            ],
-            "is_active": true,
-            "component_name": "testdep"
-        }
+        this.dep_id = this.activatedRoute.snapshot.url[0].path;
+        let department = this.depServ.return_departmentsArray().find(idx => {return idx.departmentID == this.dep_id});
+        if (department)
+            {
+            this.originalDepName = department.component_name;
+            this.department = department;
 
-        this.originalDepName = this.activatedRoute.snapshot.url[0].path;
-
-        this.subscription.add(this.usersServ.usersChanged.subscribe(
-            (status:string) => {
-                if (status == "userArrayPopulated"){
-                    console.log("status == userArrayPopulated");
-                    this.users = this.usersServ.return_userArray();
-                    this.possibleAdminUsers = this.users.slice();
-                    for (let user of this.possibleAdminUsers){
-                        if (user.role_name.length == 1 && user.role_name[0] == "cityAdmin") {
-                            this.possibleAdminUsers.splice(this.users.indexOf(user), 1); // cityAdmins do NOT manage city issues
-                        } else {
-                            for (let role of user.role_name) {
-                                if (role == "cityManager") {
-                                    user.isCityManager = true; // has 'cityManager' in rolelist
-                                    this.issueAdmins.push(user);
-                                    break;
+            this.subscription.add(this.usersServ.usersChanged.subscribe(
+                (status:string) => {
+                    if (status == "userArrayPopulated"){
+                        console.log("status == userArrayPopulated");
+                        this.users = this.usersServ.return_userArray();
+                        this.possibleAdminUsers = this.users.slice();
+                        for (let user of this.possibleAdminUsers){
+                            if (user.role_name.length == 1 && user.role_name[0] == "cityAdmin") {
+                                this.possibleAdminUsers.splice(this.users.indexOf(user), 1); // cityAdmins do NOT manage city issues
+                            } else {
+                                for (let role of user.role_name) {
+                                    if (role == "cityManager") {
+                                        user.isCityManager = true; // has 'cityManager' in rolelist
+                                        this.issueAdmins.push(user);
+                                        break;
+                                    }
                                 }
                             }
                         }
+
+                        this.allDepartmentUsers = this.issueAdmins;
+
+                        //extra admin user added that isn't already in users!
+                        for (let cp_user of department.cp_access){
+                            let extraUser = this.users.find(extraUser => {return extraUser.username == cp_user.username});
+                            if (!extraUser.role_name.includes("cityManager")){
+                                this.nonIssueAdmins.push(extraUser);
+                            }
+                        }
+                        //
+
+                        //manager initial value
+                        let manager = this.users.find(manager => {return manager.email == department.default_assigned_email[0].assignee_email})
+
+                        //cclist initial value
+                        let cclist = [];
+                        for (let cclist_user of department.default_cc_list) {
+                            cclist.push(this.users.find(idx => {return idx.email == cclist_user.email}))
+                        }
+
+                        this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
+
+
+                        this.depEditForm.patchValue({
+                            name:this.originalDepName,
+                            users:this.allDepartmentUsers,
+                            manager:manager,
+                            cclist:cclist
+                        });
+                        console.log(this.depEditForm.value)
+
+                        // keep original values for reset
+                        this.originalDepFormValue = this.depEditForm.value;
+                        this.originalNonIssueAdmins = this.nonIssueAdmins.slice();
+                        this.originalAllDepartmentUsers = this.allDepartmentUsers.slice();
+                        console.log(this.originalNonIssueAdmins)
+                        console.log(this.originalAllDepartmentUsers)
                     }
-
-                    this.allDepartmentUsers = this.issueAdmins;
-
-                    //extra admin user added that isn't already in users!
-                    let extraUser = this.users.find(extraUser => {return extraUser.username == 'test1'});
-                    if (!extraUser.role_name.includes("cityManager")){
-                        this.nonIssueAdmins.push(extraUser);
-                    }
-                    //
-
-                    //manager initial value
-                    let manager = this.users.find(manager => {return manager.email == this.department['default_assigned_email']})
-
-
-                    //cclist initial value
-                    let cclist = [];
-                    for (let user of this.department['default_cc_list']) {
-                        cclist.push(this.users.find(idx => {return idx.email == user.login_name}))
-                    }
-
-                    this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
-
-
-                    this.depEditForm.patchValue({
-                        name:this.originalDepName,
-                        users:this.allDepartmentUsers,
-                        manager:manager,
-                        cclist:cclist
-                    });
-                    this.originalDepFormValue = this.depEditForm.value;
-
                 }
-            }
-        ));
-        this.usersServ.populate_userArray();
-
+            ));
+            this.usersServ.populate_userArray();
+        }
     }
 
     onAddUser(){
@@ -146,13 +131,11 @@ export class EditDepartmentComponent implements OnInit {
             if (matchFound == false) {
                 this.nonIssueAdmins.push(selUser)
             }
-            console.log(this.nonIssueAdmins);
         }
         // this.departmentUsers.push(...this.issueAdmins);
         // this.nonIssueAdmins.push(...selectedUsers);
         // this.departmentAddForm.patchValue({users:selectedUsers});
         this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
-        console.log(this.allDepartmentUsers.length);
         console.log(this.allDepartmentUsers);
     }
 
@@ -201,6 +184,8 @@ export class EditDepartmentComponent implements OnInit {
 
     onResetEdit() {
         this.depEditForm.setValue(this.originalDepFormValue);
+        this.allDepartmentUsers = this.originalDepFormValue['users'];
+        this.nonIssueAdmins = this.originalNonIssueAdmins;
     }
 
     ngOnDestroy() {

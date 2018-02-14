@@ -2,7 +2,6 @@ import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Subscription } from 'rxjs/Subscription';
 
 import { UsersService } from '../../users.service';
 
@@ -17,7 +16,6 @@ export class EditUserComponent implements OnInit {
 
     constructor(private formBuilder: FormBuilder, private usersServ: UsersService, private activatedRoute: ActivatedRoute) { }
 
-    subscription: Subscription;
     user:any;
     originalUsername:string;
     userEditForm: FormGroup;
@@ -37,24 +35,23 @@ export class EditUserComponent implements OnInit {
 
         this.originalUsername = this.activatedRoute.snapshot.url[0].path;
         this.roleList = ['cityAdmin','cityManager','departmentAdmin','departmentUser'];
-        this.subscription = this.usersServ.usersChanged.subscribe(
-            (status:string) => {
-                if (status == "userDetailsFetched"){
-                    console.log(`status == ${status}`);
-                    this.user = this.usersServ.return_userDetails();
-                    this.userEditForm.setValue({
-                        'name': this.user.name,
-                        'surname': this.user.surname,
-                        'username': this.user.username,
-                        'email': this.user.email,
-                        'role_name': this.user.role_name,
-                        'position': this.user.position
-                    })
-                }
-            }
-        );
 
-        this.usersServ.get_userDetails(this.originalUsername);
+        this.usersServ.get_userDetails(this.originalUsername)
+        .subscribe(
+            data => {this.user = data[0]},
+            error => {console.log('error occured fetching user details'); this.userServiceMsg = 'services_error';},
+            () => {
+                this.userEditForm.setValue({
+                    'name': this.user.name,
+                    'surname': this.user.surname,
+                    'username': this.user.username,
+                    'email': this.user.email,
+                    'role_name': this.user.role_name,
+                    'position': this.user.position
+                })
+            }
+        )
+        ;
 
 
     }
@@ -63,35 +60,32 @@ export class EditUserComponent implements OnInit {
     submitEditedUser() {
         let editedUser =
         {
-          	'id': this.user._id,
-          	'name': this.userEditForm.get('name').value,
-          	'surname': this.userEditForm.get('surname').value,
-          	'email': this.userEditForm.get('email').value,
-          	'username': this.userEditForm.get('username').value,
-          	'role_name':this.userEditForm.get('role_name').value,
+            'id': this.user._id,
+            'name': this.userEditForm.get('name').value,
+            'surname': this.userEditForm.get('surname').value,
+            'email': this.userEditForm.get('email').value,
+            'username': this.userEditForm.get('username').value,
+            'role_name':this.userEditForm.get('role_name').value,
             'position':this.userEditForm.get('position').value,
-          	'city': this.user.city
+            'city': this.user.city
         };
         this.usersServ.edit_user(editedUser).subscribe(
-          data => {console.log(data)},
-          error => {
-            console.log(error);
-            this.userServiceMsg = 'error';
-            this.userEditForm.markAsPristine();
-            // if (error.error == "duplicate_surname") {
-            //   this.userServiceMsg = 'duplicate_username';
-            //   this.userEditForm.get('username').setErrors({usernameExists: true});
-            // }
-            // if (error.error == "duplicate_email") {
-            //   this.userServiceMsg = 'duplicate_email';
-            //   this.userEditForm.get('email').setErrors({emailExists: true});
-            // }
-          },
-          () => {
-              this.originalUsername = editedUser.username;
-              this.userEditForm.markAsPristine();
-              this.userServiceMsg = 'success';
-          }
+            data => {console.log(data)},
+            error => {
+                console.log(error);
+                this.userEditForm.markAsPristine();
+                if (error.error == "duplicate_username") {
+                    this.userServiceMsg = 'duplicate_username';
+                    this.userEditForm.get('username').setErrors({usernameExists: true});
+                } else {
+                    this.userServiceMsg ='services_error';
+                }
+            },
+            () => {
+                this.originalUsername = editedUser.username;
+                this.userEditForm.markAsPristine();
+                this.userServiceMsg = 'success';
+            }
         )
 
     }
@@ -105,10 +99,7 @@ export class EditUserComponent implements OnInit {
             'role_name':this.user.role_name,
             'position': this.user.position
         })
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.userServiceMsg = '';
     }
 
 }

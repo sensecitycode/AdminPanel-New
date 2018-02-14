@@ -23,7 +23,8 @@ import { MatFormFieldModule,
          MatMenuModule,
          MatSelectModule,
          MatCardModule,
-         MatDialogModule } from '@angular/material';
+         MatProgressSpinnerModule,
+         MatDialogModule, } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -111,6 +112,7 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         MatMenuModule,
         MatSelectModule,
         MatCardModule,
+        MatProgressSpinnerModule,
         MatDialogModule,
         LeafletModule,
         TranslateModule.forRoot({

@@ -47,14 +47,18 @@ export class ListDepartmentsComponent implements OnInit {
                 if (status == "departmentsArrayPopulated"){
                     console.log("status == departmentsArrayPopulated");
                     this.departments = this.depServ.return_departmentsArray();
+                    console.log(this.departments);
                     // rowData.push(this.departments);
                     for (let dep of this.departments) {
-                        let cclist = [];
-                        for (let person of dep.default_cc_list) {
-                            cclist.push(person.login_name);
-                        }
-                        rowData.push({departments: dep.component_name, manager: dep.default_assigned_email, cclist: cclist})
+                        let dep_manager = dep.default_assigned_email[0].username;
+                        let dep_manager_position = dep.default_assigned_email[0].position ? dep.default_assigned_email[0].position : '';
+                        // let cclist = [];
+                        // for (let person of dep.default_cc_list) {
+                        //     cclist.push(person.login_name);
+                        // }
+                        rowData.push({departments: dep.component_name, manager: dep_manager, manager_position: dep_manager_position})
                     }
+
 
                     // this.subscriptions.add(this.translationService.get('ROLES')
                     //     .subscribe(translatedStr =>
@@ -83,6 +87,8 @@ export class ListDepartmentsComponent implements OnInit {
                 }
                 this.rowData = rowData;
                 console.log(this.rowData);
+
+
             }
         ));
 
@@ -115,8 +121,8 @@ export class ListDepartmentsComponent implements OnInit {
                             filter: "text",
                         },
                         {
-                            headerName: translatedStr.DEP_CCLIST,
-                            field: "cclist",
+                            headerName: translatedStr.DEP_MANAGER_POSITION,
+                            field: "manager_position",
                             filter: "text",
                         }
                     ];
@@ -136,14 +142,15 @@ export class ListDepartmentsComponent implements OnInit {
                 {
                     let departmentColDef = this.gridColumnApi.getColumn("departments").getColDef();
                     let managerColDef = this.gridColumnApi.getColumn("manager").getColDef();
-                    let cclistColDef = this.gridColumnApi.getColumn("cclist").getColDef();
+                    let managerPositionColDef = this.gridColumnApi.getColumn("manager_position").getColDef();
+
 
                     this.translationService.get('GRID')
                     .subscribe(translatedStr =>
                         {
                             departmentColDef.headerName = translatedStr.DEPARTMENTS;
                             managerColDef.headerName = translatedStr.DEP_MANAGER;
-                            cclistColDef.headerName = translatedStr.DEP_CCLIST;
+                            managerPositionColDef.headerName = translatedStr.DEP_MANAGER_POSITION;
                             this.gridApi.refreshHeader();
                             // this.localeText = {
                             //
@@ -164,7 +171,6 @@ export class ListDepartmentsComponent implements OnInit {
     }
 
     onGridSizeChanged(params) {
-        // console.log(params);
         let gridApi = params.api;
         let gridColumnApi = params.columnApi;
 
@@ -173,7 +179,6 @@ export class ListDepartmentsComponent implements OnInit {
             gridColumnApi.getAllColumns().forEach(function(column) {
                 allColumnIds.push(column.getColId());
             });
-
             if (params.clientWidth > 1000){
                 gridColumnApi.autoSizeColumns(allColumnIds);
                 gridApi.sizeColumnsToFit();
@@ -181,12 +186,11 @@ export class ListDepartmentsComponent implements OnInit {
                 gridColumnApi.autoSizeColumns(allColumnIds);
             }
 
-            // for responsiveness
-            gridApi.refreshInMemoryRowModel("filter");
 
+        // for responsiveness
+        gridApi.refreshInMemoryRowModel("filter");
         }
     }
-
 
     onFilterTextBoxChanged() {
         this.gridApi.setQuickFilter(this.renderer.selectRootElement('#filter-text-box').value);
@@ -202,7 +206,7 @@ export class ListDepartmentsComponent implements OnInit {
         }
         console.log(data);
         // this.usersServ.set_userDetails(data);
-        this.router.navigate([data.department.component_name], {relativeTo: this.activatedRoute});
+        this.router.navigate([data.department.departmentID], {relativeTo: this.activatedRoute});
 
         // this.gridApi.getDisplayedRowAtIndex(cell).setData(returnedData);
         // // this.gridApi.refreshInMemoryRowModel("sort");

@@ -1,4 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { DepartmentsService } from '../departments.service';
+import { UsersService } from '../../users/users.service';
 
 @Component({
     selector: 'app-display-department',
@@ -8,17 +12,22 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class DisplayDepartmentComponent implements OnInit {
 
-    constructor() { }
+    constructor(private depServ:DepartmentsService, private usersServ:UsersService, private activatedRoute:ActivatedRoute) { }
 
     department:object;
 
     ngOnInit() {
-        this.department = {
-            name:"TestName",
-            issueAdmin:"TestUser",
-            manager:"TestManager",
-            ccList:"TestccList"
-        }
+
+        let dep_id = this.activatedRoute.snapshot.url[0].path;
+        let department = this.depServ.return_departmentsArray().find(idx => {return idx.departmentID == dep_id});
+        console.log(department);
+        if (department)
+            this.department = {
+                name:department.component_name,
+                issueAdmins:department.cp_access,
+                manager:department.default_assigned_email[0],
+                ccList:department.default_cc_list
+            }
     }
 
 }
