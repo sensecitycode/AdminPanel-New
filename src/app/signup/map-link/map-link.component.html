@@ -1,36 +1,42 @@
 <form class="example-form" [formGroup]="mapForm">
-    <div class="col-md-12">
-        <mat-form-field class="example-full-width">
-            <input matInput placeholder="Which city do you like to add?"
-            name="city"
-            formControlName="city"
-            [(ngModel)]="city"
-            (change)="clickcount=0"
-            (blur)="onCitySelect()" />
-            <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+    <mat-expansion-panel [expanded]="true" hideToggle="true">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Which city do you like to add?"
+                    name="city"
+                    formControlName="city"
+                    [(ngModel)]="city"
+                    (change)="clickcount=0"
+                    (blur)="onCitySelect()" />
+                    <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
 
-        </mat-form-field>
-        <mat-form-field *ngIf="sugg_domain" class="example-full-width">
-            <input matInput placeholder="Pick your domain name! (suggested {{sugg_domain | lowercase }}.sense.city)"
-            name="domain"
-            formControlName="domain"
-            [(ngModel)]="domain"
-            (focus)="onDomainSelect()" />
-            <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-        </mat-form-field>
-        <mat-error *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">Your city was <strong>not found</strong></span></mat-error>
-        <mat-error *ngIf="clickcount>5"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">You can still type in your city</span></mat-error>
-        <div style="min-height:500px; margin-top:1%;"
-        (leafletMapReady)=onMapReady($event)
-        leaflet
-        [leafletOptions]="mapInit"
-        [leafletLayers]="markerLayer"
-        [leafletCenter]="markerCenter"
-        [leafletZoom]="markerZoom">
+                </mat-form-field>
+                <mat-form-field *ngIf="sugg_domain" class="example-full-width">
+                    <input matInput placeholder="Pick your domain name! (suggested {{sugg_domain | lowercase }}.sense.city)"
+                    name="domain"
+                    formControlName="domain"
+                    [(ngModel)]="domain"
+                    (focus)="onDomainSelect()" />
+                    <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                </mat-form-field>
+                <mat-error *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">Your city was <strong>not found</strong></span></mat-error>
+                <mat-error *ngIf="clickcount>5"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">You can still type in your city</span></mat-error>
+                <div style="min-height:500px; margin-top:1%;"
+                (leafletMapReady)=onMapReady($event)
+                leaflet
+                [leafletOptions]="mapInit"
+                [leafletLayers]="markerLayer"
+                [leafletCenter]="markerCenter"
+                [leafletZoom]="markerZoom">
+                </div>
+            </div>
+
         </div>
+    </mat-expansion-panel>
+
     <!-- <div class="example-full-width" style="margin-top:1%">
     <mat-checkbox color="primary" id="checkbox" name="checkbox" formControlName="checkbox"><span>I have entered the correct city</span></mat-checkbox>
     <mat-error *ngIf="mapForm.controls.checkbox.hasError('checkedValidator') && mapForm.controls.checkbox.touched">Please confirm your <strong>city selection!</strong></mat-error>
     </div> -->
-    </div>
 </form>

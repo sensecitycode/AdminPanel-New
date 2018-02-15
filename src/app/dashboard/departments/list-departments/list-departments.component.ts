@@ -204,7 +204,7 @@ export class ListDepartmentsComponent implements OnInit {
             // row: cell,
             gridApi: this.gridApi,
         }
-        console.log(data);
+        // console.log(data);
         // this.usersServ.set_userDetails(data);
         this.router.navigate([data.department.departmentID], {relativeTo: this.activatedRoute});
 

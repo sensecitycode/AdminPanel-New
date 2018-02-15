@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from
 
 import { UsersService } from '../users.service';
 
-
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
     selector: 'app-add-user',
@@ -30,7 +30,7 @@ export class AddUserComponent implements OnInit {
                 'pw1':['',Validators.required],
                 'pw2':['',Validators.required]
             }, {validator: this.noMatchingPassword} ),
-            'email': ['', [Validators.required,Validators.email]],
+            'email': ['', [Validators.required,Validators.pattern(EMAIL_REGEX)]],
             'role_name': ['',Validators.required],
             'position': ['',Validators.required]
         })

@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 
 import { UsersService } from '../../users.service';
 
+const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
     selector: 'app-edit-user',
@@ -28,7 +29,7 @@ export class EditUserComponent implements OnInit {
             'name': [''/*,Validators.required*/],
             'surname': [''/*,Validators.required*/],
             'username': ['',Validators.required],
-            'email': ['', [Validators.required,Validators.email]],
+            'email': ['', [Validators.required,Validators.pattern(EMAIL_REGEX)]],
             'role_name': ['',Validators.required],
             'position': ['',Validators.required]
         })

@@ -38,9 +38,9 @@ export class EditDepartmentComponent implements OnInit {
     ngOnInit() {
         this.depEditForm = this.formBuilder.group({
             'name': ['',Validators.required],
-            'users':['', Validators.required],
+            'users':[[], Validators.required],
             'manager': ['',Validators.required],
-            'cclist': ['']
+            'cclist': [[]]
         })
 
         this.dep_id = this.activatedRoute.snapshot.url[0].path;
@@ -140,19 +140,26 @@ export class EditDepartmentComponent implements OnInit {
     }
 
     onRemoveUser(index){
-        console.log(index);
-        console.log(this.issueAdmins.length);
-        console.log(this.issueAdmins.length+index);
+        // console.log(index);
+        // console.log(this.issueAdmins.length);
+        // console.log(this.issueAdmins.length+index);
         this.nonIssueAdmins.splice(index, 1);
         this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
         this.depEditForm.patchValue({users:this.allDepartmentUsers});
+        // console.log(this.depEditForm.get('users').value.indexOf(this.depEditForm.get('manager').value))
+        if (this.depEditForm.get('users').value.indexOf(this.depEditForm.get('manager').value) === -1) {
+            this.depEditForm.patchValue({manager:[]});
+        }
+        // console.log(this.depEditForm.get('users').value)
+        // console.log(this.depEditForm.get('manager').value)
+
     }
 
     submitEditedUser() {
         let editedDepartment =
         {
           	'name': this.depEditForm.get('name').value,
-          	'users': this.depEditForm.get('users').value,
+          	'users': this.nonIssueAdmins,
           	'manager': this.depEditForm.get('manager').value,
           	'cclist': this.depEditForm.get('cclist').value,
         };

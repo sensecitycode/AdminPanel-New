@@ -8,7 +8,7 @@
             <mat-card-header>
                 <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
                 <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
-                <mat-card-subtitle>{{departmentAddForm.controls.name.value}}</mat-card-subtitle>
+                <mat-card-subtitle><span>{{departmentAddForm.controls.name.value}}</span></mat-card-subtitle>
             </mat-card-header>
             <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
             <mat-card-content class="container-fluid">
@@ -105,7 +105,7 @@
                             <mat-form-field class="example-full-width">
                                 <mat-select placeholder="{{'GRID.DEP_CCLIST' | translate}}" formControlName="cclist" multiple>
                                     <mat-select-trigger>
-                                        {{departmentAddForm.controls.cclist.value ? departmentAddForm.controls.cclist.value[0].username : ''}}
+                                        {{departmentAddForm.controls.cclist.value.length > 0 ? departmentAddForm.controls.cclist.value[0].username : ''}}
                                         <span *ngIf="departmentAddForm.controls.cclist.value?.length > 1" class="example-additional-selection">
                                             (+{{departmentAddForm.controls.cclist.value.length - 1}} {{ 'OTHERS' | translate }})
                                         </span>
@@ -134,7 +134,7 @@
         </mat-card>
 
         <div class='alert-success message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'success') && !departmentAddForm.dirty ? 'block' : 'none'}" >
-            <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.DEP_ADDED_MSG' | translate:{name: departmentAddForm.controls.name.value}"></span>
+            <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.DEP_ADDED_MSG' | translate:{name: newAddedDep}"></span>
         </div>
         <div class='alert-danger message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'duplicate_name') && !departmentAddForm.dirty ? 'block' : 'none'}" >
             <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.DEP_NAME_EXISTS_MSG' | translate:{name: departmentAddForm.controls.name.value}"></span>

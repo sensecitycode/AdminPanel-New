@@ -22,12 +22,17 @@ export class AccountCreateComponent implements OnInit {
       }, this.noMatchingPassword)
    });
 
-  noMatchingPassword(AC: AbstractControl) {
-     let pass = AC.get('pw1');
-     let confirmPass = AC.get('pw2');
-     if (!pass || !confirmPass) return null;
-     return pass.value === confirmPass.value ? null : {noMatchingPassword:true};
-     }
+   noMatchingPassword(AC: AbstractControl) {
+       let pass = AC.get('pw1');
+       let confirmPass = AC.get('pw2');
+
+       if (pass.value != confirmPass.value) {
+           confirmPass.setErrors({noMatchingPassword: true});
+       } else {
+           confirmPass.setErrors(null);
+           return null
+       }
+   }
 
   onSubmit() {
      console.log("submitted");

@@ -10,10 +10,9 @@
 <div class="container" style="margin-top:4%; padding:1%;">
     <div class="row">
         <div class="col-md-12">
-            <mat-horizontal-stepper [linear]="false" style="background:rgb(220, 220, 220); min-height:400px">
+            <mat-horizontal-stepper [linear]="false" style="background:rgb(220, 220, 230); min-height:400px">
                 <mat-step [stepControl]="personalInfoForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
-                    <hr />
                     <app-map-link></app-map-link>
                     <div class="text-right" style="margin-top:2%">
                         <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
@@ -21,7 +20,6 @@
                 </mat-step>
                 <mat-step [stepControl]="mapForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP2_LABEL' | translate}} </ng-template>
-                    <hr />
                     <app-personal-info></app-personal-info>
                     <div class="text-right" style="margin-top:2%">
                         <button color="primary" mat-raised-button matStepperPrevious> {{'BACK' | translate}} </button>
@@ -30,7 +28,6 @@
                 </mat-step>
                 <mat-step [stepControl]="accountForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP3_LABEL' | translate}} </ng-template>
-                    <hr />
                     <app-account-create></app-account-create>
                     <div class="text-right" style="margin-top:2%">
                         <button color="primary" mat-raised-button matStepperPrevious> {{'BACK' | translate}} </button>
@@ -39,7 +36,6 @@
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel> {{'SIGNUP.STEP4_LABEL' | translate}} </ng-template>
-                    <hr />
                     <h3 class="col-md-8 col-md-offset-2 text-center"> {{'SIGNUP.STEP4_FINISH' | translate}} </h3>
                     <div style="margin-top:4%" class="col-md-6 col-md-offset-3 text-center">
                         <form [formGroup]="submitForm" >

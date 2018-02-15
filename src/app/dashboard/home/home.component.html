@@ -1,56 +1,58 @@
-<section>
-   <div class="text-center">
-      <h1> {{'DASHBOARD.DB_TITLE' | translate}} </h1>
-   </div>
-</section>
-
-<div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="card card-stats" >
-        <div class="card-header" data-background-color="orange">
-            <i class="material-icons">person</i>
-        </div>
-        <div class="card-content">
-            <p class="category">{{'DASHBOARD.USERS' | translate}}</p>
-            <h3 class="title">{{users.length}}</h3>
-            <!-- <small>GB</small> -->
-        </div>
-        <div class="card-footer">
-            <div class="stats">
-                <a routerLink="../users"><i class="material-icons">settings</i> {{'DASHBOARD.USER_SETTINGS' | translate}}...</a>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-12 text-center">
+           <h2> {{'DASHBOARD.DB_TITLE' | translate}} </h2>
     </div>
 </div>
 
-<div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="card card-stats" >
-        <div class="card-header" data-background-color="green">
-            <i class="material-icons">build</i>
-        </div>
-        <div class="card-content">
-            <p class="category">{{'DASHBOARD.DEPARTMENTS' | translate}}</p>
-            <h3 class="title">{{departments.length}}</h3>
-        </div>
-        <div class="card-footer">
-            <div class="stats">
-                <a routerLink="../departments"><i class="material-icons">settings</i> {{'DASHBOARD.DEPARTMENT_SETTINGS' | translate}}...</a>
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats" >
+            <div class="card-header" data-background-color="orange">
+                <i class="material-icons">person</i>
+            </div>
+            <div class="card-content">
+                <p class="category">{{'DASHBOARD.USERS' | translate}}</p>
+                <h3 class="title">{{users.length}}</h3>
+                <!-- <small>GB</small> -->
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <a routerLink="../users"><i class="material-icons">settings</i> {{'DASHBOARD.USER_SETTINGS' | translate}}...</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="card card-stats" >
-        <div class="card-header" data-background-color="purple">
-            <i class="ion-md-stats"></i>
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats" >
+            <div class="card-header" data-background-color="green">
+                <i class="material-icons">build</i>
+            </div>
+            <div class="card-content">
+                <p class="category">{{'DASHBOARD.DEPARTMENTS' | translate}}</p>
+                <h3 class="title">{{departments.length}}</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <a routerLink="../departments"><i class="material-icons">settings</i> {{'DASHBOARD.DEPARTMENT_SETTINGS' | translate}}...</a>
+                </div>
+            </div>
         </div>
-        <div class="card-content">
-            <p class="category">{{'DASHBOARD.FIXED_ISSUES' | translate}}</p>
-            <h3 class="title">0</h3>
-        </div>
-        <div class="card-footer">
-            <div class="stats">
-                <i class="material-icons">date_range</i> {{'DASHBOARD.LAST24HOURS' | translate}}
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats" >
+            <div class="card-header" data-background-color="purple">
+                <i class="ion-md-stats"></i>
+            </div>
+            <div class="card-content">
+                <p class="category">{{'DASHBOARD.FIXED_ISSUES' | translate}}</p>
+                <h3 class="title">0</h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">date_range</i> {{'DASHBOARD.LAST24HOURS' | translate}}
+                </div>
             </div>
         </div>
     </div>

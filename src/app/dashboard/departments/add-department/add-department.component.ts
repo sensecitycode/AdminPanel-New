@@ -23,6 +23,7 @@ export class AddDepartmentComponent implements OnInit {
     allDepartmentUsers = [];
     departmentAddForm: FormGroup;
     roleList: [string];
+    newAddedDep:string;
     departmentServiceMsg:string;
     username:string;
     email:string;
@@ -31,9 +32,9 @@ export class AddDepartmentComponent implements OnInit {
 
         this.departmentAddForm = this.formBuilder.group({
             'name': ['',Validators.required],
-            'users':['', Validators.required],
+            'users':[[], Validators.required],
             'manager': ['',Validators.required],
-            'cclist': ['']
+            'cclist': [[]]
         })
 
 
@@ -75,8 +76,8 @@ export class AddDepartmentComponent implements OnInit {
 
     onAddUser(){
         let selectedUsers = this.departmentAddForm.get('users').value;
-        console.log(selectedUsers);
-        console.log(this.issueAdmins);
+        // console.log(selectedUsers);
+        // console.log(this.issueAdmins);
 
         this.nonIssueAdmins = [];
         for (let selUser of selectedUsers) {
@@ -90,34 +91,40 @@ export class AddDepartmentComponent implements OnInit {
             if (matchFound == false) {
                 this.nonIssueAdmins.push(selUser)
             }
-            console.log(this.nonIssueAdmins);
+            // console.log(this.nonIssueAdmins);
         }
         // this.departmentUsers.push(...this.issueAdmins);
         // this.nonIssueAdmins.push(...selectedUsers);
         // this.departmentAddForm.patchValue({users:selectedUsers});
         this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
-        console.log(this.allDepartmentUsers.length);
-        console.log(this.allDepartmentUsers);
+        // console.log(this.allDepartmentUsers.length);
+        // console.log(this.allDepartmentUsers);
     }
 
     onRemoveUser(index){
-        console.log(index);
-        console.log(this.issueAdmins.length);
-        console.log(this.issueAdmins.length+index);
+        // console.log(index);
+        // console.log(this.issueAdmins.length);
+        // console.log(this.issueAdmins.length+index);
         this.nonIssueAdmins.splice(index, 1);
         this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
         this.departmentAddForm.patchValue({users:this.allDepartmentUsers});
+        if (this.departmentAddForm.get('users').value.indexOf(this.departmentAddForm.get('manager').value) === -1) {
+            this.departmentAddForm.patchValue({manager:[]});
+        }
+
     }
 
     submitNewDepartment() {
-        console.log(this.departmentAddForm.value);
         let form = this.departmentAddForm.value;
         let tobeAddedDepartment = {
             department:form.name,
             default_assignee:form.manager.email,
             default_cc:form.cclist.map(idx => idx.email),
-            cp_access:form.users.map(idx => idx.email)
+            cp_access:this.nonIssueAdmins.map(idx => idx.email)
         }
+        // if (form.cclist) {
+        //     tobeAddedDepartment['default_cc'] = form.cclist.map(idx => idx.email);
+        // }
         console.log(tobeAddedDepartment);
         this.depServ.add_department(tobeAddedDepartment).subscribe(
             data => {console.log(data)},
@@ -127,10 +134,13 @@ export class AddDepartmentComponent implements OnInit {
                 if (error.error == "DUPLICATE_DEPARTMENT") {
                     this.departmentServiceMsg = 'duplicate_name';
                     this.departmentAddForm.get('name').setErrors({nameExists: true});
+                } else {
+                    this.departmentServiceMsg = 'services_error';
                 }
             },
             () => {
                 this.departmentServiceMsg = 'success';
+                this.newAddedDep = tobeAddedDepartment.department;
                 this.onReset();
             }
         )
