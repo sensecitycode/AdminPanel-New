@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Which city do you like to add?"
+                    <input matInput placeholder="{{'SIGNUP.CITY_REQUEST' | translate}}"
                     name="city"
                     formControlName="city"
                     [(ngModel)]="city"
@@ -13,15 +13,15 @@
 
                 </mat-form-field>
                 <mat-form-field *ngIf="sugg_domain" class="example-full-width">
-                    <input matInput placeholder="Pick your domain name! (suggested {{sugg_domain | lowercase }}.sense.city)"
+                    <input matInput placeholder="{{'SIGNUP.DOMAIN_REQUEST' | translate : {city: sugg_domain | lowercase} }}"
                     name="domain"
                     formControlName="domain"
                     [(ngModel)]="domain"
                     (focus)="onDomainSelect()" />
+                    <span class='suffix' matSuffix>.sense.city</span>
                     <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                 </mat-form-field>
-                <mat-error *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">Your city was <strong>not found</strong></span></mat-error>
-                <mat-error *ngIf="clickcount>5"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">You can still type in your city</span></mat-error>
+                <mat-error style="padding:0px 5px" *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">{{'SIGNUP.CITY_NOT_FOUND'| translate}}</span></mat-error>
                 <div style="min-height:500px; margin-top:1%;"
                 (leafletMapReady)=onMapReady($event)
                 leaflet

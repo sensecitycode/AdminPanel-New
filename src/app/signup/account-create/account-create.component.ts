@@ -6,7 +6,7 @@ import {FormControl, Validators, AbstractControl, FormGroup } from '@angular/for
   selector: 'app-account-create',
   templateUrl: './account-create.component.html',
   styleUrls: ['./account-create.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class AccountCreateComponent implements OnInit {
 

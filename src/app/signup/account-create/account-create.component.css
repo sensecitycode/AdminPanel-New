@@ -1,3 +1,23 @@
 .row {
     padding-top:10px;
 }
+
+.prefix {
+    font-size: 1.5em;
+	vertical-align: middle;
+}
+
+.body {
+	color: #616161;
+	position: relative;
+    flex: 1 1 auto;
+    padding: 15px 2em 15px 2em;
+}
+
+mat-form-field {
+	margin-left: 0.9em;
+	padding-bottom: .2em;
+    padding-top: .2em;
+    line-height: 1.5;
+	width: calc(100% - 3em);
+}

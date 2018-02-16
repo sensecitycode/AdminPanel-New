@@ -10,6 +10,7 @@ export class TranslationService {
     languageChanged = new Subject();
     constructor(private translate: TranslateService) {
         translate.setDefaultLang('el');
+        this.translate.use('el');
     }
 
     switchLanguage(language: string) {
@@ -17,6 +18,9 @@ export class TranslationService {
         this.languageChanged.next("language changed to: " + language);
     }
 
+    getLanguage() {
+        return this.translate.currentLang;
+    }
     get(keyword: string):Observable<any> {
         return this.translate.get(keyword);
     }
