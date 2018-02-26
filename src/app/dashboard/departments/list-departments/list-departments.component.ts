@@ -86,9 +86,6 @@ export class ListDepartmentsComponent implements OnInit {
                     // )
                 }
                 this.rowData = rowData;
-                console.log(this.rowData);
-
-
             }
         ));
 

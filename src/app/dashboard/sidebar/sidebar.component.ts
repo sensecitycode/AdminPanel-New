@@ -26,14 +26,25 @@ export const ROUTES: RouteInfo[] = [
 
 export class SidebarComponent implements OnInit {
     @Input() isToggled: string;
+    userRoles = [];
+    selectedRole:string;
 
     constructor() { }
 
     menuItems: any[];
     ngOnInit() {
+        this.userRoles =  sessionStorage.getItem('role').split(',');
+        this.selectedRole = this.userRoles[0];
+        console.log(this.userRoles);
         this.menuItems = ROUTES.filter(menuItem => menuItem);
         // console.log(this.menuItems);
         // console.log(this.isToggled);
     }
 
+    selectRole(role){
+        console.log(role);
+        this.selectedRole == role ? this.selectedRole = '': this.selectedRole = role ;
+        // if (this.selectedRole == role)
+        // this.selectedRole = role;
+    }
 }

@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 
 import { UsersService } from '../../users.service';
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+// const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 @Component({
     selector: 'app-edit-user',
@@ -27,9 +27,13 @@ export class EditUserComponent implements OnInit {
     ngOnInit() {
         this.userEditForm = this.formBuilder.group({
             'name': [''/*,Validators.required*/],
+            'passwordForm': this.formBuilder.group({
+                'pw1':[''],
+                'pw2':['']
+            }, {validator: this.noMatchingPassword} ),
             'surname': [''/*,Validators.required*/],
             'username': ['',Validators.required],
-            'email': ['', [Validators.required,Validators.pattern(EMAIL_REGEX)]],
+            'email': [''/*, [Validators.required,Validators.pattern(EMAIL_REGEX)]*/],
             'role_name': ['',Validators.required],
             'position': ['',Validators.required]
         })
@@ -44,6 +48,10 @@ export class EditUserComponent implements OnInit {
             () => {
                 this.userEditForm.setValue({
                     'name': this.user.name,
+                    'passwordForm':{
+                        'pw1':'',
+                        'pw2':''
+                    },
                     'surname': this.user.surname,
                     'username': this.user.username,
                     'email': this.user.email,
@@ -52,11 +60,19 @@ export class EditUserComponent implements OnInit {
                 })
             }
         )
-        ;
-
-
     }
+    noMatchingPassword(AC: AbstractControl) {
+        // console.log(AC);
+        let pass = AC.get('pw1');
+        let confirmPass = AC.get('pw2');
 
+        if (pass.value != confirmPass.value) {
+            confirmPass.setErrors({noMatchingPassword: true});
+        } else {
+            confirmPass.setErrors(null);
+            return null
+        }
+    }
 
     submitEditedUser() {
         let editedUser =
@@ -94,6 +110,10 @@ export class EditUserComponent implements OnInit {
     onResetEdit() {
         this.userEditForm.setValue({
             'name':this.user.name,
+            'passwordForm':{
+                'pw1':'',
+                'pw2':''
+            },
             'surname':this.user.surname,
             'username':this.user.username,
             'email':this.user.email,

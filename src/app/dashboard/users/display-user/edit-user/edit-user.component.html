@@ -19,14 +19,6 @@
                             <td><input type="text" class="form-control" formControlName="username"></td>
                         </tr>
                         <tr>
-                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.NAME_OPT' | translate}}</strong></td>
-                            <td><input type="text" class="form-control" formControlName="name"></td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.SURNAME_OPT' | translate}}</strong></td>
-                            <td><input type="text" class="form-control" formControlName="surname"></td>
-                        </tr>
-                        <tr>
                             <td style="vertical-align:middle"><strong>Email</strong></td>
                             <td>{{user?.email}}</td>
                         </tr>
@@ -55,6 +47,29 @@
                             <td>
                                 <div *ngFor="let department of user?.departments">{{department}}</div>
                             </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.NAME_OPT' | translate}}</strong></td>
+                            <td><input type="text" class="form-control" formControlName="name"></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.SURNAME_OPT' | translate}}</strong></td>
+                            <td><input type="text" class="form-control" formControlName="surname"></td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.CHANGE_PASS_OPT' | translate}}</strong></td>
+                            <td formGroupName="passwordForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="password" class="form-control" formControlName="pw1">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="password" class="form-control" formControlName="pw2">
+                                    </div>
+                                </div>
+                                <mat-error style="margin:2px" *ngIf="userEditForm.controls.passwordForm.controls.pw2.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error>
+                            </td>
+
                         </tr>
                         <!-- <tr>
                         <td>{{'DASHBOARD.LAST_LOGIN' | translate}}</td>
