@@ -2,6 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 
 import { UsersService } from '../users.service';
+import { TranslationService } from '../../../shared/translation.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -13,11 +16,11 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 })
 export class AddUserComponent implements OnInit {
 
-    constructor(private formBuilder: FormBuilder, private usersServ: UsersService) { }
+    constructor(private formBuilder: FormBuilder, private usersServ: UsersService, private translationService:TranslationService, private toastr: ToastrService) { }
 
     userAddForm: FormGroup;
     roleList: [string];
-    userServiceMsg:string;
+    // userServiceMsg:string;
     username:string;
     email:string;
     ngOnInit() {
@@ -58,21 +61,28 @@ export class AddUserComponent implements OnInit {
         this.usersServ.add_user(toAddUser).subscribe(
             data => {},
             error => {
-                this.userAddForm.markAsPristine();
+                // this.userAddForm.markAsPristine();
                 if (error.error == "duplicate_username") {
-                    this.userServiceMsg = 'duplicate_username';
+                    // this.userServiceMsg = 'duplicate_username';
+                    let usernameObj = {username:this.userAddForm.get('username').value};
+                    this.toastr.error(this.translationService.get_instant('DASHBOARD.USERNAME_EXISTS_MSG', usernameObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     this.userAddForm.get('username').setErrors({usernameExists: true});
                 }
                 else if (error.error == "duplicate_email") {
-                    this.userServiceMsg = 'duplicate_email';
+                    // this.userServiceMsg = 'duplicate_email';
+                    let emailObj = {email:this.userAddForm.get('email').value};
+                    this.toastr.error(this.translationService.get_instant('DASHBOARD.EMAIL_EXISTS_MSG', emailObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     this.userAddForm.get('email').setErrors({emailExists: true});
                 }
                 else {
-                    this.userServiceMsg = 'services_error';
+                    // this.userServiceMsg = 'services_error';
+                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 }
             },
             () => {
-                this.userServiceMsg = 'success';
+                let usernameObj = {username:this.userAddForm.get('username').value};
+                this.toastr.success(this.translationService.get_instant('DASHBOARD.USER_ADDED_MSG', usernameObj), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
+                // this.userServiceMsg = 'success';
                 this.userAddForm.reset();
             }
         )

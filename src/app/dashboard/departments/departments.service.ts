@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
+import { TranslationService } from '../../shared/translation.service';
+import { ToastrService } from 'ngx-toastr';
 // import { mergeMap } from 'rxjs/operators';
-// import { TranslationService } from '../../shared/translation.service';
 // import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Injectable()
 export class DepartmentsService {
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private translationService: TranslationService, private toastr: ToastrService) { }
 
 
     role:string;
@@ -36,7 +37,7 @@ export class DepartmentsService {
                 data => { this.departments = data},
                 error => {
                     console.log('error occured populating departmentsArray');
-                    alert("Fetch Departments Service not working!");
+                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 },
                 () =>
                     {

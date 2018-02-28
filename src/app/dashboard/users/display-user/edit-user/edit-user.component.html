@@ -90,7 +90,7 @@
         </mat-card-content>
     </mat-card>
 
-    <div class='alert-success message text-center' [ngStyle]="{'display':(userServiceMsg == 'success') && !userEditForm.dirty ? 'block' : 'none'}" >
+    <!-- <div class='alert-success message text-center' [ngStyle]="{'display':(userServiceMsg == 'success') && !userEditForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_EDIT_MSG' | translate:{username: originalUsername}"></span>
     </div>
     <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'duplicate_username') && !userEditForm.dirty ? 'block' : 'none'}" >
@@ -98,16 +98,6 @@
     </div>
     <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'services_error') && !userEditForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
-    </div>
-
-
-
-<!-- <div class="col-md-12">
-<button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
-<div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
-{{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
-
-</div>
-</div> -->
+    </div> -->
 
 </div>

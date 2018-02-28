@@ -37,9 +37,9 @@ export class EditDepartmentComponent implements OnInit {
 
     ngOnInit() {
         this.depEditForm = this.formBuilder.group({
-            'name': ['',Validators.required],
+            'name': ['',/*Validators.required*/],
             'users':[[], Validators.required],
-            'manager': ['',Validators.required],
+            'manager': ['',/*Validators.required*/],
             'cclist': [[]]
         })
 

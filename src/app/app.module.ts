@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -10,8 +12,11 @@ import { TranslationService } from './shared/translation.service';
 // import { UsersService } from './dashboard/users/users.service';
 // import { DepartmentsService } from './dashboard/departments/departments.service';
 import { AgGridModule } from 'ag-grid-angular/main';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 import { MatFormFieldModule,
          MatInputModule,
          MatToolbarModule,
@@ -122,7 +127,11 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
                 deps: [HttpClient]
             }
         }),
-        AgGridModule.withComponents([EditRendererComponent, DialogsComponent, depEditRendererComponent])
+        AgGridModule.withComponents([EditRendererComponent, DialogsComponent, depEditRendererComponent]),
+        NgProgressModule.forRoot(),
+        NgProgressHttpModule,
+        CommonModule,
+        ToastrModule.forRoot({preventDuplicates: true})
     ],
     providers: [TranslationService],
     bootstrap: [AppComponent]

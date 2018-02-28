@@ -1,3 +1,4 @@
+
 .row {
     padding-top:10px;
 }
@@ -11,7 +12,7 @@
 	color: #616161;
 	position: relative;
     flex: 1 1 auto;
-    padding: 15px 2em 15px 2em;
+    padding: 0px 5em 15px 5em;
 }
 
 mat-form-field {

@@ -1,7 +1,7 @@
 <div class="col-md-12">
     <button mat-raised-button class="btn-default"[routerLink]="['../../', dep_id]"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
 </div>
-<div class="col-xl-4 col-lg-6 col-md-8 col-xl-offset-4 col-lg-offset-3 col-md-offset-2">
+<div class="col-lg-5 col-md-12 col-lg-offset-1">
     <mat-card class="example-card">
         <mat-card-header>
             <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
@@ -16,11 +16,28 @@
                     <tbody>
                         <tr>
                             <td style="vertical-align:middle"><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
-                            <td><input type="text" class="form-control" formControlName="name"></td>
+                            <td><input type="text" class="form-control" formControlName="name" disabled></td>
                         </tr>
                         <tr>
                             <td style="vertical-align:top"><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
                             <td>
+                                <!-- <mat-form-field class="example-full-width"> -->
+                                    <mat-select formControlName="users" multiple (change)="onAddUser()" class="form-control">
+                                        <mat-select-trigger>
+                                            <span *ngIf="depEditForm.controls.users.value?.length == 1" class="example-additional-selection">
+                                                {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
+                                            </span>
+                                            <span *ngIf="depEditForm.controls.users.value?.length > 1" class="example-additional-selection">
+                                                {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
+                                            </span>
+                                        </mat-select-trigger>
+                                        <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
+                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
+                                        </mat-option>
+                                    </mat-select>
+                                    <!-- <mat-error *ngIf="depEditForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
+                                <!-- </mat-form-field> -->
+
                                 <div  #panelDivElement>
                                     <div *ngFor='let user of issueAdmins' class="panel panel-default">
                                         <div class="panel-body">
@@ -38,29 +55,14 @@
                                     </div>
                                 </div>
 
-                                <!-- <mat-form-field class="example-full-width"> -->
-                                    <mat-select formControlName="users" multiple (change)="onAddUser()" class="form-control">
-                                        <mat-select-trigger>
-                                            <span *ngIf="depEditForm.controls.users.value?.length == 1" class="example-additional-selection">
-                                                {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
-                                            </span>
-                                            <span *ngIf="depEditForm.controls.users.value?.length > 1" class="example-additional-selection">
-                                                {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
-                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
-                                        </mat-option>
-                                    </mat-select>
-                                    <!-- <mat-error *ngIf="depEditForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
-                                <!-- </mat-form-field> -->
                             </td>
                         </tr>
                         <tr>
                             <td style="vertical-align:middle"><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
                             <td>
                                 <!-- <mat-form-field class="example-full-width"> -->
-                                    <mat-select formControlName="manager" [disabled]='allDepartmentUsers.length==0' class="form-control">
+                                <mat-select formControlName="manager" [disabled]=true class="form-control">
+                                    <!-- <mat-select formControlName="manager" [disabled]='allDepartmentUsers.length==0' class="form-control" > -->
                                         <mat-select-trigger>
                                             {{depEditForm.controls.manager.value.username}}
                                             <span *ngIf="depEditForm.controls.manager.value?.length > 1" class="example-additional-selection">
@@ -79,7 +81,7 @@
                             <td style="vertical-align:middle"><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
                             <td>
                                 <!-- <mat-form-field class="example-full-width"> -->
-                                    <mat-select class="form-control" formControlName="cclist" multiple>
+                                    <mat-select class="form-control" formControlName="cclist" multiple [disabled]=true>
                                         <mat-select-trigger>
                                             {{depEditForm.controls.cclist.value.length > 0 ? depEditForm.controls.cclist.value[0].username : ''}}
                                             <span *ngIf="depEditForm.controls.cclist.value?.length > 1" class="example-additional-selection">
@@ -99,17 +101,21 @@
             </form>
 
         <button mat-button (click)="onResetEdit()" class="btn-default danger_btn" >{{'RESET' | translate}}</button>
-        <button mat-button [disabled]="depEditForm.invalid" (click)="submitEditedUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
+        <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
         </mat-card-content>
     </mat-card>
+</div>
 
-    <div class='alert-success message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'success') && !depEditForm.dirty ? 'block' : 'none'}" >
+<div class="col-lg-4 col-md-12 col-lg-offset-1">
+    <div class="alert-info message-info text-justify" [innerHTML]="'DASHBOARD.DEPARTMENT_EDIT_INFO'|translate"></div>
+</div>
+
+    <!-- <div class='alert-success message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'success') && !depEditForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_EDIT_MSG' | translate:{username: originalUsername}"></span>
     </div>
     <div class='alert-danger message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'error') && !depEditForm.dirty ? 'block' : 'none'}" >
         <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
-    </div>
-
+    </div> -->
 
 <!-- <div class="col-md-12">
 <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
@@ -118,5 +124,3 @@
 
 </div>
 </div> -->
-
-</div>

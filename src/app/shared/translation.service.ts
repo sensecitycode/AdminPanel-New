@@ -21,7 +21,19 @@ export class TranslationService {
     getLanguage() {
         return this.translate.currentLang;
     }
+
     get(keyword: string):Observable<any> {
         return this.translate.get(keyword);
     }
+
+    get_instant(keyword:string, params?:object):string {
+        console.log(keyword)
+        console.log(params)
+        console.log(this.translate.instant(keyword));
+        if (params) {
+            return this.translate.instant(keyword, params);
+        }
+        return this.translate.instant(keyword);
+    }
+
 }

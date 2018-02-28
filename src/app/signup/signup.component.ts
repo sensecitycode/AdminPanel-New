@@ -27,7 +27,7 @@ export class SignupComponent implements OnInit {
       this.mapForm = new FormGroup({});
       this.accountForm = new FormGroup({});
       this.submitForm = new FormGroup({
-          city_acknowledge: new FormControl(''),
+          // city_acknowledge: new FormControl(''),
           terms_acknowledge: new FormControl('')
        });
    }

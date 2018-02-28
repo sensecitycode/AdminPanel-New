@@ -1,29 +1,29 @@
 <form class="example-form" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
+        <div class="col-md-10 col-md-offset-1">
             <mat-expansion-panel [expanded]="true" hideToggle="true">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 text-justify">
                         <h4>{{'SIGNUP.CREATING_ACC_INFO' | translate}}</h4>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12" class="body">
+                    <div class="col-md-12 body">
                         <i class="fa fa-user-circle prefix"></i>
                         <mat-form-field class="example-full-width">
-                            <input matInput placeholder="Account name" formControlName="name"/>
+                            <input matInput placeholder="{{'USERNAME'| translate}}" formControlName="name"/>
                             <mat-error *ngIf="accountForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                         </mat-form-field>
                         <div formGroupName="passwordForm">
                             <i class="fa fa-lock prefix" style="padding:0 0.2em"></i>
                             <mat-form-field class="example-full-width">
-                                <input matInput type="password" placeholder="Password" formControlName="pw1"/>
+                                <input matInput type="password" placeholder="{{'PASSWORD'| translate}}" formControlName="pw1"/>
                                 <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw1.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                             </mat-form-field>
 
                             <i class="fa fa-lock prefix" style="padding:0 0.2em"></i>
                             <mat-form-field class="example-full-width">
-                                <input matInput type="password" placeholder="Confirm password" formControlName="pw2"/>
+                                <input matInput type="password" placeholder="{{'CONFIRM_PASS'| translate}}" formControlName="pw2"/>
                                 <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw2.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                                 <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw2.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error>
                             </mat-form-field>
@@ -34,6 +34,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-12 text-justify">
+                        <h4>{{'SIGNUP.CHOOSING_MAIN_DEPARTMENT' | translate}}</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 body">
+                        <i class="fa fa-building prefix"></i>
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'GRID.DEP_NAME'| translate}}" value="{{'SIGNUP.MAIN_DEPARTMENT'| translate}}" formControlName="department"/>
+                            <mat-error *ngIf="accountForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
             </mat-expansion-panel>
         </div>
     </div>

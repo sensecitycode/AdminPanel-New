@@ -27,8 +27,12 @@
         <li *ngIf = "userRoles.indexOf('sensecityAdmin')!=-1" [ngClass]="{'active':selectedRole == 'sensecityAdmin'}">
             <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'sensecityAdmin'" (click)="selectRole('sensecityAdmin')">{{'ROLES.sensecityAdmin' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'sensecityAdmin'}" >
-                <li><a>Link1</a></li>
-                <li><a>Link2</a></li>
+                <li routerLinkActive="active" *ngFor="let menuItem of menuItems" >
+                    <a  [routerLink]="[menuItem.path]">
+                        <i class="material-icons">{{menuItem.icon}}</i>
+                        {{menuItem.title | translate}}
+                    </a>
+                </li>
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('cityAdmin')!=-1" [ngClass]="{'components':true,  'active':selectedRole == 'cityAdmin'}">

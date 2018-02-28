@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import { ToastrService } from 'ngx-toastr';
 
+import { TranslationService } from '../../../shared/translation.service';
 import { DepartmentsService } from '../departments.service';
 import { UsersService } from '../../users/users.service';
 
@@ -13,7 +15,7 @@ import { UsersService } from '../../users/users.service';
 })
 export class AddDepartmentComponent implements OnInit {
 
-    constructor(private formBuilder: FormBuilder, private depServ: DepartmentsService, private usersServ: UsersService) { }
+    constructor(private formBuilder: FormBuilder, private depServ: DepartmentsService, private usersServ: UsersService, private translationService:TranslationService, private toastr: ToastrService) { }
 
     subscription = new Subscription;
     users = [];
@@ -24,7 +26,7 @@ export class AddDepartmentComponent implements OnInit {
     departmentAddForm: FormGroup;
     roleList: [string];
     newAddedDep:string;
-    departmentServiceMsg:string;
+    // departmentServiceMsg:string;
     username:string;
     email:string;
     ngOnInit() {
@@ -132,14 +134,17 @@ export class AddDepartmentComponent implements OnInit {
                 this.departmentAddForm.markAsPristine();
                 console.log(error);
                 if (error.error == "DUPLICATE_DEPARTMENT") {
-                    this.departmentServiceMsg = 'duplicate_name';
+                    // this.departmentServiceMsg = 'duplicate_name';
+                    this.toastr.error(this.translationService.get_instant('DASHBOARD.DEP_NAME_EXISTS_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     this.departmentAddForm.get('name').setErrors({nameExists: true});
                 } else {
-                    this.departmentServiceMsg = 'services_error';
+                    // this.departmentServiceMsg = 'services_error';
+                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 }
             },
             () => {
-                this.departmentServiceMsg = 'success';
+                // this.departmentServiceMsg = 'success';
+                this.toastr.success(this.translationService.get_instant('DASHBOARD.DEP_ADDED_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
                 this.newAddedDep = tobeAddedDepartment.department;
                 this.onReset();
             }
@@ -156,7 +161,7 @@ export class AddDepartmentComponent implements OnInit {
         this.nonIssueAdmins = [];
         this.departmentAddForm.patchValue({users:this.issueAdmins});
         this.allDepartmentUsers = this.issueAdmins;
-        this.departmentAddForm.markAsPristine();
+        this.departmentAddForm.markAsUntouched();
     }
 
     ngOnDestroy() {

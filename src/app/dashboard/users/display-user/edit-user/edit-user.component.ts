@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
+import { TranslationService } from '../../../../shared/translation.service';
 
 import { UsersService } from '../../users.service';
 
@@ -15,13 +17,13 @@ import { UsersService } from '../../users.service';
 })
 export class EditUserComponent implements OnInit {
 
-    constructor(private formBuilder: FormBuilder, private usersServ: UsersService, private activatedRoute: ActivatedRoute) { }
+    constructor(private formBuilder: FormBuilder, private usersServ: UsersService, private router:Router, private activatedRoute: ActivatedRoute, private translationService:TranslationService, private toastr: ToastrService) { }
 
     user:any;
     originalUsername:string;
     userEditForm: FormGroup;
     roleList: [string];
-    userServiceMsg:string;
+    // userServiceMsg:string;
 
 
     ngOnInit() {
@@ -44,7 +46,7 @@ export class EditUserComponent implements OnInit {
         this.usersServ.get_userDetails(this.originalUsername)
         .subscribe(
             data => {this.user = data[0]},
-            error => {console.log('error occured fetching user details'); this.userServiceMsg = 'services_error';},
+            error => {this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
             () => {
                 this.userEditForm.setValue({
                     'name': this.user.name,
@@ -89,19 +91,25 @@ export class EditUserComponent implements OnInit {
         this.usersServ.edit_user(editedUser).subscribe(
             data => {console.log(data)},
             error => {
-                console.log(error);
-                this.userEditForm.markAsPristine();
+                // console.log(error);
+                // this.userEditForm.markAsPristine();
                 if (error.error == "duplicate_username") {
-                    this.userServiceMsg = 'duplicate_username';
+                    // this.userServiceMsg = 'duplicate_username';
+                    let usernameObj = {username:this.userEditForm.get('username').value};
+                    this.toastr.error(this.translationService.get_instant('DASHBOARD.USERNAME_EXISTS_MSG', usernameObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     this.userEditForm.get('username').setErrors({usernameExists: true});
                 } else {
-                    this.userServiceMsg ='services_error';
+                    // this.userServiceMsg ='services_error';
+                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 }
             },
             () => {
-                this.originalUsername = editedUser.username;
-                this.userEditForm.markAsPristine();
-                this.userServiceMsg = 'success';
+                // this.originalUsername = editedUser.username;
+                let usernameObj = {username:this.originalUsername};
+                this.toastr.success(this.translationService.get_instant('DASHBOARD.USER_EDIT_MSG', usernameObj), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
+                this.router.navigate(['../../'], {relativeTo:this.activatedRoute})
+                // this.userEditForm.markAsPristine();
+                // this.userServiceMsg = 'success';
             }
         )
 
@@ -120,7 +128,7 @@ export class EditUserComponent implements OnInit {
             'role_name':this.user.role_name,
             'position': this.user.position
         })
-        this.userServiceMsg = '';
+        // this.userServiceMsg = '';
     }
 
 }

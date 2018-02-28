@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
-
+import { TranslationService } from '../../../shared/translation.service';
 import { UsersService } from '../users.service';
 
 
@@ -14,20 +15,20 @@ import { UsersService } from '../users.service';
 })
 export class DisplayUserComponent implements OnInit {
 
-    constructor(private usersServ: UsersService, private activatedRoute: ActivatedRoute) { }
+    constructor(private usersServ: UsersService, private activatedRoute: ActivatedRoute, private translationService:TranslationService, private toastr: ToastrService) { }
 
     username:string;
     user:object;
-    userServiceMsg:string;
+    // userServiceMsg:string;
 
     ngOnInit() {
 
         this.username = this.activatedRoute.snapshot.url[0].path;
-        console.log(this.username);
+        // console.log(this.username);
         this.usersServ.get_userDetails(this.username)
             .subscribe(
                 data => {this.user = data[0]},
-                error => {console.log('error occured fetching user details'); this.userServiceMsg = 'error';},
+                error => {this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
                 () => {}
             )
     }

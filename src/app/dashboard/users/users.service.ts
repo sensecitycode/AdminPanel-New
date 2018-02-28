@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
 import { mergeMap } from 'rxjs/operators';
 import { TranslationService } from '../../shared/translation.service';
-// import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
+// import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class UsersService {
 
-    constructor(private httpClient: HttpClient, private translationService:TranslationService) { }
+    constructor(private httpClient: HttpClient, private translationService:TranslationService, private toastr: ToastrService) { }
 
 
     role:string;
@@ -30,18 +31,21 @@ export class UsersService {
             })
             .subscribe(
                 data => { this.users = data;},
-                error => {console.log('error occured populating UserArray');},
+                error => {
+                    // console.log('error occured populating UserArray');
+                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                },
                 () =>
                     {
-                    clearTimeout(fetchUsers_canc);
+                    // clearTimeout(fetchUsers_canc);
                     this.usersChanged.next("userArrayPopulated");
                     }
             )
 
-        let fetchUsers_canc = setTimeout(() => {
-           fetchUsers.unsubscribe();
-           alert("Fetch Users Service not working!");
-        }, 10000);
+        // let fetchUsers_canc = setTimeout(() => {
+        //    fetchUsers.unsubscribe();
+        //    alert("Fetch Users Service not working!");
+        // }, 10000);
     }
 
     get_userDetails (username) {
