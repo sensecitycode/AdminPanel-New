@@ -66,7 +66,7 @@
         "STEP1_LABEL":"Locate your city",
         "CITY_REQUEST":"Which city would you like to add?",
         "DOMAIN_REQUEST":"Pick a domain name (suggested {{city}}.sense.city)",
-        "CITY_NOT_FOUND":"Your city was not foun",
+        "CITY_NOT_FOUND":"Your city was not found",
         "STEP2_LABEL":"Fill in the contact form",
         "PERSONAL_INFO":"Personal data",
         "PERSONAL_INFO_DESC":"How should we address you?",
@@ -84,10 +84,13 @@
         "CHOOSING_MAIN_DEPARTMENT":"Your city is initiated with a main issues department. For further issue assignment in the corresponding departments, you should provide them in city administration platform.",
         "MAIN_DEPARTMENT":"Main issues department",
         "STEP4_LABEL":"Submit",
-        "STEP4_FINISH":"Congratulations, You are now done!",
+        "STEP4_FINISH":"Congratulations, you have successfully completed the registration form!",
         "STEP4_CLICK":"By submitting your application, you accept:",
         "STEP4_CITY_ACKN":"the responsibility of correct city entry.",
-        "STEP4_TERMS_ACKN":"the terms and conditions."
+        "STEP4_TERMS_ACKN":"the terms and conditions.",
+        "CITY_EXISTS_ERR":"Your city is <strong>already registered</strong> in platform",
+        "EMAIL_EXISTS_ERR":"This email is <strong>already registered</strong> in platform",
+        "USERNAME_EXISTS_ERR":"This username is <strong>already registered</strong> in platform"
     },
 
     "LOGIN":

@@ -10,7 +10,7 @@
 <div class="container" style="margin-top:2%; padding:1%;">
     <div class="row">
         <div class="col-md-12">
-            <mat-horizontal-stepper [linear]="false" style="background:rgb(220, 220, 230); min-height:400px">
+            <mat-horizontal-stepper [linear]="true" style="background:rgb(220, 220, 230); min-height:400px">
                 <mat-step [stepControl]="mapForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
                     <app-map-link></app-map-link>

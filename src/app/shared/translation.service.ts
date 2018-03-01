@@ -27,9 +27,9 @@ export class TranslationService {
     }
 
     get_instant(keyword:string, params?:object):string {
-        console.log(keyword)
-        console.log(params)
-        console.log(this.translate.instant(keyword));
+        // console.log(keyword)
+        // console.log(params)
+        // console.log(this.translate.instant(keyword));
         if (params) {
             return this.translate.instant(keyword, params);
         }

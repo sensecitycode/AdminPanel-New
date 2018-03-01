@@ -11,8 +11,9 @@
                     <div class="col-md-12 body">
                         <i class="fa fa-user-circle prefix"></i>
                         <mat-form-field class="example-full-width">
-                            <input matInput placeholder="{{'USERNAME'| translate}}" formControlName="name"/>
-                            <mat-error *ngIf="accountForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            <input matInput placeholder="{{'USERNAME'| translate}}" formControlName="username" (blur)="checkUsernameExists(accountForm.controls.username.value)"/>
+                            <mat-error *ngIf="accountForm.controls.username.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            <mat-error *ngIf="accountForm.controls.username.hasError('usernameExists')" [innerHTML]="'SIGNUP.USERNAME_EXISTS_ERR' | translate"></mat-error>
                         </mat-form-field>
                         <div formGroupName="passwordForm">
                             <i class="fa fa-lock prefix" style="padding:0 0.2em"></i>
@@ -43,8 +44,8 @@
                     <div class="col-md-12 body">
                         <i class="fa fa-building prefix"></i>
                         <mat-form-field class="example-full-width">
-                            <input matInput placeholder="{{'GRID.DEP_NAME'| translate}}" value="{{'SIGNUP.MAIN_DEPARTMENT'| translate}}" formControlName="department"/>
-                            <mat-error *ngIf="accountForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            <input matInput placeholder="{{'GRID.DEP_NAME'| translate}}" formControlName="department"/>
+                            <mat-error *ngIf="accountForm.controls.department.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                         </mat-form-field>
                     </div>
                 </div>

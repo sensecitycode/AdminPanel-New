@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {}
 
     wrongCredentials:boolean = false;
+    servicesError:boolean = false;
     onSubmit() {
         if (this.loginForm.valid) {
             let loginData =
@@ -45,22 +46,17 @@ export class LoginComponent implements OnInit {
                             },
                     error =>{
                                 console.log(error);
-                                if (error.error.text == 'failure')
-                                {
-                                    clearTimeout(loginReq_canc);
+                                this.loginForm.controls.username.markAsPristine();
+                                this.loginForm.controls.password.markAsPristine();
+                                this.loginForm.markAsUntouched();
+                                if (error.error.text == 'failure') {
                                     this.wrongCredentials = true;
-                                    this.loginForm.controls.username.markAsPristine();
-                                    this.loginForm.controls.password.markAsPristine();
-                                    this.loginForm.markAsUntouched();
+                                } else {
+                                    this.servicesError = true
                                 }
                             },
-                    () => {clearTimeout(loginReq_canc)}
+                    () => {}
                 )
-
-                let loginReq_canc = setTimeout(() => {
-                    loginReq.unsubscribe();
-                    alert("Login Service is not responding!");
-                }, 5000);
         }
     }
     }

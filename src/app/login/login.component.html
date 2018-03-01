@@ -47,6 +47,9 @@
         </div>
     </div>
 </div>
-<div class='alert-danger message text-center' [ngStyle]="{'visibility':wrongCredentials && !(loginForm.controls.username.dirty || loginForm.controls.password.dirty) ? 'visible' : 'hidden'}" >
+<div class='alert-danger message text-center' [ngStyle]="{'display':wrongCredentials && !(loginForm.controls.username.dirty || loginForm.controls.password.dirty) ? 'block' : 'none'}" >
     <strong>{{'LOGIN.CREDENTIALS_ERR' | translate}}</strong>
+</div>
+<div class='alert-danger message text-center' [ngStyle]="{'display':servicesError && !(loginForm.controls.username.dirty || loginForm.controls.password.dirty) ? 'block' : 'none'}" >
+    <strong>{{'SERVICES_ERROR_MSG' | translate}}</strong>
 </div>

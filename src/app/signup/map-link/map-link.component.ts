@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators, AbstractControl, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { LowerCasePipe } from '@angular/common';
 import { MatCheckbox } from '@angular/material';
 import { TranslationService } from '../../shared/translation.service';
 
+
 import { Map } from 'leaflet';
-import { tileLayer, latLng, marker, icon, LeafletMouseEvent } from 'leaflet';
+import { tileLayer, latLng, marker, icon, LeafletMouseEvent, Marker } from 'leaflet';
+
+import { AppBootStrapComponent } from '../../../app/app-bootstrap.component';
 @Component({
     selector: 'app-map-link',
     templateUrl: './map-link.component.html',
@@ -15,9 +19,11 @@ import { tileLayer, latLng, marker, icon, LeafletMouseEvent } from 'leaflet';
 })
 export class MapLinkComponent implements OnInit{
 
-    constructor(private http: HttpClient, private translationService: TranslationService) { }
+    constructor(private http: HttpClient, private translationService: TranslationService, private bootstrapComp : AppBootStrapComponent, private toastr: ToastrService) { }
 
     mapInit:object;
+    API:string;
+
     ngOnInit() {
         this.mapInit = {
             layers: [
@@ -26,15 +32,22 @@ export class MapLinkComponent implements OnInit{
             zoom: 6,
             center: latLng(38.074208 , 22.824312)
         };
+        this.API = this.bootstrapComp.API;
     }
+    mapForm = new FormGroup({
+        city: new FormControl('', Validators.required),
+        domain:  new FormControl('', Validators.required)
+        // checkbox:  new FormControl(false , this.checkedValidator)
+    });
 
     city:string;
     sugg_domain:string;
-    marker;
+    marker: Marker;
     markerLayer:Array<object>;
     markerCenter:object;
     markerZoom:number;
     invalidcity=false;
+
     onCitySelect(){
         // this.sugg_domain = this.city;
         this.markerLayer = [];
@@ -67,8 +80,7 @@ export class MapLinkComponent implements OnInit{
                         }
                     },
                     error => {
-                        console.log('error occured')
-                        alert("Google service not responding!");
+                        this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     },
                     () => {
                     }
@@ -143,8 +155,7 @@ export class MapLinkComponent implements OnInit{
                                             this.onDomainSelect();
                                         },
                                         error => {
-                                            console.log('error occured')
-                                            alert("Google service not responding!");
+                                            this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                                         },
                                         () => {}
                                     )
@@ -154,8 +165,7 @@ export class MapLinkComponent implements OnInit{
                             }
                     },
                     error => {
-                        console.log(error);
-                        alert("Google service not responding!");
+                        this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     },
                     () => {
                     }
@@ -163,28 +173,39 @@ export class MapLinkComponent implements OnInit{
             });
         }
 
-
         domain:string;
         last_domain:string;
         onDomainSelect(){
+            this.mapForm.get('domain').markAsTouched();
+
             this.sugg_domain = this.sugg_domain.replace(/ /g,"");
+            // console.log((this.sugg_domain).toLowerCase())
             if (this.sugg_domain!=this.last_domain){
                 this.domain = (this.sugg_domain).toLowerCase()
             }
             this.last_domain = this.sugg_domain;
+            this.checkCityExists((this.sugg_domain).toLowerCase());
         }
 
-
-        mapForm = new FormGroup({
-            city: new FormControl('', Validators.required),
-            domain:  new FormControl('', Validators.required)
-            // checkbox:  new FormControl(false , this.checkedValidator)
-        });
-
-        // checkedValidator(AC: AbstractControl) {
-        //    let checkbox = AC.root.get('checkbox');
-        //    if (!checkbox) return null;
-        //    return checkbox.value === true ? null : {checkedValidator: true}
-        // }
-
+        cityExists:boolean = false;
+        checkCityExists(city) {
+            // console.log(city)
+            // console.log(`${this.API}/available_city?city=${city}`)
+            this.http.get<{bool_flag: boolean}>(`${this.API}/available_city?city=${city}`)
+                .subscribe(
+                    data => { this.cityExists = data.bool_flag },
+                    error => {
+                        // alert("Check city availability service is not responding!");
+                        this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    },
+                    () => {
+                        if (this.cityExists == true ) {
+                            // console.log('error set')
+                            // console.log(this.mapForm.get('domain'))
+                            this.mapForm.get('domain').setErrors({cityExists:true})
+                        }
+                        // clearTimeout(fetchUsers_canc);
+                    }
+                )
+        }
     }

@@ -17,9 +17,11 @@
                     name="domain"
                     formControlName="domain"
                     [(ngModel)]="domain"
-                    (focus)="onDomainSelect()" />
+                    (focus)="onDomainSelect()"
+                    (blur)="checkCityExists(mapForm.controls.domain.value)" />
                     <span class='suffix' matSuffix>.sense.city</span>
-                    <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    <mat-error *ngIf="mapForm.controls.domain.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    <mat-error *ngIf="mapForm.controls.domain.hasError('cityExists')" [innerHTML]="'SIGNUP.CITY_EXISTS_ERR' | translate"></mat-error>
                 </mat-form-field>
                 <mat-error style="padding:0px 5px" *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">{{'SIGNUP.CITY_NOT_FOUND'| translate}}</span></mat-error>
                 <div style="min-height:500px; margin-top:1%;"
