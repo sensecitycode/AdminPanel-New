@@ -1,14 +1,14 @@
 <form class="example-form" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+    <div class="row" style="padding-top:10px">
+        <div class="col-md-10 offset-md-1">
             <mat-expansion-panel [expanded]="true" hideToggle="true">
                 <div class="row">
                     <div class="col-md-12 text-justify">
-                        <h4>{{'SIGNUP.CREATING_ACC_INFO' | translate}}</h4>
+                        <h6>{{'SIGNUP.CREATING_ACC_INFO' | translate}}</h6>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 body">
+                <div class="row justify-content-sm-center">
+                    <div class="col-sm-10 body">
                         <i class="fa fa-user-circle prefix"></i>
                         <mat-form-field class="example-full-width">
                             <input matInput placeholder="{{'USERNAME'| translate}}" formControlName="username" (blur)="checkUsernameExists(accountForm.controls.username.value)"/>
@@ -37,11 +37,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12 text-justify">
-                        <h4>{{'SIGNUP.CHOOSING_MAIN_DEPARTMENT' | translate}}</h4>
+                        <h6>{{'SIGNUP.CHOOSING_MAIN_DEPARTMENT' | translate}}</h6>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 body">
+                <div class="row justify-content-sm-center">
+                    <div class="col-sm-10 body">
                         <i class="fa fa-building prefix"></i>
                         <mat-form-field class="example-full-width">
                             <input matInput placeholder="{{'GRID.DEP_NAME'| translate}}" formControlName="department"/>

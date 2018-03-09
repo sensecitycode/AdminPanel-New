@@ -1,126 +1,129 @@
-<div class="col-md-12">
-    <button mat-raised-button class="btn-default"[routerLink]="['../../', dep_id]"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
+<div class="col-md-12 back_btn">
+    <button mat-raised-button class="btn-light"[routerLink]="['../../', dep_id]"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
 </div>
-<div class="col-lg-5 col-md-12 col-lg-offset-1">
-    <mat-card class="example-card">
-        <mat-card-header>
-            <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
-            <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
-            <mat-card-subtitle><span>{{originalDepName}}</span></mat-card-subtitle>
-        </mat-card-header>
-        <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-        <mat-card-content>
-            <form [formGroup]="depEditForm">
+<div class="row">
+    <div class="col-lg-5 col-md-12 offset-lg-1">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
+                <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
+                <mat-card-subtitle><span>{{originalDepName}}</span></mat-card-subtitle>
+            </mat-card-header>
+            <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+                <form [formGroup]="depEditForm">
 
-                <table class="table table-user-information">
-                    <tbody>
-                        <tr>
-                            <td style="vertical-align:middle"><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
-                            <td><input type="text" class="form-control" formControlName="name" disabled></td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align:top"><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
-                            <td>
-                                <!-- <mat-form-field class="example-full-width"> -->
-                                    <mat-select formControlName="users" multiple (change)="onAddUser()" class="form-control">
-                                        <mat-select-trigger>
-                                            <span *ngIf="depEditForm.controls.users.value?.length == 1" class="example-additional-selection">
-                                                {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
-                                            </span>
-                                            <span *ngIf="depEditForm.controls.users.value?.length > 1" class="example-additional-selection">
-                                                {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
-                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
-                                        </mat-option>
-                                    </mat-select>
-                                    <!-- <mat-error *ngIf="depEditForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
-                                <!-- </mat-form-field> -->
+                    <table class="table table-user-information">
+                        <tbody>
+                            <tr>
+                                <td style="vertical-align:middle"><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
+                                <td><input class="bs3-form-control" formControlName="name" disabled></td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align:top"><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
+                                <td>
+                                    <!-- <mat-form-field class="example-full-width"> -->
+                                        <mat-select formControlName="users" multiple (change)="onAddUser()" class="bs3-form-control">
+                                            <mat-select-trigger>
+                                                <span *ngIf="depEditForm.controls.users.value?.length == 1" class="example-additional-selection">
+                                                    {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
+                                                </span>
+                                                <span *ngIf="depEditForm.controls.users.value?.length > 1" class="example-additional-selection">
+                                                    {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
+                                                {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-error *ngIf="depEditForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
+                                    <!-- </mat-form-field> -->
 
-                                <div  #panelDivElement>
-                                    <div *ngFor='let user of issueAdmins' class="panel panel-default">
-                                        <div class="panel-body">
-                                            {{user.username}} - <dfn>{{'ROLES.cityManager' | translate}}</dfn>
+                                    <div  #panelDivElement>
+                                        <div *ngFor='let user of issueAdmins' class="card">
+                                            <div class="card-body">
+                                                {{user.username}} - <dfn>{{'ROLES.cityManager' | translate}}</dfn>
+                                            </div>
+                                        </div>
+
+                                        <div *ngFor='let user of nonIssueAdmins; let idx = index' class="card">
+                                            <div class="card-body">
+                                                {{user.username}} <dfn *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</dfn>
+                                                <button type='button' rel="tooltip" title="Remove" class="danger_btn btn btn-sm float-right" (click)='onRemoveUser(idx)'>
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div *ngFor='let user of nonIssueAdmins; let idx = index' class="panel panel-default">
-                                        <div class="panel-body">
-                                            {{user.username}} <dfn *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</dfn>
-                                            <button type='button' rel="tooltip" title="Remove" class="btn btn-danger btn-xs" (click)='onRemoveUser(idx)'>
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align:middle"><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
+                                <td>
+                                    <!-- <mat-form-field class="example-full-width"> -->
+                                    <mat-select formControlName="manager" [disabled]=true class="bs3-form-control">
+                                        <!-- <mat-select formControlName="manager" [disabled]='allDepartmentUsers.length==0' class="bs3-form-control" > -->
+                                            <mat-select-trigger>
+                                                {{depEditForm.controls.manager.value.username}}
+                                                <span *ngIf="depEditForm.controls.manager.value?.length > 1" class="example-additional-selection">
+                                                    (+{{depEditForm.controls.manager.value.length - 1}} {{ 'OTHERS' | translate }})
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let user of allDepartmentUsers" [value]="user" style="font-size:14px">
+                                                {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-error *ngIf="depEditForm.controls.manager.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
+                                    <!-- </mat-form-field> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align:middle"><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
+                                <td>
+                                    <!-- <mat-form-field class="example-full-width"> -->
+                                        <mat-select class="bs3-form-control" formControlName="cclist" multiple [disabled]=true>
+                                            <mat-select-trigger>
+                                                {{depEditForm.controls.cclist.value.length > 0 ? depEditForm.controls.cclist.value[0].username : ''}}
+                                                <span *ngIf="depEditForm.controls.cclist.value?.length > 1" class="example-additional-selection">
+                                                    (+{{depEditForm.controls.cclist.value.length - 1}} {{ 'OTHERS' | translate }})
+                                                </span>
+                                            </mat-select-trigger>
+                                            <mat-option *ngFor="let user of users" [value]="user" style="font-size:14px" [disabled]='(user == depEditForm.controls.manager.value)' [ngClass]="{'mat-selected': user==depEditForm.controls.manager.value}">
+                                                {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
+                                            </mat-option>
+                                        </mat-select>
+                                        <!-- <mat-error *ngIf="depEditForm.controls.cclist.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
+                                    <!-- </mat-form-field> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align:middle"><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
-                            <td>
-                                <!-- <mat-form-field class="example-full-width"> -->
-                                <mat-select formControlName="manager" [disabled]=true class="form-control">
-                                    <!-- <mat-select formControlName="manager" [disabled]='allDepartmentUsers.length==0' class="form-control" > -->
-                                        <mat-select-trigger>
-                                            {{depEditForm.controls.manager.value.username}}
-                                            <span *ngIf="depEditForm.controls.manager.value?.length > 1" class="example-additional-selection">
-                                                (+{{depEditForm.controls.manager.value.length - 1}} {{ 'OTHERS' | translate }})
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of allDepartmentUsers" [value]="user" style="font-size:14px">
-                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
-                                        </mat-option>
-                                    </mat-select>
-                                    <!-- <mat-error *ngIf="depEditForm.controls.manager.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
-                                <!-- </mat-form-field> -->
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="vertical-align:middle"><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
-                            <td>
-                                <!-- <mat-form-field class="example-full-width"> -->
-                                    <mat-select class="form-control" formControlName="cclist" multiple [disabled]=true>
-                                        <mat-select-trigger>
-                                            {{depEditForm.controls.cclist.value.length > 0 ? depEditForm.controls.cclist.value[0].username : ''}}
-                                            <span *ngIf="depEditForm.controls.cclist.value?.length > 1" class="example-additional-selection">
-                                                (+{{depEditForm.controls.cclist.value.length - 1}} {{ 'OTHERS' | translate }})
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of users" [value]="user" style="font-size:14px" [disabled]='(user == depEditForm.controls.manager.value)' [ngClass]="{'mat-selected': user==depEditForm.controls.manager.value}">
-                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
-                                        </mat-option>
-                                    </mat-select>
-                                    <!-- <mat-error *ngIf="depEditForm.controls.cclist.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
-                                <!-- </mat-form-field> -->
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-
-        <button mat-button (click)="onResetEdit()" class="btn-default danger_btn" >{{'RESET' | translate}}</button>
-        <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedUser()" class="btn-default success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
-        </mat-card-content>
-    </mat-card>
-</div>
-
-<div class="col-lg-4 col-md-12 col-lg-offset-1">
-    <div class="alert-info message-info text-justify" [innerHTML]="'DASHBOARD.DEPARTMENT_EDIT_INFO'|translate"></div>
-</div>
-
-    <!-- <div class='alert-success message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'success') && !depEditForm.dirty ? 'block' : 'none'}" >
-        <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_EDIT_MSG' | translate:{username: originalUsername}"></span>
+            <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
+            <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedUser()" class="btn-light success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
+            </mat-card-content>
+        </mat-card>
     </div>
-    <div class='alert-danger message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'error') && !depEditForm.dirty ? 'block' : 'none'}" >
-        <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
+
+    <div class="col-lg-4 col-md-12 offset-lg-1">
+        <div class="alert-info message-info text-justify" [innerHTML]="'DASHBOARD.DEPARTMENT_EDIT_INFO'|translate"></div>
+    </div>
+
+        <!-- <div class='alert-success message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'success') && !depEditForm.dirty ? 'block' : 'none'}" >
+            <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.USER_EDIT_MSG' | translate:{username: originalUsername}"></span>
+        </div>
+        <div class='alert-danger message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'error') && !depEditForm.dirty ? 'block' : 'none'}" >
+            <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
+        </div> -->
+
+    <!-- <div class="col-md-12">
+    <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
+    <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
+    {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
+
+    </div>
     </div> -->
 
-<!-- <div class="col-md-12">
-<button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
-<div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
-{{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
-
 </div>
-</div> -->

@@ -1,20 +1,23 @@
 <app-header></app-header>
-<section style="min-height:100vh; min-width:350px; background: url('assets/welcome_image.JPG'); background-size: 100% 100%;">
-   <div class="container">
-      <div class="row voffset15">
-         <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2 text-right"
-         style="background:rgba(0, 0, 0, 0.6); padding:2%;">
-            <div style="color:white;">
-               <h1 [innerHTML] = "'WELCOME.TITLE' | translate"></h1>
-               <h3 [innerHTML] = "'WELCOME.SUBTITLE' | translate"><br /></h3>
-               <div class="voffset20">
-                  <button mat-raised-button style="margin-right:2%" color="primary" routerLink="/login">{{'WELCOME.SIGN_IN' | translate}}</button>
-                  <button mat-raised-button style="margin-left:2%"color="warn" [routerLink]="['/signup']">{{'WELCOME.SIGN_UP' | translate}}</button>
-               </div>
+<video autoplay loop muted data-wow-delay="0.5s" poster="assets/video_screen.png" id="video-background">
+    <source type="video/webm" src="http://sense.city/movie.webm" >
+    <source type="video/mp4" src="http://sense.city/movie.mp4" >
+</video>
+<!-- <div style="min-height:100vh; min-width:350px; background: url('assets/welcome_image.JPG'); background-size: 100% 100%;"> -->
+<div class="container">
+  <div class="row justify-content-center">
+     <div class="voffset15  col-xl-4 col-lg-5 col-md-8  text-right" style="background:rgba(0, 0, 0, 0.6); padding:2%;">
+        <div style="color:white;">
+           <h2 [innerHTML] = "'WELCOME.TITLE' | translate"></h2>
+           <h4 [innerHTML] = "'WELCOME.SUBTITLE' | translate"><br /></h4>
+           <div class="voffset20">
+              <button mat-raised-button style="margin-right:2%" color="primary" routerLink="/login">{{'WELCOME.SIGN_IN' | translate}}</button>
+              <button mat-raised-button style="margin-left:2%"color="warn" [routerLink]="['/signup']">{{'WELCOME.SIGN_UP' | translate}}</button>
+           </div>
 
-            </div>
-         </div>
+        </div>
+     </div>
 
-      </div>
-   </div>
-</section>
+  </div>
+</div>
+<!-- </div> -->

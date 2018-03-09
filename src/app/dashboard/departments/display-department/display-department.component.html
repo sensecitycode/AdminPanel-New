@@ -1,56 +1,59 @@
-<div class="col-md-12">
-    <button mat-raised-button class="btn-default"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
+<div class="col-md-12 back_btn">
+    <button mat-raised-button class="btn-light"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
 </div>
-<div class="col-xl-4 col-lg-6 col-md-8col-xl-offset-4 col-lg-offset-3 col-md-offset-2">
-    <mat-card class="example-card">
-        <mat-card-header>
-            <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
-            <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
-            <mat-card-subtitle><span>{{department?.name}}</span></mat-card-subtitle>
-        </mat-card-header>
-        <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-        <mat-card-content>
+<div class="row justify-content-center">
+    <div class="col-xl-5 col-lg-8 col-md-12">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
+                <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
+                <mat-card-subtitle><span>{{department?.name}}</span></mat-card-subtitle>
+            </mat-card-header>
+            <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
 
-            <table class="table table-user-information">
-                <tbody>
-                    <tr>
-                        <td><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
-                        <td>{{department?.name}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
-                        <td>
-                            <div *ngFor="let issueAdmin of department?.issueAdmins">{{issueAdmin.username}}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
-                        <td>{{department?.manager.username}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
-                        <td>
-                            <div *ngFor="let user of department?.ccList">{{user.username}}</div>
-                        </td>
-                    </tr>
-                    <!-- <tr>
-                        <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
-                        <td>
-                        <div *ngFor="let role of user?.role_name">{{ ('ROLES.' + role) | translate }}</div>
-                        </td>
-                    </tr> -->
-                </tbody>
-            </table>
-            <button mat-button [routerLink]="['edit']" class="btn-default" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons">edit</i> {{'DASHBOARD.EDIT_DEP' | translate}}</button>
-        </mat-card-content>
-    </mat-card>
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
+                            <td>{{department?.name}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
+                            <td>
+                                <div *ngFor="let issueAdmin of department?.issueAdmins">{{issueAdmin.username}}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
+                            <td>{{department?.manager.username}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
+                            <td>
+                                <div *ngFor="let user of department?.ccList">{{user.username}}</div>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
+                            <td>
+                            <div *ngFor="let role of user?.role_name">{{ ('ROLES.' + role) | translate }}</div>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+                <button mat-button [routerLink]="['edit']" class="btn-light" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons">edit</i> {{'DASHBOARD.EDIT_DEP' | translate}}</button>
+            </mat-card-content>
+        </mat-card>
 
-    <!-- <div class="col-md-12">
-    <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
-    <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
-    {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
+        <!-- <div class="col-md-12">
+        <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
+        <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
+        {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
 
-</div>
-</div> -->
+    </div>
+    </div> -->
+
+    </div>
 
 </div>

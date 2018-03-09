@@ -17,9 +17,11 @@
 }
 
 .card-footer {
-    margin: 0 20px 10px;
-    padding-top: 10px;
+    margin: 0 20px;
+    padding-left: 0px;
+    padding-right: 0px;
     border-top: 1px solid #eee;
+    background: #fff;
 }
 .card-footer .content {
     display: block;
@@ -42,7 +44,7 @@ color: #999;
 }
 
 .row {
-    padding-bottom: 2%
+    padding-bottom: 1%
 }
 /* .card-footer h6 {
 color: #999;

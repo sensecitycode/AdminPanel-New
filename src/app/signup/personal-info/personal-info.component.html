@@ -11,23 +11,27 @@
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="example-full-width container">
-                <div class="col-md-12">
-                    <mat-form-field class="example-full-width">
-                        <input matInput placeholder="{{'GRID.POSITION' | translate}}" formControlName="position"/>
-                        <mat-error *ngIf="personalInfoForm.controls.position.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                    </mat-form-field>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'GRID.POSITION' | translate}}" formControlName="position"/>
+                            <mat-error *ngIf="personalInfoForm.controls.position.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <mat-form-field class="example-full-width">
-                        <input matInput placeholder="{{'SIGNUP.NAME' | translate}}" formControlName="firstname"/>
-                        <mat-error *ngIf="personalInfoForm.controls.firstname.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-6">
-                    <mat-form-field class="example-full-width">
-                        <input matInput placeholder="{{'SIGNUP.SURNAME' | translate}}" formControlName="lastname"/>
-                        <mat-error *ngIf="personalInfoForm.controls.lastname.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                    </mat-form-field>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'SIGNUP.NAME' | translate}}" formControlName="firstname"/>
+                            <mat-error *ngIf="personalInfoForm.controls.firstname.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'SIGNUP.SURNAME' | translate}}" formControlName="lastname"/>
+                            <mat-error *ngIf="personalInfoForm.controls.lastname.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
         </mat-expansion-panel>
@@ -45,20 +49,25 @@
             </mat-expansion-panel-header>
 
             <div class="example-full-width container">
-                <div class="col-md-12">
-                    <mat-form-field class="example-full-width">
-                        <input matInput placeholder="Email" formControlName="email" (blur)="checkEmailExists(personalInfoForm.controls.email.value)" />
-                        <mat-error *ngIf="personalInfoForm.controls.email.hasError('pattern')" [innerHTML]="'VALID_MAIL_ERR' | translate"></mat-error>
-                        <mat-error *ngIf="personalInfoForm.controls.email.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                        <mat-error *ngIf="personalInfoForm.controls.email.hasError('emailExists')" [innerHTML]="'SIGNUP.EMAIL_EXISTS_ERR' | translate"></mat-error>
-                    </mat-form-field>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Email" formControlName="email" (blur)="checkEmailExists(personalInfoForm.controls.email.value)" />
+                            <mat-error *ngIf="personalInfoForm.controls.email.hasError('pattern')" [innerHTML]="'VALID_MAIL_ERR' | translate"></mat-error>
+                            <mat-error *ngIf="personalInfoForm.controls.email.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            <mat-error *ngIf="personalInfoForm.controls.email.hasError('emailExists')" [innerHTML]="'SIGNUP.EMAIL_EXISTS_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div class="col-md-12">
-                    <mat-form-field class="example-full-width">
-                        <input matInput placeholder="{{'SIGNUP.TEL' | translate}}" formControlName="telephone"/>
-                        <mat-error *ngIf="personalInfoForm.controls.telephone.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                    </mat-form-field>
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="{{'SIGNUP.TEL' | translate}}" formControlName="telephone"/>
+                            <mat-error *ngIf="personalInfoForm.controls.telephone.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
+
                 <!-- <div formGroupName = "addressForm">
                     <div class="col-md-12">
                         <mat-form-field class="example-full-width">

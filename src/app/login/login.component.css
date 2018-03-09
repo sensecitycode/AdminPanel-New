@@ -28,7 +28,7 @@
 .login-dialog .header {
 	text-align: center;
     margin: -2em 1em 1em 1em;
-    padding: 1.4em;
+    padding: 1em;
     border: none;
     flex-direction: column;
 	border-radius: 3px;
@@ -68,7 +68,7 @@ mat-form-field {
 .login_btn {
 	font-size: 1em;
     padding: 0.4em 2em;
-    margin: 6px;
+    margin: 15px;
 }
 
 .login-dialog .footer {

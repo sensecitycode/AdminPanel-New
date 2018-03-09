@@ -33,24 +33,28 @@ i, span {
 .navbar {
     padding: 16px 10px;
     background: #fff;
+    /* background: #6d7fcc; */
     border: none;
     border-radius: 0;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    min-height:81px;
+    min-height:80px;
 }
-/* .navbar-header{
-    margin:0;
-} */
+
 .navbar-btn {
     box-shadow: none;
     outline: none !important;
     border: none;
 }
 
+.navbar-element {
+    margin:0px 8px;
+}
+
 #sidebarCollapse {
     width: 33px;
     height: 33px;
     /* background: #f5f5f5; */
+    border-radius: 4px;
 }
 
 #sidebarCollapse i {
@@ -70,19 +74,16 @@ i, span {
     height: 45px;
 }
 
-.dropdown-item {
+.custom-dropdown-item {
     float:left;
     padding: 12px 10px 12px 0px;
     border-radius: 3px;
     color: #3c4858;
     /*@extend .animation-transition-general;*/
 }
-
-.font-bold {
-    font-weight: bold;
-}
-
-
+/*  */
+/* GLOBAL CONTENT */
+/*  */
 .card {
     display: inline-block;
     position: relative;
@@ -136,9 +137,12 @@ i, span {
 }
 
 .card .card-content {
-    padding: 15px 20px;
+    padding: 10px 20px;
 }
 
+.card-row {
+    padding: 0px 10px;
+}
 .success_btn {
     color: #fff !important;
     background-color: #5cb85c !important;
@@ -149,4 +153,27 @@ i, span {
     color: #fff !important;
     background-color: #c9302c !important;
     border-color: #ac2925 !important;
+}
+
+.back_btn {
+    margin-bottom: 15px;
+}
+
+.example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+}
+
+table.table td {
+	padding:0.70rem;
+    vertical-align:middle;
+}
+
+strong, .font-bold {
+    font-weight: bold;
+}
+
+.example-card {
+    background-color: #eee;
+    /* width: 500px; */
 }

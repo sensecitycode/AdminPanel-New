@@ -1,12 +1,12 @@
 <div class="col-md-12">
     <div class="card" >
         <div class="card-header" data-background-color="red">
-            <h4 class="title">{{ 'DASHBOARD.BOUNDARIES' | translate }}</h4>
+            <h5 class="title">{{ 'DASHBOARD.BOUNDARIES' | translate }}</h5>
             <p class="category">{{ 'DASHBOARD.BOUND_DESC' | translate }}</p>
         </div>
         <div class="card-content">
             <div class="tab-content">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-lg-8 offset-lg-2">
                     <div style="min-height:500px; margin:2%;"
                        leaflet
                        (leafletMapReady)="onMapReady($event)"

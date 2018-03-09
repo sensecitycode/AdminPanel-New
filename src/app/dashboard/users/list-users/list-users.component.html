@@ -1,23 +1,25 @@
-<div class="table-responsive">
-    <div class="col-xl-2 col-lg-4 col-md-6 input-group">
-      <span class="input-group-addon" style="padding: 5px 10px"><i class="material-icons" style="display:flex; font-size:22px">search</i></span>
-      <input type="text" class="form-control" id="filter-text-box" placeholder="{{ 'FILTER' | translate }}..." (input)="onFilterTextBoxChanged()" aria-describedby="filter">
+<div class="row">
+    <div class="col-xl-4 col-lg-5 col-md-6 input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text" id="btnGroupAddon" style="padding: 5px 10px"><span ><i class="material-icons" style="display:flex; font-size:22px">search</i></span></div>
+        </div>
+        <input class="bs3-form-control" id="filter-text-box" placeholder="{{ 'FILTER' | translate }}..." (input)="onFilterTextBoxChanged()" aria-describedby="filter">
     </div>
-    <div>
-        <ag-grid-angular #agGrid [ngStyle]="{'width': '100%', 'height': rowData ? '1000px' : '999px'}" class="ag-theme-material"
-            [gridOptions]="gridOptions"
-            [columnDefs]="columnDefs"
-            [rowData]="rowData"
-            [animateRows]=true
-            [context]="context"
-            enableSorting
-            enableColResize
-            [frameworkComponents]="frameworkComponents"
-            [pagination]=true
-            [paginationAutoPageSize]=true
-            [localeText]="localeText"
-            (gridSizeChanged)="onGridSizeChanged($event)"
-            (gridReady)="onGridReady($event)">
-        </ag-grid-angular>
-    </div>
+</div>
+<div>
+    <ag-grid-angular #agGrid [ngStyle]="{'width': '100%', 'height': rowData ? '1000px' : '999px'}" class="ag-theme-material"
+        [gridOptions]="gridOptions"
+        [columnDefs]="columnDefs"
+        [rowData]="rowData"
+        [animateRows]=true
+        [context]="context"
+        enableSorting
+        enableColResize
+        [frameworkComponents]="frameworkComponents"
+        [pagination]=true
+        [paginationAutoPageSize]=true
+        [localeText]="localeText"
+        (gridSizeChanged)="onGridSizeChanged($event)"
+        (gridReady)="onGridReady($event)">
+    </ag-grid-angular>
 </div>

@@ -61,7 +61,7 @@ i, span {
     max-width: 95px;
     text-align: center;
 }
-#sidebar.active .sidebar-header h2, #sidebar.active .CTAs {
+#sidebar.active .sidebar-header h3, #sidebar.active .CTAs {
     display: none;
 }
 
@@ -96,7 +96,7 @@ i, span {
 }
 
 #sidebar.active ul ul a {
-    padding: 10px !important;
+    padding: 10px 0px;
 }
 
 #sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {
@@ -111,7 +111,7 @@ i, span {
 #sidebar .sidebar-header {
     padding: 7px 10px;
     background: #6d7fcc;
-    height:81px;
+    height:80px;
 }
 
 #sidebar .sidebar-header strong {
@@ -176,23 +176,23 @@ a[data-toggle="collapse"] {
 }
 
 a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
-    content: '\e259';
+    content: '\f107';
     display: block;
     position: absolute;
     right: 20px;
-    font-family: 'Glyphicons Halflings';
-    font-size: 0.6em;
+    font-family: 'FontAwesome';
+    font-size: 1em;
     top: 35%;
 }
 a[aria-expanded="true"]::before {
-    content: '\e260';
+    content: '\f106';
 }
 
 
 ul ul a {
-    /* font-size: 1em !important; */
-    /* padding-left: 30px !important; */
-    /* background: #6d7fcc; */
+    /* font-size: 1em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc; */
 }
 
 
@@ -235,7 +235,7 @@ ul ul a {
         float:none;
     }
 
-    #sidebar .sidebar-header h2, #sidebar .CTAs {
+    #sidebar .sidebar-header h3, #sidebar .CTAs {
         display: none;
     }
 

@@ -1,44 +1,48 @@
 <div class="wrapper">
     <app-sidebar [isToggled]="toggled"></app-sidebar>
     <div class="main-content">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" id="sidebarCollapse" (click)="isToggled()" [ngClass]="{'active':toggled == true, 'navbar-btn':true}">
-                        <i class="material-icons">keyboard_arrow_left</i>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- <li><a><img class="translate-flag" src="assets/flags/el.png" (click)="langToEl()" /></a></li>
-                        <li><a><img class="translate-flag" src="assets/flags/en.png" (click)="langToEn()" /></a></li> -->
-                        <li style="margin:5px 0px 5px 20px">
-                        <!-- <button mat-icon-button (click)="onLangMenuTrigger()">
-                            <i class="material-icons">account_box</i>
-                        </button> -->
-                        <span><strong>{{username}} ({{ 'CITIES.'+city | translate }})</strong></span>
-                        <button mat-icon-button [matMenuTriggerFor]="userMenu">
-                            <i class="material-icons">arrow_drop_down</i>
-                        </button>
 
-                        <mat-menu #userMenu="matMenu">
-                            <button mat-menu-item routerLink="account">
-                                <i class="material-icons dropdown-item">settings</i>
-                                {{ 'DASHBOARD.SETTINGS' | translate }}
-                            </button>
-                            <button mat-menu-item (click)="authService.logout()">
-                                <i class="material-icons dropdown-item">power_settings_new</i>
-                                {{ 'DASHBOARD.LOGOUT' | translate }}
-                            </button>
-                        </mat-menu>
-                        </li>
+        <mdb-navbar SideClass="navbar navbar-expand-lg navbar-light" [containerInside]="false">
 
-                    </ul>
+            <!-- Navbar brand -->
+            <logo><a class="navbar-brand">
+                <button type="button" id="sidebarCollapse" (click)="isToggled()" [ngClass]="{'active':toggled == true, 'navbar-btn':true}">
+                    <i class="material-icons waves-dark">keyboard_arrow_left</i>
+                </button>
+            </a></logo>
 
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- <li><a><img class="translate-flag" src="assets/flags/el.png" (click)="langToEl()" /></a></li>
-                        <li><a><img class="translate-flag" src="assets/flags/en.png" (click)="langToEn()" /></a></li> -->
-                        <li style="margin:5px 0px">
+            <!-- Collapsible content -->
+            <links>
+
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <!-- <li class="nav-item active">
+                        <a class="nav-link waves-dark" mdbRippleRadius>Home<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-dark" mdbRippleRadius>Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link waves-dark" mdbRippleRadius>Pricing</a>
+                    < -->
+
+                    <!-- <li class="nav-item dropdown" dropdown>
+                        <a dropdownToggle mdbRippleRadius type="button" class="nav-link dropdown-toggle waves-dark" mdbRippleRadius>
+                        Basic dropdown<span class="caret"></span></a>
+                        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+                            <a class="dropdown-item waves-light" mdbRippleRadius href="#">Action</a>
+                            <a class="dropdown-item waves-light" mdbRippleRadius href="#">Another action</a>
+                            <a class="dropdown-item waves-light" mdbRippleRadius href="#">Something else here</a>
+                            <div class="divider dropdown-divider"></div>
+                            <a class="dropdown-item waves-light" mdbRippleRadius href="#">Separated link</a>
+                        </div>
+                    </li> -->
+                </ul>
+                <!-- Links -->
+
+                <!-- right side form -->
+                <ul class="navbar-nav mr-right">
+                    <span class="navbar-element">
                         <button mat-icon-button [matMenuTriggerFor]="langMenu">
                             <i class="material-icons">language</i>
                         </button>
@@ -53,16 +57,36 @@
                                 <span [ngClass]="{'font-bold':currentLang == 'en'}">English</span>
                             </button>
                         </mat-menu>
-                        </li>
+                    </span>
 
-                    </ul>
+                    <span class="navbar-element">
+                        <span class="font-weight-bold">{{username}} ({{ 'CITIES.'+city | translate }})</span>
+                        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+                            <i class="material-icons">arrow_drop_down</i>
+                        </button>
+                        <mat-menu #userMenu="matMenu">
+                            <button mat-menu-item routerLink="account">
+                                <i class="material-icons custom-dropdown-item">settings</i> {{ 'DASHBOARD.SETTINGS' | translate }}
 
-                </div>
-            </div>
-        </nav>
+                            </button>
+                            <button mat-menu-item (click)="authService.logout()">
+                                <i class="material-icons custom-dropdown-item">power_settings_new</i>
+                                {{ 'DASHBOARD.LOGOUT' | translate }}
+                            </button>
+                        </mat-menu>
+                    </span>
+                </ul >
 
+                <!-- Search form -->
+                <!-- <form class="form-inline  waves-light" mdbRippleRadius>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                </form> -->
+            </links>
+            <!-- Collapsible content -->
 
-        <div class="container-fluid" style="padding:2% 4%">
+        </mdb-navbar>
+
+        <div class="container-fluid" style="padding:3% 3%">
             <router-outlet></router-outlet>
         </div>
     </div>

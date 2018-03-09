@@ -1,0 +1,9 @@
+.bs3-form-control {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}

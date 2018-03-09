@@ -8,12 +8,17 @@
     font-size: 2.2em;
 }
 
-
-
 .icon-add{
     float:right;
-    background-color: #5cb85c!important;
-    font-size: 1.2em;
-    margin: 13px 1px;
+    background-color: #fff;
+    color: #3c4858;
+    font-size: 1.1em;
+    margin: 10px 5px;
+}
+
+.icon-text{
+    font-family: "Open Sans";
+    font-size: 1em;
+    margin-left: 5px;
     font-weight: bold;
 }

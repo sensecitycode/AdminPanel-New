@@ -10,7 +10,7 @@
 <div class="container" style="margin-top:2%; padding:1%;">
     <div class="row">
         <div class="col-md-12">
-            <mat-horizontal-stepper [linear]="true" style="background:rgb(220, 220, 230); min-height:400px">
+            <mat-horizontal-stepper [linear]="false" style="background:rgb(220, 220, 230); min-height:400px">
                 <mat-step [stepControl]="mapForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
                     <app-map-link></app-map-link>
@@ -36,19 +36,19 @@
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel> {{'SIGNUP.STEP4_LABEL' | translate}} </ng-template>
-                    <div class="row" style="margin-top:10px">
-                        <div class="col-md-10 col-md-offset-1">
+                    <div class="row justify-content-center" style="margin-top:10px">
+                        <div class="col-md-10">
                             <mat-expansion-panel [expanded]="true" hideToggle="true">
-                                <div class="row">
-                                    <div class="col-md-8 col-md-offset-2 text-center">
-                                        <h3 > {{'SIGNUP.STEP4_FINISH' | translate}} </h3>
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 text-center" style="padding-top:16px">
+                                        <h4 > {{'SIGNUP.STEP4_FINISH' | translate}} </h4>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div style="margin-top:4%" class="col-md-6 col-md-offset-3 text-center">
+                                <div class="row justify-content-center">
+                                    <div style="margin-top:4%" class="col-lg-6 text-center">
                                         <form [formGroup]="submitForm" >
-                                            <h4> {{'SIGNUP.STEP4_CLICK' | translate}} </h4>
+                                            <h5> {{'SIGNUP.STEP4_CLICK' | translate}} </h5>
                                             <!-- <div class="example-full-width">
                                                 <mat-checkbox color="primary" id="city_acknowledge" name="city_acknowledge" formControlName="city_acknowledge"></mat-checkbox><strong style="margin-left:6px"> {{'SIGNUP.STEP4_CITY_ACKN' | translate}} </strong>
                                             </div> -->

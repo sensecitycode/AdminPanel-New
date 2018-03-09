@@ -1,72 +1,75 @@
-<div class="col-md-12">
-    <button mat-raised-button class="btn-default"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
+<div class="col-md-12 back_btn">
+    <button mat-raised-button class="btn-light"[routerLink]="['../']"><i class="material-icons" style="font-size:22px">arrow_back</i> {{'BACK' | translate}} </button>
 </div>
-<div class="col-xl-4 col-lg-6 col-md-8 col-xl-offset-4 col-lg-offset-3 col-md-offset-2">
-    <mat-card class="example-card">
-        <mat-card-header>
-            <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">account_circle</i></div>
-            <mat-card-title>{{'DASHBOARD.USER' | translate}}</mat-card-title>
-            <mat-card-subtitle><span>{{username}}</span></mat-card-subtitle>
-        </mat-card-header>
-        <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-        <mat-card-content>
+<div class="row justify-content-center">
+    <div class="col-xl-6 col-lg-10 col-md-12">
+        <mat-card class="example-card">
+            <mat-card-header>
+                <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">account_circle</i></div>
+                <mat-card-title>{{'DASHBOARD.USER' | translate}}</mat-card-title>
+                <mat-card-subtitle><span>{{username}}</span></mat-card-subtitle>
+            </mat-card-header>
+            <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
 
-            <table class="table table-user-information">
-                <tbody>
-                    <tr>
-                        <td><strong>{{'USERNAME' | translate}}</strong></td>
-                        <td>{{user?.username}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'GRID.NAME' | translate}}</strong></td>
-                        <td>{{user?.name}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'GRID.SURNAME' | translate}}</strong></td>
-                        <td>{{user?.surname}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Email</strong></td>
-                        <td>{{user?.email}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'GRID.POSITION' | translate}}</strong></td>
-                        <td>{{user?.position}}</td>
-                    </tr>
+                <table class="table table-user-information">
+                    <tbody>
+                        <tr>
+                            <td><strong>{{'USERNAME' | translate}}</strong></td>
+                            <td>{{user?.username}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'GRID.NAME' | translate}}</strong></td>
+                            <td>{{user?.name}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'GRID.SURNAME' | translate}}</strong></td>
+                            <td>{{user?.surname}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Email</strong></td>
+                            <td>{{user?.email}}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'GRID.POSITION' | translate}}</strong></td>
+                            <td>{{user?.position}}</td>
+                        </tr>
 
-                    <tr>
-                        <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
-                        <td>
-                        <div *ngFor="let role of user?.role_name">{{ ('ROLES.' + role) | translate }}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="vertical-align:middle"><strong>{{'DASHBOARD.DEPARTMENTS' | translate}}</strong></td>
-                        <td>
-                            <div *ngFor="let department of user?.departments">{{department}}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>{{'DASHBOARD.LAST_LOGIN' | translate}}</strong></td>
-                        <td>{{ user?.last_login | date: 'MMM d, HH:mm'}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <button mat-button [routerLink]="['edit']" class="btn-default" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons">edit</i> {{'DASHBOARD.EDIT_USER' | translate}}</button>
-        </mat-card-content>
-    </mat-card>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
+                            <td>
+                            <div *ngFor="let role of user?.role_name">{{ ('ROLES.' + role) | translate }}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:middle"><strong>{{'DASHBOARD.DEPARTMENTS' | translate}}</strong></td>
+                            <td>
+                                <div *ngFor="let department of user?.departments">{{department}}</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>{{'DASHBOARD.LAST_LOGIN' | translate}}</strong></td>
+                            <td>{{ user?.last_login | date: 'MMM d, HH:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button mat-button [routerLink]="['edit']" class="btn-light" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons">edit</i> {{'DASHBOARD.EDIT_USER' | translate}}</button>
+            </mat-card-content>
+        </mat-card>
 
-    <!-- <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'error') ? 'block' : 'none'}" >
-        <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
+        <!-- <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'error') ? 'block' : 'none'}" >
+            <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
+        </div> -->
+
+
+        <!-- <div class="col-md-12">
+        <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
+        <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
+        {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
+
+    </div>
     </div> -->
 
-
-    <!-- <div class="col-md-12">
-    <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
-    <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
-    {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
-
-</div>
-</div> -->
+    </div>
 
 </div>

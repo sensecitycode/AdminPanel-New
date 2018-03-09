@@ -3,9 +3,9 @@ import { ICellRendererAngularComp } from "ag-grid-angular";
 
 @Component({
     selector: 'child-cell',
-    template: `<span><button type="button" rel="tooltip" (click)="invokeParentMethod()" class="btn btn-default"><i class="material-icons">content_paste</i></button></span>`,
+    template: `<span><button type="button" rel="tooltip" (click)="invokeParentMethod()" class="bs3-btn bs3-btn-default"><i class="material-icons">content_paste</i></button></span>`,
     styles: [
-        `.btn {
+        `.bs3-btn {
             line-height: 0.5;
             padding: 0px 0px;
         }

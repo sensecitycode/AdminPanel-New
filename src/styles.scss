@@ -1,0 +1,150 @@
+/* You can add global styles to this file, and also import other style files */
+/*@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";*/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@angular/material/theming';
+$custom-typography: mat-typography-config(
+    $font-family: 'Open Sans, sans-serif'
+);
+@include angular-material-typography($custom-typography);
+
+body {
+    background-color: #eee !important;
+    color:#3c4858 !important;
+    font-family: "Open Sans", sans-serif !important;
+    font-weight: 400 !important;
+    line-height: 1.4em !important;
+    font-size: 16px !important;
+}
+
+/*  dialog box custom settings*/
+.mat-dialog-container {
+    padding: 0px !important;
+    overflow: hidden !important;
+}
+.mat-dialog-actions:last-child {
+    margin-bottom: 0px !important;
+}
+
+
+/*  full width all forms in app */
+.example-form {
+   // min-width: 150px;
+   width: 100%;
+}
+.example-full-width {
+   width: 100%;
+   padding: 5px 0px;
+}
+
+.ag-cell-focus,.ag-cell-no-focus{
+border:none !important;
+}
+.ag-cell:focus{
+border:none !important;
+outline: none;
+}
+
+
+input[type=password] {
+    border-bottom: none !important;
+    height: inherit !important;
+}
+input[type=password]:focus {
+    border-bottom: none!important;
+    box-shadow: none!important;
+}
+input[type=password].bs3-form-control {
+    display: block!important;
+    box-sizing:inherit!important;
+    width: 100%!important;
+    height: 34px!important;
+    padding: 6px 12px!important;
+    font-size: 14px!important;
+    line-height: 1.42857143!important;
+    color: #555!important;
+    background-color: #fff!important;
+    background-image: none!important;
+    border: 1px solid #ccc!important;
+    border-radius: 4px!important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075)!important;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
+}
+
+input[type=password].bs3-form-control:focus {
+    border:2px solid #72aada !important
+}
+
+.bs3-form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.bs3-form-control:disabled {
+    background: transparent;
+    cursor: not-allowed;
+}
+
+.bs4-form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.bs3-btn-default {
+    color: #333 !important;
+    background-color: #fff !important;
+    border-color: #ccc !important;
+}
+
+.bs3-btn-default:hover {
+    color: #333 !important;
+    background-color: #e6e6e6 !important;
+    border-color: #adadad !important;
+}
+
+.bs3-btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.bs3-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}

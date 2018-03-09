@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class HomeComponent implements OnInit {
 

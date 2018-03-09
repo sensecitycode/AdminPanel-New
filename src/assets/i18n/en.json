@@ -144,7 +144,10 @@
         "DEPARTMENT_EDIT_INFO":"<strong>Ιnformation</strong><li>Department name, manager and notification list editing service is not yet available!</li><li>Users with the 'Issues Administrator' role are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
         "DEP_ADDED_MSG":"<strong>{{name}}</strong> was successfully added!",
         "DEP_ADDED_ERROR_MSG":"An error occured adding department <strong>{{name}}</strong>!",
-        "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!"
+        "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!",
+        "ISSUES":"Issues",
+        "ISSUES_DESC":"View and administer city issues of a selected category",
+        "ALL_ISSUES":"All"
     },
 
     "CITIES":

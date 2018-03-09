@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -16,6 +16,8 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 import { ToastrModule } from 'ngx-toastr';
+
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { MatFormFieldModule,
          MatInputModule,
@@ -61,6 +63,7 @@ import { AddDepartmentComponent } from './dashboard/departments/add-department/a
 import { depEditRendererComponent } from './dashboard/departments/list-departments/dep-edit-renderer.component';
 import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
 import { EditDepartmentComponent } from './dashboard/departments/display-department/edit-department/edit-department.component';
+import { IssuesComponent } from './dashboard/issues/issues.component';
 
 
 
@@ -97,7 +100,8 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         AddDepartmentComponent,
         depEditRendererComponent,
         DisplayDepartmentComponent,
-        EditDepartmentComponent
+        EditDepartmentComponent,
+        IssuesComponent
     ],
     imports: [
         BrowserModule,
@@ -131,8 +135,10 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         NgProgressModule.forRoot(),
         NgProgressHttpModule,
         CommonModule,
-        ToastrModule.forRoot({preventDuplicates: true})
+        ToastrModule.forRoot({preventDuplicates: true}),
+        MDBBootstrapModule.forRoot()
     ],
+    schemas: [ NO_ERRORS_SCHEMA ],
     providers: [TranslationService],
     bootstrap: [AppComponent]
 })

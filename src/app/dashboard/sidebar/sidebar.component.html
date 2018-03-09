@@ -19,7 +19,7 @@
 
 <nav id="sidebar" [ngClass]="{'active':isToggled == true}">
     <div class="sidebar-header">
-        <h2 style="padding: 8px 10px; margin: 10px;"><a routerLink='./home'><i class="ion-ios-analytics-outline" style="margin-right:8px; top:1px; position:relative;"></i>sense.city</a></h2>
+        <h3 style="padding: 15px 20px;"><a routerLink='./home'><i class="ion-ios-analytics-outline" style="margin-right:8px; top:1px; position:relative;"></i>sense.city</a></h3>
         <strong><a routerLink='./home'><i class="ion-ios-analytics-outline"></i><br />sense city</a></strong>
     </div>
 
@@ -38,19 +38,27 @@
         <li *ngIf = "userRoles.indexOf('cityAdmin')!=-1" [ngClass]="{'components':true,  'active':selectedRole == 'cityAdmin'}">
             <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'cityAdmin'" (click)="selectRole('cityAdmin')">{{'ROLES.cityAdmin' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'cityAdmin'}" >
-                <li routerLinkActive="active" *ngFor="let menuItem of menuItems" >
-                    <a  [routerLink]="[menuItem.path]">
-                        <i class="material-icons">{{menuItem.icon}}</i>
-                        {{menuItem.title | translate}}
-                    </a>
-                </li>
+                <div *ngFor="let menuItem of menuItems">
+                    <li routerLinkActive="active" *ngIf="menuItem.role == 'cityAdmin'" >
+                        <a  [routerLink]="[menuItem.path]">
+                            <i class="material-icons">{{menuItem.icon}}</i>
+                            {{menuItem.title | translate}}
+                        </a>
+                    </li>
+                </div>
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('cityManager')!=-1" [ngClass]="{'components':true,'active':selectedRole == 'cityManager'}">
             <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'cityManager'" (click)="selectRole('cityManager')">{{'ROLES.cityManager' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'cityManager'}">
-                <li><a>Link1</a></li>
-                <li><a>Link2</a></li>
+                <div *ngFor="let menuItem of menuItems">
+                    <li routerLinkActive="active" *ngIf="menuItem.role == 'cityManager'" >
+                        <a  [routerLink]="[menuItem.path]">
+                            <i class="material-icons">{{menuItem.icon}}</i>
+                            {{menuItem.title | translate}}
+                        </a>
+                    </li>
+                </div>
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('departmentAdmin')!=-1" [ngClass]="{'active':selectedRole == 'departmentAdmin'}">

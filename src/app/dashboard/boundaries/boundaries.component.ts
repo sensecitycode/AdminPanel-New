@@ -2,6 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tileLayer, latLng, marker, icon, LeafletMouseEvent, Polygon, polygon, geoJSON, GeoJSON, point } from 'leaflet';
 import { Map } from 'leaflet';
+import { TranslationService } from '../../shared/translation.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -12,12 +15,22 @@ import { Map } from 'leaflet';
 })
 export class BoundariesComponent implements OnInit {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private translationService:TranslationService, private toastr: ToastrService) { }
 
     city:string = sessionStorage.getItem('city');
     mapInit:object;
     boundaryLayer = [];
     geoJSON:GeoJSON;
+
+    geojsonFeature:any = {
+        "type": "FeatureCollection",
+        "features": [{
+            "type": "Feature",
+            "id": "Multipolygon",
+            "properties": {"name": "Multipolygon"},
+            "geometry": {"type": "", "coordinates": ""}
+        }]
+    }
 
     ngOnInit() {
         this.mapInit = {
@@ -34,33 +47,19 @@ export class BoundariesComponent implements OnInit {
             })
             .subscribe(
                 data => {
-                    var geojsonFeature = {
-                        "type": "FeatureCollection",
-                        "features": [{
-                            "type": "Feature",
-                            "id": "Multipolygon",
-                            "properties": {"name": "Multipolygon"},
-                            "geometry": {"type": data[0].boundaries.type, "coordinates": data[0].boundaries.coordinates}
-                        }]
-                    };
-                    this.geoJSON = geoJSON(geojsonFeature);
+                    this.geojsonFeature.features[0].geometry = {"type": data[0].boundaries.type, "coordinates": data[0].boundaries.coordinates};
+
+                    this.geoJSON = geoJSON(this.geojsonFeature);
 
                     this.boundaryLayer = [
                         this.geoJSON
                     ];
                 },
                 error => {
-                    console.log('error occured');
+                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 },
-                () => {
-                    clearTimeout(getBoundaries_canc);
-                }
+                () => {}
             );
-
-            let getBoundaries_canc = setTimeout(() => {
-                getBoundaries.unsubscribe();
-                alert("Error fetching city boundaries!");
-            }, 10000);
         }
 
     onMapReady(map: Map){

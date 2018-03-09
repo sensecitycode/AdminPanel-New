@@ -1,20 +1,15 @@
-.panel {
-    margin-bottom: 5px;
+.card {
+    margin: 5px 0px;
 }
 
-.panel-body {
+.card-body {
     padding: 5px;
 }
 
-.btn-xs {
-    float:right;
+.btn-sm {
+    padding: 0.2rem 0.5rem;
+    margin:1px;
 }
-
-.example-card {
-    background-color: #eee;
-    /* width: 500px; */
-}
-
 .example-header-image {
     background-size: cover;
 }

@@ -20,6 +20,7 @@ import { ListDepartmentsComponent } from './dashboard/departments/list-departmen
 import { AddDepartmentComponent } from './dashboard/departments/add-department/add-department.component';
 import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
 import { EditDepartmentComponent } from './dashboard/departments/display-department/edit-department/edit-department.component';
+import { IssuesComponent } from './dashboard/issues/issues.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { EnvironmentSpecificResolver } from './envSpecific/environment-specific-resolver';
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
             {path: 'boundaries', component: BoundariesComponent},
             {path: 'policy', component: PolicyComponent},
             {path: 'account', component: AccountComponent},
+            {path: 'issues', component: IssuesComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
         { path: '**', redirectTo: 'welcome', pathMatch: 'full'}

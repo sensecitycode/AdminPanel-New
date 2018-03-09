@@ -12,7 +12,7 @@ import { DepartmentsService } from '../../departments.service';
     selector: 'app-edit-department',
     templateUrl: './edit-department.component.html',
     styleUrls: ['./edit-department.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class EditDepartmentComponent implements OnInit {
 
@@ -192,7 +192,7 @@ export class EditDepartmentComponent implements OnInit {
     onResetEdit() {
         this.depEditForm.setValue(this.originalDepFormValue);
         this.allDepartmentUsers = this.originalDepFormValue['users'];
-        this.nonIssueAdmins = this.originalNonIssueAdmins;
+        this.nonIssueAdmins = this.originalNonIssueAdmins.slice();
     }
 
     ngOnDestroy() {

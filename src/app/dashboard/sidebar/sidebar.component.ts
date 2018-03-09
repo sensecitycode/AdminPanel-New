@@ -4,13 +4,15 @@ declare interface RouteInfo {
     path: string;
     title: string;
     icon: string;
+    role: string;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: 'home', title: 'DASHBOARD.DASHB',  icon: 'dashboard'},
-    { path: 'users', title: 'DASHBOARD.USERS',  icon:'people'},
-    { path: 'departments', title: 'DASHBOARD.DEPARTMENTS',  icon:'build'},
-    { path: 'boundaries', title: 'DASHBOARD.BOUNDARIES',  icon:'map'},
-    { path: 'policy', title: 'DASHBOARD.POLICIES',  icon:'bubble_chart'},
+    { path: 'home', title: 'DASHBOARD.DASHB',  icon: 'dashboard', role: 'cityAdmin'},
+    { path: 'users', title: 'DASHBOARD.USERS',  icon:'people', role: 'cityAdmin'},
+    { path: 'departments', title: 'DASHBOARD.DEPARTMENTS',  icon:'build', role: 'cityAdmin'},
+    { path: 'boundaries', title: 'DASHBOARD.BOUNDARIES',  icon:'map', role: 'cityAdmin'},
+    { path: 'policy', title: 'DASHBOARD.POLICIES',  icon:'bubble_chart', role: 'cityAdmin'},
+    { path: 'issues', title: 'DASHBOARD.ISSUES', icon:'tv', role: 'cityManager'}
     // { path: 'maps', title: 'Maps',  icon:'library_books'},
     // { path: 'notifications', title: 'Notifications',  icon:'notifications'},
     // { path: 'upgrade', title: 'Upgrade to PRO',  icon:'unarchive'},
