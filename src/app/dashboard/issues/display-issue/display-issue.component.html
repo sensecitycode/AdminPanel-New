@@ -1,17 +1,17 @@
-<div class="col-md-12 back_btn">
-    <button mat-raised-button class="btn-light" [routerLink]="['../']"><i class="material-icons" style="font-size: 20px">arrow_back</i> {{'BACK' | translate}} </button>
+<div class="row">
+    <div class="col-md-12 back_btn">
+        <button mat-raised-button class="btn-light" [routerLink]="['../']"><i class="material-icons" style="font-size: 20px">arrow_back</i> {{'BACK' | translate}} </button>
+    </div>
 </div>
-<div class="row justify-content-center">
-    <div class="col-xl-6 col-lg-10 col-md-12">
-        <mat-card class="example-card">
-            <mat-card-header>
-                <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">account_circle</i></div>
-                <mat-card-title>{{'DASHBOARD.USER' | translate}}</mat-card-title>
-                <mat-card-subtitle><span>{{username}}</span></mat-card-subtitle>
-            </mat-card-header>
-            <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-            <mat-card-content>
-
+<div class="row">
+    <div class="col-lg-7 col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
+                    {{issue?.bug_id}} ({{'DASHBOARD.'+issue?.issue | translate}} - {{issue?.value_desc}}) -- {{issue?.created_ago}}
+                </h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <table class="table table-user-information">
                     <tbody>
                         <tr>
@@ -53,23 +53,23 @@
                         </tr>
                     </tbody>
                 </table>
-                <button mat-button [routerLink]="['edit']" class="btn-light" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons">edit</i> {{'DASHBOARD.EDIT_USER' | translate}}</button>
-            </mat-card-content>
-        </mat-card>
-
-        <!-- <div class='alert-danger message text-center' [ngStyle]="{'display':(userServiceMsg == 'error') ? 'block' : 'none'}" >
-            <i class="fa fa-close" style="margin-right:5px"></i><span [innerHTML]="'SERVICES_ERROR_MSG' | translate"></span>
-        </div> -->
-
-
-        <!-- <div class="col-md-12">
-        <button mat-raised-button color="warn" data-background-color="orange" (click)="onResetPassword()" >{{ 'DASHBOARD.RESET_PASSWORD'| translate }}</button>
-        <div *ngIf='resetPasswordMsg' class='dialog-alert example-full-width alert-danger'>
-        {{ 'DASHBOARD.RESET_PASSWORD_MSG' | translate }} <strong>{{originalEmailField}}</strong>
-
+                <a class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
     </div>
-    </div> -->
-
+    <div class="col-lg-5 col-md-12">
+        <div style="min-height:500px;" id="issuesmap"
+        leaflet
+        (leafletMapReady)="onMapReady($event)"
+        (leafletMarkerClusterReady)="markerClusterReady($event)"
+        [leafletOptions]="mapInit"
+        [leafletMarkerCluster]="markerClusterData"
+        [leafletMarkerClusterOptions]="markerClusterOptions"
+        [leafletZoom]="issueZoom"
+        [leafletCenter]="issueCenter"
+        [leafletLayers]="mapLayers"
+        [leafletLayersControl]="layersControl">
+        </div>
     </div>
 
 </div>

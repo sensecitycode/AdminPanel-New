@@ -21,6 +21,8 @@ import { AddDepartmentComponent } from './dashboard/departments/add-department/a
 import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
 import { EditDepartmentComponent } from './dashboard/departments/display-department/edit-department/edit-department.component';
 import { IssuesComponent } from './dashboard/issues/issues.component';
+import { ListIssuesComponent } from './dashboard/issues/list-issues/list-issues.component';
+import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-issue.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { EnvironmentSpecificResolver } from './envSpecific/environment-specific-resolver';
@@ -48,7 +50,10 @@ const appRoutes: Routes = [
             {path: 'boundaries', component: BoundariesComponent},
             {path: 'policy', component: PolicyComponent},
             {path: 'account', component: AccountComponent},
-            {path: 'issues', component: IssuesComponent},
+            {path: 'issues', component: IssuesComponent, children:[
+                {path: '', component: ListIssuesComponent},
+                {path: ':name', component: DisplayIssueComponent}
+            ]},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
         { path: '**', redirectTo: 'welcome', pathMatch: 'full'}

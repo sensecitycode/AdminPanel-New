@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { UsersService } from './users/users.service';
 import { DepartmentsService } from './departments/departments.service';
 import { TranslationService } from '../shared/translation.service';
+import { IssuesService } from './issues/issues.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from '../auth/auth.service';
 import { AppBootStrapComponent } from '../../app/app-bootstrap.component';
@@ -12,7 +13,7 @@ import { AppBootStrapComponent } from '../../app/app-bootstrap.component';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     encapsulation: ViewEncapsulation.None,
-    providers: [ UsersService, DepartmentsService ]
+    providers: [ UsersService, DepartmentsService, IssuesService ]
 })
 
 export class DashboardComponent implements OnInit {
@@ -22,7 +23,8 @@ export class DashboardComponent implements OnInit {
         private usersServ: UsersService,
         private depServ: DepartmentsService,
         private authService: AuthService,
-        private bootstrapComp : AppBootStrapComponent) { }
+        private bootstrapComp : AppBootStrapComponent,
+        private issuesService: IssuesService) { }
 
     // onLangMenuTrigger() {
     //   this.trigger.openMenu();
@@ -44,6 +46,10 @@ export class DashboardComponent implements OnInit {
         this.depServ.uuid = this.uuid;
         this.depServ.city = this.city;
         this.depServ.API = this.bootstrapComp.API;
+        this.issuesService.role = this.role;
+        this.issuesService.uuid = this.uuid;
+        this.issuesService.city = this.city;
+        this.issuesService.API = this.bootstrapComp.API;
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {console.log("usersChanged: " + status);}

@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-lg-7 col-md-12">
+        <div class="row">
+            <div class="col-xl-4 col-lg-6">
+                <mat-form-field class="example-full-width">
+                    <mat-select [(value)]="issuesService.issuesSorting" placeholder="{{'SORTING' | translate}}">
+                        <mat-option value="-1" (click)="changeIssueSorting('-1')">{{'SORTING_NEWER_FIRST'|translate}}</mat-option>
+                        <mat-option value="1" (click)="changeIssueSorting('1')">{{'SORTING_OLDER_FIRST'|translate}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-xl-4 col-lg-6">
+                <mat-form-field class="example-full-width">
+                    <mat-select [(value)]="issuesService.issuesSelected" placeholder="{{'DASHBOARD.ISSUES_TYPE' | translate}}">
+                        <mat-option *ngFor = "let issue of issue_types" value="{{issue.type}}" (click)="changeIssueType(issue.type)"><span class = "{{issue.icon}}"></span> {{'DASHBOARD.'+issue.type | translate}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-xl-4 col-lg-12 refresh_btn_container">
+                <button mat-raised-button class="btn-light" (click)="fetchIssues()"><i class="material-icons">refresh</i> {{'REFRESH' | translate}} </button>
+            </div>
+
+        </div>
+        <div *ngFor='let issue of issues' class="card">
+            <div class="card-body" (click)="onDisplayIssueDetails(issue)">
+                <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
+                {{issue.bug_id}} ({{'DASHBOARD.'+issue.issue | translate}} - {{issue.value_desc}}) -- {{issue.created_ago}}
+            </div>
+        </div>
+        <div class='text-right'>
+            <span style="vertical-align: middle;">Results:</span>
+            <div class="btn-group">
+                <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="20" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
+                    20
+                </label>
+                <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="50" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
+                    50
+                </label>
+                <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="100" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
+                    100
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5 col-md-12">
+        <div style="min-height:500px;" id="issuesmap"
+        leaflet
+        (leafletMapReady)="onMapReady($event)"
+        (leafletMarkerClusterReady)="markerClusterReady($event)"
+        [leafletOptions]="mapInit"
+        [leafletMarkerCluster]="markerClusterData"
+        [leafletMarkerClusterOptions]="markerClusterOptions"
+        [leafletLayers]="mapLayers"
+        [leafletLayersControl]="layersControl">
+        </div>
+    </div>
+</div>

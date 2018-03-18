@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslationService } from './shared/translation.service';
@@ -31,7 +32,8 @@ import { MatFormFieldModule,
          MatSelectModule,
          MatCardModule,
          MatProgressSpinnerModule,
-         MatDialogModule, } from '@angular/material';
+         MatDialogModule,
+         MatRadioModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -64,6 +66,8 @@ import { depEditRendererComponent } from './dashboard/departments/list-departmen
 import { DisplayDepartmentComponent } from './dashboard/departments/display-department/display-department.component';
 import { EditDepartmentComponent } from './dashboard/departments/display-department/edit-department/edit-department.component';
 import { IssuesComponent } from './dashboard/issues/issues.component';
+import { ListIssuesComponent } from './dashboard/issues/list-issues/list-issues.component';
+import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-issue.component';
 
 
 
@@ -101,7 +105,9 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         depEditRendererComponent,
         DisplayDepartmentComponent,
         EditDepartmentComponent,
-        IssuesComponent
+        IssuesComponent,
+        ListIssuesComponent,
+        DisplayIssueComponent
     ],
     imports: [
         BrowserModule,
@@ -123,7 +129,9 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         MatCardModule,
         MatProgressSpinnerModule,
         MatDialogModule,
+        MatRadioModule,
         LeafletModule,
+        LeafletMarkerClusterModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

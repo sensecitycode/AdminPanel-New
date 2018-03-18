@@ -7,11 +7,15 @@
     "SUBMIT":"Submit",
     "RESET":"Reset",
     "CANCEL":"Cancel",
+    "REFRESH":"Refresh",
     "LANGUAGE":"Ελ",
     "FILTER":"Filter",
     "OTHERS":"others",
     "SUCCESS":"Success",
     "ERROR":"Error",
+    "SORTING":"Sorting",
+    "SORTING_NEWER_FIRST":"Newer first",
+    "SORTING_OLDER_FIRST":"Older first",
     "REQ_ERR":"Field is <strong>required</strong>",
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
@@ -147,7 +151,53 @@
         "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!",
         "ISSUES":"Issues",
         "ISSUES_DESC":"View and administer city issues of a selected category",
-        "ALL_ISSUES":"All"
+        "ISSUES_TYPE":"Issues type",
+        "all":"All",
+        "garbage":"Cleaning",
+        "lighting":"Lighting",
+        "plumbing":"Plumbing",
+        "road-constructor":"Pavement / Road / Square",
+        "protection-policy":"Civil Protection",
+        "green":"Gardening",
+        "environment":"Enviromental",
+        "FIXED_POINTS":"Bins/Lighting",
+        "NUMBER_OF_ISSUES":"Number of issues",
+        "ASSIGNED_DEPARTMENT":"Department assigned to",
+        "STATE":"State",
+        "STATE_STATUS":
+        {
+            "CONFIRMED":"Confirmed",
+            "IN_PROGRESS":"In progress",
+            "RESOLVED":"Resolved"
+        },
+        "REPORTED":"Reported",
+        "PRIORITY":"Priority",
+        "PRIORITY_STATUS":
+        {
+            "LOW":"Low",
+            "NORMAL":"Normal",
+            "HIGH":"High"
+        },
+        "IMPORTANCE":"Importance",
+        "IMPORTANCE_STATUS":
+        {
+            "CRITICAL":"Critical",
+            "MAJOR":"Major",
+            "NORMAL":"Normal",
+            "MINOR":"Minor",
+            "MINIMAL":"Minimal",
+            "ENHANCEMENT":"Enhancement"
+        },
+        "FULL_NAME":"Full name",
+        "CC_LIST":"Also interested",
+        "ADMINISTRATION":"Administration",
+        "ASSIGNED_TO":"Assigned to",
+        "COMMENTS":"Comments",
+        "FILES":"Files",
+        "BROWSE":"Browse",
+        "NEW_USER_SUBSCRIBED":"New user {{fullName}} subscription",
+        "USER_COMMENTED":"Comment from {{fullName}}",
+        "USER_UPLOADED_FILES":"Files from {{fullName}}"
     },
 
     "CITIES":

@@ -1,0 +1,36 @@
+
+.fa-exclamation-triangle {
+    color:red
+}
+
+.fa-tasks {
+    color:orange
+}
+
+.fa-check-square {
+    color:green
+}
+
+.card {
+    margin: 5px 0px;
+}
+
+.card-body {
+    padding: 10px;
+    cursor:pointer;
+}
+
+.card-body:hover {
+    background: #eee;
+}
+
+.results_btn{
+    color:#3c4858 !important;
+    padding: 0.35rem 0.63rem;
+}
+
+.refresh_btn_container {
+    display:flex;
+    align-items:center; /* vertically aligned! */
+    justify-content: flex-end;
+}

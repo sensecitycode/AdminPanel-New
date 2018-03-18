@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 /*@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";*/
+// @import '~leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css';
+@import '~leaflet.markercluster/dist/MarkerCluster.css';
+@import '~leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~@angular/material/theming';
 $custom-typography: mat-typography-config(

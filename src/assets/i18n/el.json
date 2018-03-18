@@ -7,11 +7,15 @@
     "SUBMIT":"Υποβολή",
     "RESET":"Επαναφορά",
     "CANCEL":"Ακύρωση",
+    "REFRESH":"Ανανέωση",
     "LANGUAGE":"En",
     "FILTER":"Φίλτρο",
     "OTHERS":"υπόλοιποι",
     "SUCCESS":"Επιτυχία",
     "ERROR":"Σφάλμα",
+    "SORTING":"Ταξινόμηση",
+    "SORTING_NEWER_FIRST":"Νεότερα πρώτα",
+    "SORTING_OLDER_FIRST":"Παλαιότερα πρώτα",
     "REQ_ERR":"Το πεδίο είναι <strong>απαραίτητο</strong>",
     "VALID_MAIL_ERR":"Η διεύθυνση email <strong>δεν είναι έγκυρη</strong>",
     "MATCHING_PASS_ERR":"Οι κωδικοί <strong>δεν ταιριάζουν</strong>",
@@ -147,7 +151,53 @@
         "DEP_NAME_EXISTS_MSG":"Το όνομα τμήματος <strong>{{name}}</strong> δεν είναι διαθέσιμο!",
         "ISSUES":"Προβλήματα",
         "ISSUES_DESC":"Εποπτεία και διαχείριση προβλημάτων επιλεγμένης κατηγορίας",
-        "ALL_ISSUES":"Όλα"
+        "ISSUES_TYPE":"Τύπος προβλημάτων",
+        "all":"Όλα",
+        "garbage":"Καθαριότητας",
+        "lighting":"Ηλεκτροφωτισμού",
+        "plumbing":"Ύδρευσης",
+        "road-constructor":"Πεζοδρομίου / Δρόμου / Πλατείας",
+        "protection-policy":"Πολιτικής Προστασίας",
+        "green":"Πρασίνου",
+        "environment":"Περιβάλλοντος",
+        "FIXED_POINTS":"Κάδοι/Φωτισμός",
+        "NUMBER_OF_ISSUES":"Πλήθος προβλημάτων",
+        "ASSIGNED_DEPARTMENT":"Τμήμα Ανάθεσης",
+        "STATE":"Κατάσταση",
+        "STATE_STATUS":
+        {
+            "CONFIRMED":"Επιβεβαιωμένο",
+            "IN_PROGRESS":"Σε εκτέλεση",
+            "RESOLVED":"Ολοκληρωμένο"
+        },
+        "REPORTED":"Αναφορά",
+        "PRIORITY":"Προτεραιότητα",
+        "PRIORITY_STATUS":
+        {
+            "LOW":"Χαμηλή",
+            "NORMAL":"Κανονική",
+            "HIGH":"Υψηλή"
+        },
+        "IMPORTANCE":"Σπουδαιότητα",
+        "IMPORTANCE_STATUS":
+        {
+            "CRITICAL":"Κρίσιμο",
+            "MAJOR":"Μείζον",
+            "NORMAL":"Κανονικό",
+            "MINOR":"Ελάσσον",
+            "MINIMAL":"Μηδαμινό",
+            "ENHANCEMENT":"Βελτίωση"
+        },
+        "FULL_NAME":"Ονοματεπώνυμο",
+        "CC_LIST":"Επίσης ενδιαφέρονται",
+        "ADMINISTRATION":"Διαχείριση",
+        "ASSIGNED_TO":"Ανάθεση σε",
+        "COMMENTS":"Σχόλια",
+        "FILES":"Αρχεία",
+        "BROWSE":"Αναζήτηση",
+        "NEW_USER_SUBSCRIBED":"Εγγραφή νέου χρήστη {{fullName}}",
+        "USER_COMMENTED":"Σχόλιο από {{fullName}}",
+        "USER_UPLOADED_FILES":"Αρχεία από {{fullName}}"
     },
 
     "CITIES":
