@@ -110,7 +110,7 @@ export class MapLinkComponent implements OnInit{
                     .subscribe(
                         data => {
                             // console.log(data.results);
-                            this.translationService.getLanguage();
+                            // this.translationService.getLanguage();
                             // for (let res_index in data.results){
                             //    // console.log(data.results[res_index]);
                             //    for (let addr_ind in data.results[res_index].address_components ){

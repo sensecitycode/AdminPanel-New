@@ -19,6 +19,7 @@ export class TranslationService {
     }
 
     getLanguage() {
+        console.log(this.translate.currentLang)
         return this.translate.currentLang;
     }
 

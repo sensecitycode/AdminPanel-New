@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 declare interface RouteInfo {
     path: string;
@@ -31,13 +32,16 @@ export class SidebarComponent implements OnInit {
     userRoles = [];
     selectedRole:string;
 
-    constructor() { }
+    constructor(private activatedRoute:ActivatedRoute) { }
 
     menuItems: any[];
     ngOnInit() {
         this.userRoles =  sessionStorage.getItem('role').split(',');
-        this.selectedRole = this.userRoles[0];
         console.log(this.userRoles);
+
+        var routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
+        this.selectedRole = this.userRoles[this.userRoles.indexOf(ROUTES[routeIndex].role)];
+
         this.menuItems = ROUTES.filter(menuItem => menuItem);
         // console.log(this.menuItems);
         // console.log(this.isToggled);

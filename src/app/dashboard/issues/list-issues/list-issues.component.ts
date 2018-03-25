@@ -27,7 +27,7 @@ import * as moment from 'moment';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class ListIssuesComponent implements OnInit {
-
+    initial_language = this.translationService.getLanguage()
 
     issuesPerPage = this.issuesService.issuesViewPerPage;
     sorting_value = this.issuesService.issuesSorting;
@@ -134,24 +134,28 @@ export class ListIssuesComponent implements OnInit {
                     chunkedLoading: true
                 }
 
-                this.layersControl = {
-            		overlays: {
-            			"<span class='fa fa-trash-o fa-2x'></span> Static Points": this.markerClusterGroup,
-            			// StaticLightingMarkers: StaticLightingMarkers
-            		}
-            	};
+                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+
+                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+
+                // this.layersControl = {
+            	// 	overlays: {
+            	// 		"<span class='fa fa-trash-o fa-2x'></span> Static Points": this.markerClusterGroup,
+            	// 		// StaticLightingMarkers: StaticLightingMarkers
+            	// 	}
+            	// };
             },
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
             () => {    }
         )
         // map.on ('layeradd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
+        // map.on ('click', (ev:L.LeafletMouseEvent) => {console.log(ev)});
     }
 
 
     markerClusterReady(group: L.MarkerClusterGroup) {
         // console.log(group)
         this.markerClusterGroup = group;
-
     }
 
 
@@ -196,44 +200,26 @@ export class ListIssuesComponent implements OnInit {
         this.router.navigate([issue.bug_id], {relativeTo: this.activatedRoute});
     }
 
+
+
     displayIssuesOnMap(issues) {
         this.mapLayers = [];
         let allIssueMarkers = [];
         let icon:string;
         // for (let [index, issue] of issues.entries()) {
         issues.forEach((issue, index) => {
-            this.issues[index].created_ago = moment(new Date(issue.create_at)).fromNow();
-            switch (issue.issue) {
-                case 'lighting':
-                    icon = 'fa-lightbulb-o';
-                    break;
-                case 'road-constructor':
-                    icon = 'fa-road';
-                    break;
-                case 'garbage':
-                    icon = 'fa-trash-o';
-                    break;
-                case 'green':
-                    icon = 'fa-tree';
-                    break;
-                case 'plumbing':
-                    //
-                    // not yet supported
-                    //
-                case 'environment':
-                    icon = 'fa-leaf';
-                    break;
-                case 'protection-policy':
-                    icon = 'fa-shield';
-                    break;
-            }
+            this.issues[index].created_ago = moment(new Date(issue.create_at)).locale(this.initial_language).fromNow();
+
+            icon = this.issuesService.get_issue_icon(issue.issue)
             let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
                 icon: icon,
                 markerColor: 'red',
                 prefix: 'fa',
             });
 
-            let issueMarker = new L.Marker([issue.loc.coordinates[1],issue.loc.coordinates[0]], {icon: AwesomeMarker})
+            let issueMarker = new L.Marker([issue.loc.coordinates[1],issue.loc.coordinates[0]], {icon: AwesomeMarker, alt:issue.bug_id})
+            issueMarker.on('click', ev => {this.router.navigate([ev.target.options.alt], {relativeTo: this.activatedRoute});})
+
             allIssueMarkers.push(issueMarker)
         })
         console.log(allIssueMarkers.length)
@@ -252,5 +238,7 @@ export class ListIssuesComponent implements OnInit {
             () => {}
         )
     }
+
+
 
 }

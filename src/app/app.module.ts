@@ -4,6 +4,10 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { LOCALE_ID } from '@angular/core';
+
+import { registerLocaleData } from '@angular/common';
+import localeEl from '@angular/common/locales/el'
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
@@ -19,6 +23,7 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { ToastrModule } from 'ngx-toastr';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { LightboxModule } from 'angular2-lightbox'
 
 import { MatFormFieldModule,
          MatInputModule,
@@ -33,7 +38,8 @@ import { MatFormFieldModule,
          MatCardModule,
          MatProgressSpinnerModule,
          MatDialogModule,
-         MatRadioModule} from '@angular/material';
+         MatRadioModule,
+         MatTooltipModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -74,6 +80,7 @@ import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-
 export function HttpLoaderFactory(httpclient:HttpClient) {
     return new TranslateHttpLoader(httpclient, './assets/i18n/', '.json');
 }
+registerLocaleData(localeEl);
 
 @NgModule({
     declarations: [
@@ -130,6 +137,7 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         MatProgressSpinnerModule,
         MatDialogModule,
         MatRadioModule,
+        MatTooltipModule,
         LeafletModule,
         LeafletMarkerClusterModule,
         TranslateModule.forRoot({
@@ -144,10 +152,13 @@ export function HttpLoaderFactory(httpclient:HttpClient) {
         NgProgressHttpModule,
         CommonModule,
         ToastrModule.forRoot({preventDuplicates: true}),
-        MDBBootstrapModule.forRoot()
+        MDBBootstrapModule.forRoot(),
+        LightboxModule
     ],
     schemas: [ NO_ERRORS_SCHEMA ],
-    providers: [TranslationService],
+    providers: [TranslationService, {provide: LOCALE_ID, deps:[TranslationService], useFactory: (TranslationService) => TranslationService.getLanguage()}],
     bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }

@@ -46,62 +46,6 @@ export class DepartmentsService {
             )
     }
 
-    get_userDetails (username) {
-        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserDetails = this.httpClient.get<[object]>(`${this.API}/admin/user/${username}`,
-            {
-                headers: reqheaders
-            })
-            .subscribe(
-                data => {this.userDetails = data;},
-                error => {console.log('error occured fetching user details')},
-                () =>
-                    {
-                        clearTimeout(fetchUserDetails_canc);
-                        this.usersChanged.next("userDetailsFetched");
-                    }
-            )
-
-        let fetchUserDetails_canc = setTimeout(()=>{
-            fetchUserDetails.unsubscribe();
-            alert("Fetch User Details Service not working!");
-        }, 10000);
-    }
-
-    get_userRoles() {
-        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid);
-        const fetchUserRoles = this.httpClient.get<[object]>(`${this.API}/admin/roles`,
-            {
-                headers: reqheaders
-            })
-            .subscribe(
-                data => { this.roleslist = data; console.log(data)},
-                error => {console.log('error occured fetching user roles')},
-                () =>
-                    {
-                        clearTimeout(fetchUserRoles_canc);
-                        this.usersChanged.next("userRolesFetched");
-                    }
-            )
-
-        let fetchUserRoles_canc = setTimeout(()=>{
-            fetchUserRoles.unsubscribe();
-            alert("Fetch User Roles Service not working!");
-        }, 6000);
-    }
-
-
-    return_rolesList() {
-        return this.roleslist.slice();
-    }
-
-    return_userArray() {
-        return this.users.slice();
-    }
-
-    return_userDetails() {
-        return this.userDetails[0];
-    }
 
     return_departmentsArray() {
         return this.departments.slice();

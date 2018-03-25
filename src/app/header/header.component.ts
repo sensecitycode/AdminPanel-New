@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
     }
-    currentLang:string = 'el';
+    currentLang:string = this.translationService.getLanguage();
     langToEl() {
         this.translationService.switchLanguage("el");
         this.currentLang = 'el';
@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
     langToEn() {
         this.translationService.switchLanguage("en");
         this.currentLang = 'en';
-
     }
 
 }

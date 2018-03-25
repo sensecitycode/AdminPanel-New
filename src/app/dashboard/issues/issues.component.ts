@@ -1,16 +1,19 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+
+import { DepartmentsService } from '../departments/departments.service';
 
 @Component({
-  selector: 'app-issues',
-  templateUrl: './issues.component.html',
-  styleUrls: ['./issues.component.css'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'app-issues',
+    templateUrl: './issues.component.html',
+    styleUrls: ['./issues.component.css'],
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class IssuesComponent implements OnInit {
 
-  constructor() { }
+    constructor(private depServ: DepartmentsService) { }
 
-  ngOnInit() {
-  }
 
+    ngOnInit() {
+        this.depServ.populate_departmentsArray()
+    }
 }

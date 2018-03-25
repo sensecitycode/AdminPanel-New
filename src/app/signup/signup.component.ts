@@ -62,21 +62,21 @@ export class SignupComponent implements OnInit {
             department: this.accountForm.get('department').value,
         }
         console.log(submitObject)
-        // this.http.post<any>(`${this.API}/admin/add_city`, submitObject)
-        //     .subscribe(
-        //         data => { console.log(data) },
-        //         error => {
-        //             alert("Check email availability service is not responding!");
-        //             if (error.error){}
-        //             // this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-        //         },
-        //         () => {
-        //             if (this.emailExists == "1" ) {
-        //                 this.personalInfoForm.get('email').setErrors({emailExists:true})
-        //             }
-        //             // clearTimeout(fetchUsers_canc);
-        //         }
-        //     )
-        
+    //     this.http.post<any>(`${this.API}/admin/add_city`, submitObject)
+    //         .subscribe(
+    //             data => { console.log(data) },
+    //             error => {
+    //                 // alert("Check email availability service is not responding!");
+    //                 if (error.error){}
+    //                 // this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+    //             },
+    //             () => {
+    //                 // if (this.emailExists == "1" ) {
+    //                 //     this.personalInfoForm.get('email').setErrors({emailExists:true})
+    //                 // }
+    //                 // clearTimeout(fetchUsers_canc);
+    //             }
+    //         )
+    //
     };
 }

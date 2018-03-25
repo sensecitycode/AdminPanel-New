@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     uuid:string = sessionStorage.getItem('uuid');
     city:string = sessionStorage.getItem('city');
     username:string = sessionStorage.getItem('username');
-    currentLang:string = 'el';
+    currentLang:string = this.translationService.getLanguage();
     subscription = new Subscription;
     ngOnInit() {
         this.usersServ.role = this.role;

@@ -33,7 +33,8 @@
                 "../node_modules/ngx-toastr/toastr.css",
                 "../node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
                 "../node_modules/angular-bootstrap-md/scss/mdb-free.scss",
-                "../node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css"
+                "../node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css",
+                "../node_modules/angular2-lightbox/lightbox.css"
             ],
             "scripts": [
                 "../node_modules/chart.js/dist/Chart.js",

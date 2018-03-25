@@ -16,6 +16,8 @@
     "SORTING":"Sorting",
     "SORTING_NEWER_FIRST":"Newer first",
     "SORTING_OLDER_FIRST":"Older first",
+    "FROM":"From",
+    "TO":"To",
     "REQ_ERR":"Field is <strong>required</strong>",
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
@@ -160,7 +162,7 @@
         "protection-policy":"Civil Protection",
         "green":"Gardening",
         "environment":"Enviromental",
-        "FIXED_POINTS":"Bins/Lighting",
+        "FIXED_POINTS":"Bins / Lighting",
         "NUMBER_OF_ISSUES":"Number of issues",
         "ASSIGNED_DEPARTMENT":"Department assigned to",
         "STATE":"State",
@@ -168,8 +170,19 @@
         {
             "CONFIRMED":"Confirmed",
             "IN_PROGRESS":"In progress",
-            "RESOLVED":"Resolved"
+            "RESOLVED":"Resolved",
+            "NEW_USER_SUBSCRIBED":"New user subscription",
+            "USER_COMMENTED":"Comment from",
+            "USER_UPLOADED_FILES":"Files from"
         },
+        "RESOLVED_STATUS":{
+            "FIXED":"Restoration",
+            "INVALID":"Invalid report",
+            "WONTFIX":"Not Restored / Rejected",
+            "DUPLICATE":"Already reported"
+        },
+        "DUPLICATE_ISSUE":"Duplicate issue",
+        "DUPLICATE_ISSUE_REPORTED":"It has been reported as duplicate issue of",
         "REPORTED":"Reported",
         "PRIORITY":"Priority",
         "PRIORITY_STATUS":
@@ -185,7 +198,7 @@
             "MAJOR":"Major",
             "NORMAL":"Normal",
             "MINOR":"Minor",
-            "MINIMAL":"Minimal",
+            "TRIVIAL":"Trivial",
             "ENHANCEMENT":"Enhancement"
         },
         "FULL_NAME":"Full name",
@@ -195,9 +208,7 @@
         "COMMENTS":"Comments",
         "FILES":"Files",
         "BROWSE":"Browse",
-        "NEW_USER_SUBSCRIBED":"New user {{fullName}} subscription",
-        "USER_COMMENTED":"Comment from {{fullName}}",
-        "USER_UPLOADED_FILES":"Files from {{fullName}}"
+        "HISTORY":"History"
     },
 
     "CITIES":

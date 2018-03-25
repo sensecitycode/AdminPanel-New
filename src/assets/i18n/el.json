@@ -16,6 +16,8 @@
     "SORTING":"Ταξινόμηση",
     "SORTING_NEWER_FIRST":"Νεότερα πρώτα",
     "SORTING_OLDER_FIRST":"Παλαιότερα πρώτα",
+    "FROM":"Από",
+    "ΤΟ":"Προς",
     "REQ_ERR":"Το πεδίο είναι <strong>απαραίτητο</strong>",
     "VALID_MAIL_ERR":"Η διεύθυνση email <strong>δεν είναι έγκυρη</strong>",
     "MATCHING_PASS_ERR":"Οι κωδικοί <strong>δεν ταιριάζουν</strong>",
@@ -160,7 +162,7 @@
         "protection-policy":"Πολιτικής Προστασίας",
         "green":"Πρασίνου",
         "environment":"Περιβάλλοντος",
-        "FIXED_POINTS":"Κάδοι/Φωτισμός",
+        "FIXED_POINTS":"Κάδοι / Φωτισμός",
         "NUMBER_OF_ISSUES":"Πλήθος προβλημάτων",
         "ASSIGNED_DEPARTMENT":"Τμήμα Ανάθεσης",
         "STATE":"Κατάσταση",
@@ -168,8 +170,19 @@
         {
             "CONFIRMED":"Επιβεβαιωμένο",
             "IN_PROGRESS":"Σε εκτέλεση",
-            "RESOLVED":"Ολοκληρωμένο"
+            "RESOLVED":"Ολοκληρωμένο",
+            "NEW_USER_SUBSCRIBED":"Εγγραφή νέου χρήστη",
+            "USER_COMMENTED":"Σχόλιο από",
+            "USER_UPLOADED_FILES":"Αρχεία από"
         },
+        "RESOLVED_STATUS":{
+            "FIXED":"Αποκατάσταση",
+            "INVALID":"Εσφαλμένη αναφορά",
+            "WONTFIX":"Μη αποκατάσταση / Απόρριψη",
+            "DUPLICATE":"Έχει αναφερθεί ήδη"
+        },
+        "DUPLICATE_ISSUE":"Διπλότυπο πρόβλημα",
+        "DUPLICATE_ISSUE_REPORTED":"Έχει δηλωθεί ως διπλότυπο πρόβλημα του",
         "REPORTED":"Αναφορά",
         "PRIORITY":"Προτεραιότητα",
         "PRIORITY_STATUS":
@@ -185,7 +198,7 @@
             "MAJOR":"Μείζον",
             "NORMAL":"Κανονικό",
             "MINOR":"Ελάσσον",
-            "MINIMAL":"Μηδαμινό",
+            "TRIVIAL":"Μηδαμινό",
             "ENHANCEMENT":"Βελτίωση"
         },
         "FULL_NAME":"Ονοματεπώνυμο",
@@ -195,9 +208,7 @@
         "COMMENTS":"Σχόλια",
         "FILES":"Αρχεία",
         "BROWSE":"Αναζήτηση",
-        "NEW_USER_SUBSCRIBED":"Εγγραφή νέου χρήστη {{fullName}}",
-        "USER_COMMENTED":"Σχόλιο από {{fullName}}",
-        "USER_UPLOADED_FILES":"Αρχεία από {{fullName}}"
+        "HISTORY":"Ιστορικό"
     },
 
     "CITIES":

@@ -10,6 +10,61 @@
     color:green
 }
 
+.fa-commenting-o, .fa-file-o {
+    color: rgb(8, 111, 135)
+}
+
+.fa-feed {
+    color: rgb(98, 8, 135)
+}
+
 .card {
     margin:0;
+}
+.card-header  {
+    background:#3c4858;
+    color:white
+}
+.card-text {
+    color:inherit;
+}
+
+h5 {
+    margin-bottom:0
+}
+
+.list-group-item {
+    background: #f8f9fa
+}
+
+.file-thumb-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    font-size: 3rem;
+    width:100%;
+    min-width:100%;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.16), 0 0px 3px 0 rgba(0, 0, 0, 0.12);
+    border: 2px solid #FFF;
+    background-color: #ffffff;
+}
+
+.flex-box-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    height:inherit;
+    min-height: 34px;
+    max-height: 170px;
+}
+
+.flex-input-group {
+    flex:1 0 auto;
+    width:auto;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px
 }
