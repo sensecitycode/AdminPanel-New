@@ -26,6 +26,7 @@ export class SignupComponent implements OnInit {
     accountForm:FormGroup;
     submitForm:FormGroup;
 
+
     constructor(private bootstrapComp : AppBootStrapComponent, private http: HttpClient) {
         this.personalInfoForm = new FormGroup({});
         this.mapForm = new FormGroup({});
@@ -47,8 +48,22 @@ export class SignupComponent implements OnInit {
         this.accountForm = this.accCreate.accountForm;
     }
 
-    error:boolean = false;
+    requestGuard:boolean = false;
+    servicesError:boolean
+    badRequest:boolean
+    success:boolean
     onSubmit(){
+        this.requestGuard = true;
+
+        this.servicesError = false;
+        this.badRequest = false;
+        this.success = false;
+
+        this.personalInfoForm.markAsPristine()
+        this.mapForm.markAsPristine()
+        this.accountForm.markAsPristine()
+        this.submitForm.markAsPristine()
+
         let submitObject = {
             city: this.mapForm.get('domain').value,
             municipality_desc: this.mapForm.get('city').value,
@@ -62,21 +77,24 @@ export class SignupComponent implements OnInit {
             department: this.accountForm.get('department').value,
         }
         console.log(submitObject)
-    //     this.http.post<any>(`${this.API}/admin/add_city`, submitObject)
-    //         .subscribe(
-    //             data => { console.log(data) },
-    //             error => {
-    //                 // alert("Check email availability service is not responding!");
-    //                 if (error.error){}
-    //                 // this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-    //             },
-    //             () => {
-    //                 // if (this.emailExists == "1" ) {
-    //                 //     this.personalInfoForm.get('email').setErrors({emailExists:true})
-    //                 // }
-    //                 // clearTimeout(fetchUsers_canc);
-    //             }
-    //         )
-    //
+        this.http.post(`${this.API}/admin/add_city1`, submitObject, {responseType:'text'})
+            .subscribe(
+                data => { console.log(data) },
+                error => {
+                    console.error(error);
+                    this.requestGuard = false;
+                    if (error.error == "Bad Request") {
+                        this.badRequest = true
+                    } else {
+                        this.servicesError = true;
+                    }
+                    // this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                },
+                () => {
+                    this.success = true;
+
+                }
+            )
+
     };
 }

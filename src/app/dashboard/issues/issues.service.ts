@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { Subject } from 'rxjs/Subject';
+import { TranslationService } from '../../shared/translation.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable()
 export class IssuesService {
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient, private translationService:TranslationService, private toastr: ToastrService) { }
 
     role:string;
     uuid:string;
@@ -21,7 +25,7 @@ export class IssuesService {
     fetch_issues(reqparams) {
         //
         //awaiting migrate
-        this.uuid = 'dGVzdGNvbnRyb2xAdGVzdGNpdHkxdGVzdGNpdHkxMjM0V2VkIE1hciAyMSAyMDE4IDE1OjI5OjExIEdNVCswMjAwIChFRVQp';
+        this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
         this.role = 'cityAdmin';
         //
         //
@@ -38,7 +42,7 @@ export class IssuesService {
     fetch_issue_comment(bug_id) {
         //
         //awaiting migrate
-        this.uuid = 'dGVzdGNvbnRyb2xAdGVzdGNpdHkxdGVzdGNpdHkxMjM0V2VkIE1hciAyMSAyMDE4IDE1OjI5OjExIEdNVCswMjAwIChFRVQp';
+        this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
         this.role = 'cityAdmin';
         //
         //
@@ -75,4 +79,60 @@ export class IssuesService {
         return icon
     }
 
+    updateIssueStatus = new Subject();
+    update_bug(update_obj, comment, files) {
+        this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
+        this.role = 'cityAdmin';
+        console.log("bug_update");
+
+        //add mantatory field 'product' at update object
+        update_obj['product'] = this.city;
+
+
+
+        console.log(update_obj)
+        console.log(comment)
+        console.log(files)
+
+        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
+        this.httpClient.post<any>(`${this.API}/admin/bugs/update`, update_obj, {headers: reqheaders})
+        .subscribe(
+            data1 => {},
+            error1 => {
+                console.error(error1);
+                console.error("error at 1st request");
+                this.toastr.error(this.translationService.get_instant('DASHBOARD.ISSUE_FAILURE_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true});
+            },
+            () => {
+
+                if (comment == '') comment = 'undefined'
+                let comment_obj = {"comment":comment, "id":update_obj.ids[0]}
+                this.httpClient.post<any>(`${this.API}/admin/bugs/comment/add`, comment_obj, {headers: reqheaders})
+                .subscribe(
+                    data2 => {
+                        let comment_tag_obj = {"component":update_obj.component, "status":update_obj.status, "bug_id":update_obj.ids[0], "comment_id": data2.id}
+                        this.httpClient.post(`${this.API}/admin/bugs/comment/tags`, files, {headers: reqheaders, params:comment_tag_obj, responseType:'text' })
+                        .subscribe(
+                            data3 => {},
+                            error3 => {
+                                console.error(error3);
+                                console.error("error at 3rd request");
+                                this.toastr.error(this.translationService.get_instant('DASHBOARD.ISSUE_FAILURE_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true});
+                            },
+                            () => {
+                                this.updateIssueStatus.next("done")
+                                this.toastr.success(this.translationService.get_instant('DASHBOARD.ISSUE_SUCCESS_MSG'), this.translationService.get_instant('SUCCESS'), {timeOut:6000, progressBar:true, enableHtml:true});
+                            }
+                        )
+                    },
+                    error2 => {
+                        console.error(error2)
+                        console.error("error at 2nd request")
+                        this.toastr.error(this.translationService.get_instant('DASHBOARD.ISSUE_FAILURE_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    },
+                    () => {}
+                )
+            }
+        )
+    }
 }

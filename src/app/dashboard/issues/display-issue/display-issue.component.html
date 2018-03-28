@@ -32,8 +32,8 @@
                                 <td><strong>{{'DASHBOARD.PRIORITY_STATUS.'+issue?.bug_priority | uppercase | translate}}</strong></td>
                             </tr>
                             <tr>
-                                <td>{{'DASHBOARD.IMPORTANCE' | translate}}</td>
-                                <td><strong>{{'DASHBOARD.PRIORITY_STATUS.'+issue?.bug_priority | uppercase | translate}}</strong></td>
+                                <td>{{'DASHBOARD.SEVERITY' | translate}}</td>
+                                <td><strong>{{'DASHBOARD.SEVERITY_STATUS.'+issue?.bug_severity | uppercase | translate}}</strong></td>
                             </tr>
                             <tr>
                                 <td>{{'DASHBOARD.FULL_NAME' | translate}}</td>
@@ -63,7 +63,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button mat-button  class="btn-light" (click)="enableAdmin=true" style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">settings</i><span>{{'DASHBOARD.ADMINISTRATION' | translate}}</span></button>
+                    <button mat-button  class="btn-light" (click)="enableAdmin=true"  [disabled] = 'requestGuard' style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">settings</i><span>{{'DASHBOARD.ADMINISTRATION' | translate}}</span></button>
                 </div>
 
                 <div id="adminIssue" *ngIf="enableAdmin">
@@ -80,7 +80,13 @@
                                                         <mat-select-trigger>
                                                             {{'DASHBOARD.STATE_STATUS.'+issueAdminForm.controls.status.value | uppercase | translate}}
                                                         </mat-select-trigger>
-                                                        <mat-option *ngFor="let status of statusList" [value]="status" style="font-size:14px">{{('DASHBOARD.STATE_STATUS.'+status) | uppercase | translate}}</mat-option>
+                                                        <div *ngIf = "issue.status != 'RESOLVED'">
+                                                            <mat-option *ngFor="let status of statusList" [value]="status" style="font-size:14px">{{('DASHBOARD.STATE_STATUS.'+status) | uppercase | translate}}</mat-option>
+                                                        </div>
+                                                        <div *ngIf = "issue.status == 'RESOLVED'">
+                                                            <mat-option *ngFor="let status of ['CONFIRMED', 'RESOLVED']" [value]="status" style="font-size:14px">{{('DASHBOARD.STATE_STATUS.'+status) | uppercase | translate}}</mat-option>
+                                                        </div>
+
                                                     </mat-select>
                                                 </div>
                                                 <div class="col-6">
@@ -122,13 +128,13 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>{{'DASHBOARD.IMPORTANCE' | translate}}</td>
+                                        <td>{{'DASHBOARD.SEVERITY' | translate}}</td>
                                         <td>
-                                            <mat-select formControlName="importance" class="bs3-form-control">
+                                            <mat-select formControlName="severity" class="bs3-form-control">
                                                 <mat-select-trigger>
-                                                    {{'DASHBOARD.IMPORTANCE_STATUS.'+issueAdminForm.controls.importance.value | uppercase | translate}}
+                                                    {{'DASHBOARD.SEVERITY_STATUS.'+issueAdminForm.controls.severity.value | uppercase | translate}}
                                                 </mat-select-trigger>
-                                                <mat-option *ngFor="let status of importanceStatusList" [value]="status" style="font-size:14px">{{('DASHBOARD.IMPORTANCE_STATUS.'+status) | uppercase | translate}}</mat-option>
+                                                <mat-option *ngFor="let status of severityStatusList" [value]="status" style="font-size:14px">{{('DASHBOARD.SEVERITY_STATUS.'+status) | uppercase | translate}}</mat-option>
                                             </mat-select>
 
                                         </td>
@@ -174,7 +180,7 @@
 
                         </div>
                     </form>
-                    <button mat-button (click)="submitAdmin()" class="btn-light success_btn" ><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">check</i><span>{{'SUBMIT' | translate}}</span></button>
+                    <button mat-button (click)="submitAdmin()" class="btn-light success_btn" [disabled] = 'requestGuard'><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">check</i><span>{{'SUBMIT' | translate}}</span></button>
                     <button mat-button (click)="resetAdmin()" class="btn-light danger_btn" ><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">clear</i><span>{{'CANCEL' | translate}}</span></button>
 
 

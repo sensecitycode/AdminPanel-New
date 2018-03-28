@@ -7,7 +7,6 @@
                     name="city"
                     formControlName="city"
                     [(ngModel)]="city"
-                    (change)="clickcount=0"
                     (blur)="onCitySelect()" />
                     <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
 

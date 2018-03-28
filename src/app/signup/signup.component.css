@@ -10,3 +10,9 @@ mat-horizontal-stepper{
 .mat-expansion-panel-header, .mat-expansion-panel-body {
     font-size: 15px;
 }
+
+.message {
+	margin: 2em 2em;
+	padding: 1em;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}

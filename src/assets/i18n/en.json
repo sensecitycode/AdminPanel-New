@@ -96,7 +96,9 @@
         "STEP4_TERMS_ACKN":"the terms and conditions.",
         "CITY_EXISTS_ERR":"Your city is <strong>already registered</strong> in platform",
         "EMAIL_EXISTS_ERR":"This email is <strong>already registered</strong> in platform",
-        "USERNAME_EXISTS_ERR":"This username is <strong>already registered</strong> in platform"
+        "USERNAME_EXISTS_ERR":"This username is <strong>already registered</strong> in platform",
+        "CITY_ADD_SUCCESS_MSG":"Υour city was successfully registed for inspection!",
+        "CITY_ADD_ERROR_MSG":"An error occured during city registration. Please check the submission form again!"
     },
 
     "LOGIN":
@@ -191,8 +193,8 @@
             "NORMAL":"Normal",
             "HIGH":"High"
         },
-        "IMPORTANCE":"Importance",
-        "IMPORTANCE_STATUS":
+        "SEVERITY":"Severity",
+        "SEVERITY_STATUS":
         {
             "CRITICAL":"Critical",
             "MAJOR":"Major",
@@ -208,7 +210,10 @@
         "COMMENTS":"Comments",
         "FILES":"Files",
         "BROWSE":"Browse",
-        "HISTORY":"History"
+        "HISTORY":"History",
+        "ADMIN_ADDRESS_CHANGED":"Address '{{old_addr}}' changed to '{{new_addr}}' from Administrator.",
+        "ISSUE_SUCCESS_MSG":"Your request was successful!",
+        "ISSUE_FAILURE_MSG":"An error occured completing your request!"
     },
 
     "CITIES":

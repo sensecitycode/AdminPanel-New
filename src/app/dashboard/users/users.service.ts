@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
-import { mergeMap } from 'rxjs/operators';
 import { TranslationService } from '../../shared/translation.service';
 import { ToastrService } from 'ngx-toastr';
 

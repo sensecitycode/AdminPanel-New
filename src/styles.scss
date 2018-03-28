@@ -36,6 +36,10 @@ body {
     text-align: center !important;
 }
 
+.mat-form-field {
+    line-height: 1.315;
+}
+
 /*  full width all forms in app */
 .example-form {
    // min-width: 150px;
@@ -83,6 +87,7 @@ input[type=password].bs3-form-control {
 input[type=password].bs3-form-control:focus {
     border:2px solid #72aada !important
 }
+
 
 .bs3-form-control {
     display: block;

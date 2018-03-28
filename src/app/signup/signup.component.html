@@ -10,7 +10,7 @@
 <div class="container" style="margin-top:2%; padding:1%;">
     <div class="row">
         <div class="col-md-12">
-            <mat-horizontal-stepper [linear]="false" style="background:rgb(220, 220, 230); min-height:400px">
+            <mat-horizontal-stepper [linear]="true" style="background:rgb(220, 220, 230); min-height:400px">
                 <mat-step [stepControl]="mapForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
                     <app-map-link></app-map-link>
@@ -67,14 +67,26 @@
                         <button mat-button matStepperPrevious> {{'BACK' | translate}} </button>
                     </div>
                     <div class="text-center" >
-                        <button style="padding: 3px 40px; margin-top: 1%;" color="primary" mat-raised-button [disabled]="!(submitForm.controls.terms_acknowledge.value == true)" (click)="onSubmit()"> {{'SIGNUP.STEP4_LABEL' | translate}} </button>
+                        <button style="padding: 3px 40px; margin-top: 1%;" color="primary" mat-raised-button [disabled]="(submitForm.controls.terms_acknowledge.value == false) || (requestGuard == true) " (click)="onSubmit()"> {{'SIGNUP.STEP4_LABEL' | translate}} </button>
                     </div>
 
                 </mat-step>
             </mat-horizontal-stepper>
         </div>
     </div>
+
+    <div class='alert-danger message text-center' [ngStyle]="{'display':badRequest && (personalInfoForm.pristine && mapForm.pristine && accountForm.pristine && submitForm.pristine)? 'block' : 'none'}" >
+        <strong>{{'SIGNUP.CITY_ADD_ERROR_MSG' | translate}}</strong>
+    </div>
+    <div class='alert-danger message text-center' [ngStyle]="{'display':servicesError && (personalInfoForm.pristine && mapForm.pristine && accountForm.pristine && submitForm.pristine)? 'block' : 'none'}" >
+        <strong>{{'SERVICES_ERROR_MSG' | translate}}</strong>
+    </div>
+    <div class='alert-success message text-center' [ngStyle]="{'display':success && (personalInfoForm.pristine && mapForm.pristine && accountForm.pristine && submitForm.pristine) ? 'block' : 'none'}" >
+        <strong>{{'SIGNUP.CITY_ADD_SUCCESS_MSG' | translate}}</strong>
+    </div>
 </div>
+
+
 
 <!-- <div class="container" style="margin-top:5%">
 <div class="row">

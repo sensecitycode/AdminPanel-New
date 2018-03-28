@@ -96,7 +96,9 @@
         "STEP4_TERMS_ACKN":"τους όρους και τις προϋποθέσεις.",
         "CITY_EXISTS_ERR":"Η πόλη σας είναι <strong>ήδη καταχωρημένη</strong> στην πλατφόρμα",
         "EMAIL_EXISTS_ERR":"To email είναι <strong>ήδη καταχωρημένο</strong> στην πλατφόρμα",
-        "USERNAME_EXISTS_ERR":"To όνομα χρήστη είναι <strong>ήδη καταχωρημένο</strong> στην πλατφόρμα"
+        "USERNAME_EXISTS_ERR":"To όνομα χρήστη είναι <strong>ήδη καταχωρημένο</strong> στην πλατφόρμα",
+        "CITY_ADD_SUCCESS_MSG":"Η πόλη σας καταχωρήθηκε επιτυχώς προς επιθεώρηση!",
+        "CITY_ADD_ERROR_MSG":"Προέκυψε κάποιο σφάλμα κατά την καταχώρηση της πόλης σας. Παρακαλώ ελέγξτε τη φόρμα υποβολής!"
     },
 
     "LOGIN":
@@ -191,8 +193,8 @@
             "NORMAL":"Κανονική",
             "HIGH":"Υψηλή"
         },
-        "IMPORTANCE":"Σπουδαιότητα",
-        "IMPORTANCE_STATUS":
+        "SEVERITY":"Σπουδαιότητα",
+        "SEVERITY_STATUS":
         {
             "CRITICAL":"Κρίσιμο",
             "MAJOR":"Μείζον",
@@ -208,7 +210,10 @@
         "COMMENTS":"Σχόλια",
         "FILES":"Αρχεία",
         "BROWSE":"Αναζήτηση",
-        "HISTORY":"Ιστορικό"
+        "HISTORY":"Ιστορικό",
+        "ADMIN_ADDRESS_CHANGED":"Η διεύθυνση '{{old_addr}}' άλλαξε σε '{{new_addr}}' από το Διαχειριστή.",
+        "ISSUE_SUCCESS_MSG":"Η τροποποίηση του προβλήματος ήταν επιτυχής!",
+        "ISSUE_FAILURE_MSG":"Προέκυψε σφάλμα κατά την τροποποίηση του αιτήματός σας!"
     },
 
     "CITIES":

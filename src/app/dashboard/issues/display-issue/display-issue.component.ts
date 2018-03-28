@@ -40,7 +40,8 @@ export class DisplayIssueComponent implements OnInit {
     }]
     imageBroken = false;
     issueIcon:string;
-    enableAdmin = true;
+    enableAdmin = false;
+    requestGuard = false;
 
 
     mapInit:object;
@@ -57,8 +58,8 @@ export class DisplayIssueComponent implements OnInit {
     issueAdminForm: FormGroup;
     statusList = ["CONFIRMED","IN_PROGRESS","RESOLVED"];
     resolvedStatusList = ["FIXED","INVALID","WONTFIX","DUPLICATE"];
-    priorityStatusList = ["Low","Normal","High"];
-    importanceStatusList = ["critical","major","normal","minor","trivial","enhancement"]
+    priorityStatusList = ["High","Normal","Low"];
+    severityStatusList = ["critical","major","normal","minor","trivial","enhancement"]
 
 
     constructor(private formBuilder: FormBuilder,
@@ -98,6 +99,16 @@ export class DisplayIssueComponent implements OnInit {
             }
         }))
 
+        this.subscriptions.add(this.issuesService.updateIssueStatus.subscribe(
+            (status:string) => {
+                if (status == "done") {
+                    this.fetchIssue()
+                    this.fetchComments()
+                    this.requestGuard = false;
+                }
+            }
+        ))
+
         //edit issue form
         this.issueAdminForm = this.formBuilder.group({
             'status': [''],
@@ -105,7 +116,7 @@ export class DisplayIssueComponent implements OnInit {
             'duplicate': [''],
             'assignee': [''],
             'priority': [''],
-            'importance': [''],
+            'severity': [''],
             'address': [''],
             'comments': [''],
             'files': ['']
@@ -119,6 +130,8 @@ export class DisplayIssueComponent implements OnInit {
 
     checkStatusValue(event){
         event.value == 'IN_PROGRESS' ? this.issueAdminForm.get('assignee').enable() : this.issueAdminForm.get('assignee').disable()
+
+        if (event.value == 'CONFIRMED')  this.issueAdminForm.patchValue({assignee:'Τμήμα επίλυσης προβλημάτων'})
     }
 
     uploadFilesFormData: FormData
@@ -139,16 +152,52 @@ export class DisplayIssueComponent implements OnInit {
             status:this.issue['status'],
             assignee:this.issue['bug_component'],
             priority:this.issue['bug_priority'],
-            importance:this.issue['bug_severity'],
-            address:this.issue['bug_address']
+            severity:this.issue['bug_severity'],
+            address:this.issue['bug_address'],
+            comments:''
         })
         this.issue['resolution'] == '' ? this.issueAdminForm.patchValue({resolution:this.issue['resolution']}) : this.issueAdminForm.patchValue({resolution:"FIXED"})
         this.issue['status'] == 'IN_PROGRESS' ? this.issueAdminForm.get('assignee').enable() : this.issueAdminForm.get('assignee').disable()
+
+        this.fileNamesArray = [];
+        this.uploadFilesFormData = new FormData();
+
     }
 
     submitAdmin() {
-        console.log (this.issueAdminForm.value)
-        // this.enableAdmin = false;
+        // console.log (this.issueAdminForm.value)
+        let updatedIssue = {
+            "ids": [this.issue['bug_id']],
+            "status": this.issueAdminForm.get('status').value,
+            "priority": this.issueAdminForm.get('priority').value,
+            "severity": this.issueAdminForm.get('severity').value,
+            "component": this.issueAdminForm.get('assignee').value,
+            "cf_city_address": this.issueAdminForm.get('address').value,
+            "lat": this.issue['loc'].coordinates[1],
+            "lng": this.issue['loc'].coordinates[0],
+            "reset_assigned_to": true
+        }
+
+        if (this.issueAdminForm.get('status').value == 'RESOLVED') updatedIssue['resolution'] = this.issueAdminForm.get('resolution').value
+        if (this.issueAdminForm.get('resolution').value == 'DUPLICATE') updatedIssue['dupe_of'] = this.issueAdminForm.get('duplicate').value
+
+        let comment = this.issueAdminForm.get('comments').value
+        if ( this.issue['bug_address'] != updatedIssue.cf_city_address) {
+            if (comment != '') {
+                comment += " -- " + this.translationService.get_instant("DASHBOARD.ADMIN_ADDRESS_CHANGED", {old_addr:this.issue['bug_address'], new_addr:updatedIssue.cf_city_address})
+            } else {
+                comment = this.translationService.get_instant("DASHBOARD.ADMIN_ADDRESS_CHANGED", {old_addr:this.issue['bug_address'], new_addr:updatedIssue.cf_city_address})
+            }
+        }
+
+        this.requestGuard = true;
+        this.issuesService.update_bug(updatedIssue, comment, this.uploadFilesFormData)
+
+        this.enableAdmin = false;
+
+        // this.fetchIssue()
+        // this.fetchComments()
+
     }
 
     resetAdmin() {
@@ -199,6 +248,8 @@ export class DisplayIssueComponent implements OnInit {
     history = []
     cc_list = []
     fetchComments() {
+        this.history = []
+        this.cc_list = []
         this.issuesService.fetch_issue_comment(this.fetch_params.bug_id)
         .subscribe(
             data => {
@@ -284,6 +335,8 @@ export class DisplayIssueComponent implements OnInit {
 
                         // history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com_text, "timestamp": comment.time, "state": comment.tags[status_index].split(":")[1], "department": comment.tags[dep_index].split(":")[1] });
                     } else {
+
+                        history_object['state'] = 'USER_COMMENTED';
 
                         if (duplicate_issue_status)  history_object['state'] = duplicate_issue_status
 
