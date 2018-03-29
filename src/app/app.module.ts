@@ -74,6 +74,7 @@ import { EditDepartmentComponent } from './dashboard/departments/display-departm
 import { IssuesComponent } from './dashboard/issues/issues.component';
 import { ListIssuesComponent } from './dashboard/issues/list-issues/list-issues.component';
 import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-issue.component';
+import { StatisticsComponent } from './dashboard/statistics/statistics.component';
 
 
 
@@ -114,7 +115,8 @@ registerLocaleData(localeEl);
         EditDepartmentComponent,
         IssuesComponent,
         ListIssuesComponent,
-        DisplayIssueComponent
+        DisplayIssueComponent,
+        StatisticsComponent
     ],
     imports: [
         BrowserModule,

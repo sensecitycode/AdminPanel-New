@@ -13,7 +13,10 @@ export const ROUTES: RouteInfo[] = [
     { path: 'departments', title: 'DASHBOARD.DEPARTMENTS',  icon:'build', role: 'cityAdmin'},
     { path: 'boundaries', title: 'DASHBOARD.BOUNDARIES',  icon:'map', role: 'cityAdmin'},
     { path: 'policy', title: 'DASHBOARD.POLICIES',  icon:'bubble_chart', role: 'cityAdmin'},
-    { path: 'issues', title: 'DASHBOARD.ISSUES', icon:'tv', role: 'cityManager'}
+    { path: 'issues', title: 'DASHBOARD.ISSUES', icon:'tv', role: 'cityManager'},
+    { path: 'statistics', title: 'DASHBOARD.STATISTICS', icon:'show_chart', role: 'cityManager'},
+    { path: 'issues', title: 'DASHBOARD.ISSUES', icon:'tv', role: 'departmentAdmin'},
+    { path: 'issues', title: 'DASHBOARD.ISSUES', icon:'tv', role: 'departmentUser'},
     // { path: 'maps', title: 'Maps',  icon:'library_books'},
     // { path: 'notifications', title: 'Notifications',  icon:'notifications'},
     // { path: 'upgrade', title: 'Upgrade to PRO',  icon:'unarchive'},

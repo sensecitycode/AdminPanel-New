@@ -15,6 +15,7 @@ export class IssuesService {
     uuid:string;
     city:string;
     API:string;
+    statisticsUrl:string;
 
 
 

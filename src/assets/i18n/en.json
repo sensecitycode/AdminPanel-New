@@ -22,6 +22,7 @@
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
     "SERVICES_ERROR_MSG":"Some services are not responding! Please try again later.",
+    "UNDER_CONSTRUCTION":"Under construction",
 
     "ROLES":
     {
@@ -213,7 +214,10 @@
         "HISTORY":"History",
         "ADMIN_ADDRESS_CHANGED":"Address '{{old_addr}}' changed to '{{new_addr}}' from Administrator.",
         "ISSUE_SUCCESS_MSG":"Your request was successful!",
-        "ISSUE_FAILURE_MSG":"An error occured completing your request!"
+        "ISSUE_FAILURE_MSG":"An error occured completing your request!",
+        "STATISTICS":"Statistics",
+        "STATISTICS_DESC":"View city's statistics and graphs",
+        "STATISTICS_TEMPORARY_MSG":"You may view temporary statistics at the link below"
     },
 
     "CITIES":

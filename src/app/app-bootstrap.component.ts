@@ -10,7 +10,9 @@ export class AppBootStrapComponent implements OnInit{
     constructor(private route: ActivatedRoute) {}
 
     public API:string
+    public STATISTICS_URL:string;
     ngOnInit() {
         this.API = this.route.snapshot.data['envSpecific'].API;
+        this.STATISTICS_URL = this.route.snapshot.data['envSpecific'].TEMP_STATISTICS
     }
 }

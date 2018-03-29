@@ -23,6 +23,8 @@ import { EditDepartmentComponent } from './dashboard/departments/display-departm
 import { IssuesComponent } from './dashboard/issues/issues.component';
 import { ListIssuesComponent } from './dashboard/issues/list-issues/list-issues.component';
 import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-issue.component';
+import { StatisticsComponent } from './dashboard/statistics/statistics.component';
+
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { EnvironmentSpecificResolver } from './envSpecific/environment-specific-resolver';
@@ -54,6 +56,7 @@ const appRoutes: Routes = [
                 {path: '', component: ListIssuesComponent},
                 {path: ':name', component: DisplayIssueComponent}
             ]},
+            {path: 'statistics', component: StatisticsComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
         { path: '**', redirectTo: 'welcome', pathMatch: 'full'}

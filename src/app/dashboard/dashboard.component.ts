@@ -50,6 +50,7 @@ export class DashboardComponent implements OnInit {
         this.issuesService.uuid = this.uuid;
         this.issuesService.city = this.city;
         this.issuesService.API = this.bootstrapComp.API;
+        this.issuesService.statisticsUrl = this.bootstrapComp.STATISTICS_URL;
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {console.log("usersChanged: " + status);}
