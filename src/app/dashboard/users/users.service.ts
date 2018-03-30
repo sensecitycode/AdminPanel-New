@@ -102,11 +102,16 @@ export class UsersService {
     edit_user(user) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
         return this.httpClient.post<[object]>(`${this.API}/admin/edit_user`,
-          user,
-          {
-            headers: reqheaders
-          })
-          // this.usersChanged.next("userEdited");
-      }
+            user,
+            {
+                headers: reqheaders
+            })
+            // this.usersChanged.next("userEdited");
+    }
+
+    change_user_pass(pass_object) {
+        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+        return this.httpClient.post(`${this.API}/admin/change_user_pass`, pass_object , { headers: reqheaders})
+    }
 
 }

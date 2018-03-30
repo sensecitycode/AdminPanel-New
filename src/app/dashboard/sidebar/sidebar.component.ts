@@ -40,10 +40,14 @@ export class SidebarComponent implements OnInit {
     menuItems: any[];
     ngOnInit() {
         this.userRoles =  sessionStorage.getItem('role').split(',');
-        console.log(this.userRoles);
+        // console.log(this.userRoles);
+        if (this.activatedRoute.children[0].routeConfig.path != 'account') {
+            var routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
+            this.selectedRole = this.userRoles[this.userRoles.indexOf(ROUTES[routeIndex].role)];
+        } else {
+            this.selectedRole = this.userRoles[0]
+        }
 
-        var routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
-        this.selectedRole = this.userRoles[this.userRoles.indexOf(ROUTES[routeIndex].role)];
 
         this.menuItems = ROUTES.filter(menuItem => menuItem);
         // console.log(this.menuItems);

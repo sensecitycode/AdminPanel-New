@@ -1,0 +1,32 @@
+.font-semibold {
+    font-weight: 600;
+}
+
+img {
+    width:100%;
+    padding: 0rem 2rem 2rem 2rem
+}
+
+.btn-light {
+    background:#6d7fcc;
+    text-transform: none;
+    margin-left: 0;
+    padding: 0.55rem 1.63rem;
+}
+
+.flex-center {
+display:flex;align-items:center}
+
+.active {
+    padding: .15em .5em;
+    background:#5cb85c;
+    color:#fff;
+    text-align: center;
+    font-size: 85%;
+    font-weight: 700;
+    border-radius: .25em;
+}
+
+.is-invalid {
+    color: #dc3545
+}

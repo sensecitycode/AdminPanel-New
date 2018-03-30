@@ -18,6 +18,12 @@
     "SORTING_OLDER_FIRST":"Older first",
     "FROM":"From",
     "TO":"To",
+    "PROFILE":"Profile",
+    "ACCOUNT":"Account",
+    "CURRENT":"Current",
+    "OLD":"Old",
+    "NEW":"New",
+    "ACTIVE":"Active",
     "REQ_ERR":"Field is <strong>required</strong>",
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
@@ -217,7 +223,9 @@
         "ISSUE_FAILURE_MSG":"An error occured completing your request!",
         "STATISTICS":"Statistics",
         "STATISTICS_DESC":"View city's statistics and graphs",
-        "STATISTICS_TEMPORARY_MSG":"You may view temporary statistics at the link below"
+        "STATISTICS_TEMPORARY_MSG":"You may view temporary statistics at the link below",
+        "ACCOUNT_EDIT_SUCCESS":"Your account was successfully edited!",
+        "ACCOUNT_EDIT_WRONG_PASS":"Wrong account password!"
     },
 
     "CITIES":
