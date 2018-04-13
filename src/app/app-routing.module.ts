@@ -27,6 +27,7 @@ import { StatisticsComponent } from './dashboard/statistics/statistics.component
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { RoleGuardService } from './guards/role-guard.service';
 import { EnvironmentSpecificResolver } from './envSpecific/environment-specific-resolver';
 import { EnvironmentSpecificService } from './envSpecific/environment-specific-service';
 
@@ -36,7 +37,7 @@ const appRoutes: Routes = [
         { path: 'signup', component: SignupComponent},
         { path: 'login', component: LoginComponent},
         { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuardService], children:[
-            {path: 'home', component: HomeComponent},
+            {path: 'home',  canActivate:[RoleGuardService], component: HomeComponent},
             {path: 'users', component: UsersComponent, children:[
                 {path: '', component: ListUsersComponent},
                 {path: 'add', component: AddUserComponent},
@@ -59,14 +60,14 @@ const appRoutes: Routes = [
             {path: 'statistics', component: StatisticsComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
-        { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+        // { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ]}
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(appRoutes)],
     exports: [RouterModule],
-    providers: [AuthService, AuthGuardService, EnvironmentSpecificResolver, EnvironmentSpecificService]
+    providers: [AuthService, AuthGuardService, RoleGuardService, EnvironmentSpecificResolver, EnvironmentSpecificService]
 })
 export class AppRoutingModule {
 }

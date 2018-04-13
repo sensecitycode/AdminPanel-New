@@ -18,7 +18,6 @@ export class IssuesService {
     statisticsUrl:string;
 
 
-
     issuesViewPerPage: string = '20';
     issuesSorting:string = "-1";
     issuesSelected:string = "all";
@@ -26,8 +25,8 @@ export class IssuesService {
     fetch_issues(reqparams) {
         //
         //awaiting migrate
-        this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
-        this.role = 'cityAdmin';
+        // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
+        // this.role = 'cityAdmin';
         //
         //
         reqparams.city = this.city;
@@ -43,8 +42,8 @@ export class IssuesService {
     fetch_issue_comment(bug_id) {
         //
         //awaiting migrate
-        this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
-        this.role = 'cityAdmin';
+        // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
+        // this.role = 'cityAdmin';
         //
         //
         console.log("fetch_issue_comment");
@@ -82,8 +81,8 @@ export class IssuesService {
 
     updateIssueStatus = new Subject();
     update_bug(update_obj, comment, files) {
-        this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
-        this.role = 'cityAdmin';
+        // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
+        // this.role = 'cityAdmin';
         console.log("bug_update");
 
         //add mantatory field 'product' at update object

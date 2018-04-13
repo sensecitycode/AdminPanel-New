@@ -155,7 +155,7 @@ export class EditDepartmentComponent implements OnInit {
 
     }
 
-    submitEditedUser() {
+    submitEditedDep() {
         let editedDepartment =
         {
           	'name': this.depEditForm.get('name').value,

@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate {
     canActivate() {
         console.log("Auth Guard");
         if (this.auth.isAuthenticated())
-        {   
+        {
             return true;
         }
 

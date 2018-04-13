@@ -102,7 +102,7 @@
                 </form>
 
             <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
-            <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedUser()" class="btn-light success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
+            <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedDep()" class="btn-light success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
             </mat-card-content>
         </mat-card>
     </div>
