@@ -60,7 +60,7 @@ const appRoutes: Routes = [
             {path: 'statistics', component: StatisticsComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
-        // { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+        { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ]}
 ];
 

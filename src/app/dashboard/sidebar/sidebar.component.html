@@ -64,15 +64,27 @@
         <li *ngIf = "userRoles.indexOf('departmentAdmin')!=-1" [ngClass]="{'active':selectedRole == 'departmentAdmin'}">
             <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'departmentAdmin'" (click)="selectRole('departmentAdmin')">{{'ROLES.departmentAdmin' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'departmentAdmin'}" >
-                <li><a>Link1</a></li>
-                <li><a>Link2</a></li>
+                <div *ngFor="let menuItem of menuItems">
+                    <li routerLinkActive="active" *ngIf="menuItem.role == 'departmentAdmin'" >
+                        <a  [routerLink]="[menuItem.path]">
+                            <i class="material-icons">{{menuItem.icon}}</i>
+                            {{menuItem.title | translate}}
+                        </a>
+                    </li>
+                </div>
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('departmentUser')!=-1" [ngClass]="{'active':selectedRole == 'departmentUser'}">
             <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'departmentUser'" (click)="selectRole('departmentUser')">{{'ROLES.departmentUser' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'departmentUser'}" >
-                <li><a>Link1</a></li>
-                <li><a>Link2</a></li>
+                <div *ngFor="let menuItem of menuItems">
+                    <li routerLinkActive="active" *ngIf="menuItem.role == 'departmentUser'" >
+                        <a  [routerLink]="[menuItem.path]">
+                            <i class="material-icons">{{menuItem.icon}}</i>
+                            {{menuItem.title | translate}}
+                        </a>
+                    </li>
+                </div>
             </ul>
         </li>
         <!-- <li routerLinkActive="active" *ngFor="let menuItem of menuItems">

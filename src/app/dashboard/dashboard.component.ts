@@ -34,13 +34,19 @@ export class DashboardComponent implements OnInit {
     role:string = sessionStorage.getItem('role');
     uuid:string = sessionStorage.getItem('uuid');
     city:string = sessionStorage.getItem('city');
+    email:string = sessionStorage.getItem('email');
+    position:string = sessionStorage.getItem('position');
     username:string = sessionStorage.getItem('username');
+    departments:string = sessionStorage.getItem('departments');
     currentLang:string = this.translationService.getLanguage();
     subscription = new Subscription;
     ngOnInit() {
         this.usersServ.role = this.role;
         this.usersServ.uuid = this.uuid;
         this.usersServ.city = this.city;
+        this.usersServ.email = this.email;
+        this.usersServ.position = this.position;
+        this.usersServ.username = this.username;
         this.usersServ.API = this.bootstrapComp.API;
         this.depServ.role = this.role;
         this.depServ.uuid = this.uuid;
@@ -49,6 +55,9 @@ export class DashboardComponent implements OnInit {
         this.issuesService.role = this.role;
         this.issuesService.uuid = this.uuid;
         this.issuesService.city = this.city;
+        if (this.departments != '') {
+            this.issuesService.departments_ids = this.departments.split(',');
+        }
         this.issuesService.API = this.bootstrapComp.API;
         this.issuesService.statisticsUrl = this.bootstrapComp.STATISTICS_URL;
 

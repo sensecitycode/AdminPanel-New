@@ -40,13 +40,28 @@ export class SidebarComponent implements OnInit {
     menuItems: any[];
     ngOnInit() {
         this.userRoles =  sessionStorage.getItem('role').split(',');
-        // console.log(this.userRoles);
-        if (this.activatedRoute.children[0].routeConfig.path != 'account') {
-            var routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
+        console.log(this.userRoles);
+        // if (this.activatedRoute.children[0].routeConfig.path != 'account') {
+        //     let routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
+        //     this.selectedRole = this.userRoles[this.userRoles.indexOf(ROUTES[routeIndex].role)];
+        //
+        // } else {
+        //     this.selectedRole = this.userRoles[0]
+        // }
+
+        if (this.activatedRoute.children[0].routeConfig.path == 'issues') {
+            if (this.userRoles.includes('cityManager')) {this.selectedRole = 'cityManager'}
+            else if (this.userRoles.includes('departmentAdmin')) {this.selectedRole = 'departmentAdmin'}
+            else {this.selectedRole = 'departmentUser'}
+        }
+        else if (this.activatedRoute.children[0].routeConfig.path != 'account') {
+            let routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
             this.selectedRole = this.userRoles[this.userRoles.indexOf(ROUTES[routeIndex].role)];
-        } else {
+        }
+        else {
             this.selectedRole = this.userRoles[0]
         }
+
 
 
         this.menuItems = ROUTES.filter(menuItem => menuItem);

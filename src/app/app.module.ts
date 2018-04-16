@@ -39,7 +39,8 @@ import { MatFormFieldModule,
          MatProgressSpinnerModule,
          MatDialogModule,
          MatRadioModule,
-         MatTooltipModule} from '@angular/material';
+         MatTooltipModule,
+         MatButtonToggleModule} from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -140,6 +141,7 @@ registerLocaleData(localeEl);
         MatDialogModule,
         MatRadioModule,
         MatTooltipModule,
+        MatButtonToggleModule,
         LeafletModule,
         LeafletMarkerClusterModule,
         TranslateModule.forRoot({

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class='text-right'>
-            <span style="vertical-align: middle;">{{'DASHBOARD.NUMBER_OF_ISSUES' | translate}}:</span>
+            <i style="vertical-align: middle;">{{'DASHBOARD.NUMBER_OF_ISSUES' | translate}}:</i>
             <div class="btn-group">
                 <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="20" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
                     20
@@ -44,6 +44,31 @@
         </div>
     </div>
     <div class="col-lg-5 col-md-12">
+        <div class="row">
+            <div class="col-12">
+                <mat-button-toggle-group #group="matButtonToggleGroup" [ngModel]="actionGroupSelect" (ngModelChange)="actionGroupSelected($event)">
+                    <mat-button-toggle value="own_dep_issues" matTooltip="{{ 'DASHBOARD.DEPARTMENT_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}" >
+                        <i class='fa fa-sm fa-building color_blue'></i>
+                    </mat-button-toggle>
+                    <mat-button-toggle value="dep_completed_issues" matTooltip="{{ 'DASHBOARD.DEPARTENT_COMPLETED_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}">
+                        <i class='fa fa-sm fa-check-circle color_green'></i>
+                    </mat-button-toggle>
+                    <mat-button-toggle *ngIf="userRoles.indexOf('cityManager')!=-1" value="other_dep_issues" matTooltip="{{ 'DASHBOARD.OTHER_DEP_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}">
+                        <i class='material-icons color_orange'>location_city</i>
+                    </mat-button-toggle>
+                </mat-button-toggle-group>
+
+                <span>
+                    <button mat-raised-button style="min-width: inherit; color: rgba(0,0,0,.38);"><i class='fa fa-lg fa-print'></i></button>
+
+                </span>
+                <!-- <mat-button-toggle><i class='fa fa-lg fa-check-circle'></i></mat-button-toggle>
+                <mat-button-toggle><i class='fa fa-lg fa-question-circle'></i></mat-button-toggle> -->
+                <!-- <mat-button-toggle><i class='fa fa-lg fa-print'></i></mat-button-toggle> -->
+
+
+            </div>
+        </div>
         <div class="card">
             <!-- <div class="card-body"> -->
                 <div style="min-height:500px;" id="issuesmap"

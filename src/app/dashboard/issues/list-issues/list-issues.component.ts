@@ -1,9 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+
 
 
 import { IssuesService } from '../issues.service';
 import { TranslationService } from '../../../shared/translation.service';
+import { DepartmentsService } from '../../departments/departments.service';
+
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -47,27 +51,75 @@ export class ListIssuesComponent implements OnInit {
     markerClusterOptions: L.MarkerClusterGroupOptions;
     markerClusterGroup: L.MarkerClusterGroup;
 
+    subscriptions = new Subscription();
     mapLayers = [];
     layersControl = {};
 
+    userRoles = sessionStorage.getItem('role').split(',')
     constructor(private issuesService: IssuesService,
                 private translationService: TranslationService,
                 private toastr: ToastrService,
                 private router: Router,
-                private activatedRoute: ActivatedRoute) { }
+                private activatedRoute: ActivatedRoute,
+                private depServ: DepartmentsService) { }
 
     ngOnInit() {
-        this.fetch_params = {
-            departments: 'Τμήμα επίλυσης προβλημάτων',
-            image_field: '0',
-            limit: this.issuesPerPage,
-            sort: this.sorting_value,
-            startdate: '2016-08-01',
-            status: 'CONFIRMED|IN_PROGRESS'
+
+        //get departments name to replace departments_ids
+        let departments = []
+        let userdepartments = [];
+
+        //initial component loading
+        //
+        if (this.issuesService.departments.length == 0) {
+            this.subscriptions.add(this.depServ.departmentsChanged.subscribe(
+                (status:string) => {
+                if (status == "departmentsArrayPopulated"){
+                    departments = this.depServ.return_departmentsArray()
+                    // console.log(departments)
+                    this.issuesService.departments = []
+                    if (this.issuesService.departments_ids.length > 0) {
+
+                        for (let dep_id of this.issuesService.departments_ids) {
+                            this.issuesService.departments.push(departments.find((dep) => dep.departmentID == dep_id)['component_name'])
+                            userdepartments.push(departments.find((dep) => dep.departmentID == dep_id)['component_name'])
+                        }
+                    } else {
+                        // console.log('Τμήμα επίλυσης προβλημάτων')
+                        this.issuesService.departments.push('Τμήμα επίλυσης προβλημάτων')
+                        userdepartments.push('Τμήμα επίλυσης προβλημάτων')
+                    }
+                    // console.log(userdepartments)
+                    // console.log(userdepartments.join('&'))
+                    this.fetch_params = {
+                        departments: userdepartments.join('|'),
+                        image_field: '0',
+                        limit: this.issuesPerPage,
+                        sort: this.sorting_value,
+                        startdate: '2016-08-01',
+                        status: 'CONFIRMED|IN_PROGRESS'
+                    }
+
+                    if (this.issuesService.issuesSelected != 'all')  this.fetch_params['issue'] = this.issuesService.issuesSelected;
+                    this.fetchIssues()
+                }
+            }))
+
         }
 
-        if (this.issuesService.issuesSelected != 'all')  this.fetch_params['issue'] = this.issuesService.issuesSelected;
-        this.fetchIssues()
+        //component re-loading
+        //
+        if (this.issuesService.departments.length > 0) {
+            this.fetch_params = {
+                departments: this.issuesService.departments.join('|'),
+                image_field: '0',
+                limit: this.issuesPerPage,
+                sort: this.sorting_value,
+                startdate: '2016-08-01',
+                status: 'CONFIRMED|IN_PROGRESS'
+            }
+            this.fetchIssues()
+        }
 
         this.mapInit = {
             layers: [
@@ -158,6 +210,27 @@ export class ListIssuesComponent implements OnInit {
         this.markerClusterGroup = group;
     }
 
+    actionGroupSelect = 'own_dep_issues';
+    actionGroupSelected(selection) {
+        // console.log(selection)
+        if (selection == 'own_dep_issues') {
+            this.fetch_params['status'] = 'CONFIRMED|IN_PROGRESS'
+        }
+        if (selection == 'dep_completed_issues') {
+            this.fetch_params['status'] = 'RESOLVED'
+        }
+        if (selection == 'other_dep_issues') {
+            this.fetch_params['status'] = 'IN_PROGRESS'
+        }
+        // console.log(this.fetch_params['status'])
+        this.fetchIssues()
+
+
+
+        // if (this.group.value == this.actionGroupSelect ) {this.actionGroupSelect = '';}
+        // console.log(group)
+        // if (group.value == 'right') group.selected.value = 'center'
+    }
 
     changePageSize(issuesPerPage) {
         if (this.fetch_params['limit'] != issuesPerPage){
@@ -237,6 +310,10 @@ export class ListIssuesComponent implements OnInit {
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
             () => {}
         )
+    }
+
+    ngOnDestroy () {
+        this.subscriptions.unsubscribe()
     }
 
 

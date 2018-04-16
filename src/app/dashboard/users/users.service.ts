@@ -15,6 +15,9 @@ export class UsersService {
     role:string;
     uuid:string;
     city:string;
+    email:string;
+    position:string;
+    username:string;
     API:string;
     private roleslist = [];
     private users = [];

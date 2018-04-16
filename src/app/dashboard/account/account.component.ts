@@ -20,16 +20,13 @@ export class AccountComponent implements OnInit {
 
     constructor( private usersService : UsersService, private toastr: ToastrService, private translationService:TranslationService, private formBuilder: FormBuilder,private http: HttpClient) { }
 
-    username = sessionStorage.getItem('username')
-    user:object
+    username = this.usersService.username;
+    email = this.usersService.username;
+    position = this.usersService.position
     passwordForm: FormGroup;
 
     ngOnInit() {
-        this.usersService.get_userDetails(this.username)
-            .subscribe(
-                data => {this.user = data[0]; console.log(this.user)},
-                error => this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-            )
+
 
         this.passwordForm = this.formBuilder.group({
             'old_pass': ['', Validators.required],

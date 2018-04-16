@@ -41,7 +41,9 @@ export class LoginComponent implements OnInit {
                                 sessionStorage.setItem('city', data[0]['city']);
                                 sessionStorage.setItem('departments', data[0]['departments']);
                                 sessionStorage.setItem('username', data[0]['username']);
+                                sessionStorage.setItem('email', data[0]['email'])
                                 sessionStorage.setItem('last_login', data[0]['last_login']);
+                                sessionStorage.setItem('position', data[0]['position']);
                                 this.router.navigate(['/dashboard']);
                             },
                     error =>{

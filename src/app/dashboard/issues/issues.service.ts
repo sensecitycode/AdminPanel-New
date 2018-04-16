@@ -15,6 +15,8 @@ export class IssuesService {
     uuid:string;
     city:string;
     API:string;
+    departments_ids = [];
+    departments = [];
     statisticsUrl:string;
 
 
@@ -31,6 +33,10 @@ export class IssuesService {
         //
         reqparams.city = this.city;
         console.log("fetch_issues");
+        console.log("departments ids -- ")
+        console.log(this.departments_ids)
+        console.log("departments --")
+        console.log(this.departments)
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
         return this.httpClient.get<any>(`${this.API}/admin/issue`,{params: reqparams, headers: reqheaders})
     }
