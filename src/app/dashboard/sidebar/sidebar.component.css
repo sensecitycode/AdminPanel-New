@@ -76,6 +76,7 @@ i, span {
     border-radius: 3px;
     color: #3c4858;
     padding: 15px;
+    padding-right: 35px;
     font-size: 1.1em;
     display: block;
 }

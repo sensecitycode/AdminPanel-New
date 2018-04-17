@@ -25,7 +25,7 @@
 
     <ul class="list-unstyled components">
         <li *ngIf = "userRoles.indexOf('sensecityAdmin')!=-1" [ngClass]="{'active':selectedRole == 'sensecityAdmin'}">
-            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'sensecityAdmin'" (click)="selectRole('sensecityAdmin')">{{'ROLES.sensecityAdmin' | translate}}</a>
+            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'sensecityAdmin'" (click)="selectRole('sensecityAdmin')">{{'ROLE_ACTIONS.sensecityAdmin' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'sensecityAdmin'}" >
                 <li routerLinkActive="active" *ngFor="let menuItem of menuItems" >
                     <a  [routerLink]="[menuItem.path]">
@@ -36,7 +36,7 @@
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('cityAdmin')!=-1" [ngClass]="{'components':true,  'active':selectedRole == 'cityAdmin'}">
-            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'cityAdmin'" (click)="selectRole('cityAdmin')">{{'ROLES.cityAdmin' | translate}}</a>
+            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'cityAdmin'" (click)="selectRole('cityAdmin')">{{'ROLE_ACTIONS.cityAdmin' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'cityAdmin'}" >
                 <div *ngFor="let menuItem of menuItems">
                     <li routerLinkActive="active" *ngIf="menuItem.role == 'cityAdmin'" >
@@ -49,7 +49,7 @@
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('cityManager')!=-1" [ngClass]="{'components':true,'active':selectedRole == 'cityManager'}">
-            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'cityManager'" (click)="selectRole('cityManager')">{{'ROLES.cityManager' | translate}}</a>
+            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'cityManager'" (click)="selectRole('cityManager')">{{'ROLE_ACTIONS.cityManager' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'cityManager'}">
                 <div *ngFor="let menuItem of menuItems">
                     <li routerLinkActive="active" *ngIf="menuItem.role == 'cityManager'" >
@@ -62,7 +62,7 @@
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('departmentAdmin')!=-1" [ngClass]="{'active':selectedRole == 'departmentAdmin'}">
-            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'departmentAdmin'" (click)="selectRole('departmentAdmin')">{{'ROLES.departmentAdmin' | translate}}</a>
+            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'departmentAdmin'" (click)="selectRole('departmentAdmin')">{{'ROLE_ACTIONS.departmentAdmin' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'departmentAdmin'}" >
                 <div *ngFor="let menuItem of menuItems">
                     <li routerLinkActive="active" *ngIf="menuItem.role == 'departmentAdmin'" >
@@ -75,7 +75,7 @@
             </ul>
         </li>
         <li *ngIf = "userRoles.indexOf('departmentUser')!=-1" [ngClass]="{'active':selectedRole == 'departmentUser'}">
-            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'departmentUser'" (click)="selectRole('departmentUser')">{{'ROLES.departmentUser' | translate}}</a>
+            <a data-toggle="collapse" [attr.aria-expanded]="selectedRole == 'departmentUser'" (click)="selectRole('departmentUser')">{{'ROLE_ACTIONS.departmentUser' | translate}}</a>
             <ul [ngClass]="{'list-unstyled':true, 'collapse': selectedRole != 'departmentUser'}" >
                 <div *ngFor="let menuItem of menuItems">
                     <li routerLinkActive="active" *ngIf="menuItem.role == 'departmentUser'" >

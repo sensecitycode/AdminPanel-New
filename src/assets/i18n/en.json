@@ -8,6 +8,7 @@
     "RESET":"Reset",
     "CANCEL":"Cancel",
     "REFRESH":"Refresh",
+    "SEARCH":"Search",
     "LANGUAGE":"Ελ",
     "FILTER":"Filter",
     "OTHERS":"others",
@@ -28,16 +29,27 @@
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
     "SERVICES_ERROR_MSG":"Some services are not responding! Please try again later.",
+    "ADDRESS_NOT_FOUND_MSG":"Address not found",
     "UNDER_CONSTRUCTION":"Under construction",
 
     "ROLES":
     {
-        "sensecityAdmin":"SenseCity Administrator",
-        "cityAdmin":"City Administrator",
-        "cityManager":"Issues Administrator",
-        "departmentAdmin":"Department Administrator",
+        "sensecityAdmin":"SenseCity Administration",
+        "cityAdmin":"City Administration",
+        "cityManager":"Issues Administration",
+        "departmentAdmin":"Department Administration",
         "departmentUser":"Department User",
         "Anonymous":"Anonymous User"
+    },
+
+    "ROLE_ACTIONS":
+    {
+        "sensecityAdmin":"Διαχειριστής SenseCity",
+        "cityAdmin":"Διαχειριστής Πόλης",
+        "cityManager":"Διαχειριστής Προβλημάτων",
+        "departmentAdmin":"Διαχειριστής Τμήματος",
+        "departmentUser":"Χρήστης Τμήματος",
+        "Anonymous":"Ανώνυμος Χρήστης"
     },
 
     "GRID":

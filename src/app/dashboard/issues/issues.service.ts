@@ -18,6 +18,7 @@ export class IssuesService {
     departments_ids = [];
     departments = [];
     statisticsUrl:string;
+    googleKey:string;
 
 
     issuesViewPerPage: string = '20';
@@ -42,7 +43,7 @@ export class IssuesService {
     }
 
     fetch_fixed_points() {
-        return this.httpClient.get<any>(`../../../assets/env-specific/dev/${this.city}.json`)
+        return this.httpClient.get<any>(`assets/env-specific/dev/${this.city}.json`)
     }
 
     fetch_issue_comment(bug_id) {
@@ -140,5 +141,17 @@ export class IssuesService {
                 )
             }
         )
+    }
+
+    get_issue_address(latitude, longitude) {
+        let query_lang = this.translationService.getLanguage();
+        return this.httpClient.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=false&language=${query_lang}&key=${this.googleKey}`)
+    }
+
+    get_address_coordinates(address) {
+        this.city != 'testcity1' ? address += ` ,${this.city}` : address += ' ,patra';
+        let query_lang = this.translationService.getLanguage();
+        // console.log(address)
+        return this.httpClient.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&sensor=false&language=${query_lang}&key=${this.googleKey}`)
     }
 }

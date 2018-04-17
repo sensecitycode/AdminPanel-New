@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
 
-import { DepartmentsService } from '../departments/departments.service';
 
 @Component({
     selector: 'app-issues',
@@ -10,10 +9,10 @@ import { DepartmentsService } from '../departments/departments.service';
 })
 export class IssuesComponent implements OnInit {
 
-    constructor(private depServ: DepartmentsService) { }
+    constructor() { }
 
 
     ngOnInit() {
-        this.depServ.populate_departmentsArray()
+        // this.depServ.populate_departmentsArray()
     }
 }

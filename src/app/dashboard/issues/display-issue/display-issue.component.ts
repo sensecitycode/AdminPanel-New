@@ -98,6 +98,9 @@ export class DisplayIssueComponent implements OnInit {
                 this.departments = this.depServ.return_departmentsArray();
             }
         }))
+        
+        if (this.departments.length == 0) this.depServ.populate_departmentsArray()
+
 
         this.subscriptions.add(this.issuesService.updateIssueStatus.subscribe(
             (status:string) => {
@@ -207,6 +210,28 @@ export class DisplayIssueComponent implements OnInit {
         this.enableAdmin = false;
     }
 
+
+    searchAddress(address) {
+        if (address != '')
+        {
+            this.issuesService.get_address_coordinates(address)
+                .subscribe(
+                    data =>
+                    {
+                        if (data.results.length > 0) {
+                            this.issueCenter = data.results[0].geometry.location
+                            if (this.enableAdmin) {
+                                this.mapLayers[0].setLatLng(this.issueCenter)
+                                this.issueAdminForm.patchValue({address:data.results[0].formatted_address})
+                            }
+                        } else {
+                            this.toastr.error(this.translationService.get_instant('ADDRESS_NOT_FOUND_MSG'), this.translationService.get_instant('ERROR'), {timeOut:6000, progressBar:true, enableHtml:true})
+                        }
+                    },
+                    error => this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                )
+        }
+    }
     //
     //  --- ISSUE ADMIN FUNCTIONS
     //
@@ -457,6 +482,23 @@ export class DisplayIssueComponent implements OnInit {
         )
         // map.on ('layeradd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
         // map.on ('overlayadd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
+
+        map.on('click', (ev:L.LeafletMouseEvent) => {
+            if (this.enableAdmin) {
+                this.mapLayers[0].setLatLng(ev.latlng);
+                this.issuesService.get_issue_address(ev.latlng.lat, ev.latlng.lng)
+                    .subscribe(
+                        data =>
+                        {
+                            if (data.results.length > 1) {
+                                // console.log(data.results[0].formatted_address)
+                                this.issueAdminForm.patchValue({address:data.results[0].formatted_address})
+                            }
+                        },
+                        error => this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    )
+            }
+        })
     }
 
     markerClusterReady(group: L.MarkerClusterGroup) {

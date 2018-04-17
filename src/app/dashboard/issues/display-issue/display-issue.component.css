@@ -68,3 +68,10 @@ textarea {
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px
 }
+
+.flex-input-group-append {
+    flex:1 0 auto;
+    width:auto;
+    margin-right:0.6em;
+    height: 36px;
+}

@@ -238,6 +238,14 @@
     <div class="col-lg-5 col-md-12">
         <div class="card">
             <!-- <div class="card-body"> -->
+                <div>
+                    <div class="input-group" style='padding:0.5em'>
+                        <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
+                        <div class="input-group-append">
+                            <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e9ecef;">{{'SEARCH' | translate}} </button>
+                        </div>
+                    </div>
+                </div>
                 <div style="min-height:500px;" id="issuesmap"
                 leaflet
                 (leafletMapReady)="onMapReady($event)"

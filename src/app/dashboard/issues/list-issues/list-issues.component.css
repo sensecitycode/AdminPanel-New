@@ -46,3 +46,10 @@
 .mat-button-toggle-checked .color_orange {
     color:orange;
 }
+
+.flex-input-group-append {
+    flex:1 0 auto;
+    width:auto;
+    margin-right:0.6em;
+    height: 36px;
+}

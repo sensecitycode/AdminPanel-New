@@ -54,6 +54,8 @@ export class ListIssuesComponent implements OnInit {
     subscriptions = new Subscription();
     mapLayers = [];
     layersControl = {};
+    issueZoom:number ;
+    issueCenter: L.LatLng
 
     userRoles = sessionStorage.getItem('role').split(',')
     constructor(private issuesService: IssuesService,
@@ -104,6 +106,7 @@ export class ListIssuesComponent implements OnInit {
                     this.fetchIssues()
                 }
             }))
+            this.depServ.populate_departmentsArray()
 
         }
 
@@ -224,12 +227,25 @@ export class ListIssuesComponent implements OnInit {
         }
         // console.log(this.fetch_params['status'])
         this.fetchIssues()
+    }
 
-
-
-        // if (this.group.value == this.actionGroupSelect ) {this.actionGroupSelect = '';}
-        // console.log(group)
-        // if (group.value == 'right') group.selected.value = 'center'
+    searchAddress(address) {
+        if (address != '')
+        {
+            this.issuesService.get_address_coordinates(address)
+                .subscribe(
+                    data =>
+                    {
+                        if (data.results.length > 0) {
+                            this.issueCenter = data.results[0].geometry.location
+                            this.issueZoom = 17
+                        } else {
+                            this.toastr.error(this.translationService.get_instant('ADDRESS_NOT_FOUND_MSG'), this.translationService.get_instant('ERROR'), {timeOut:6000, progressBar:true, enableHtml:true})
+                        }
+                    },
+                    error => this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                )
+        }
     }
 
     changePageSize(issuesPerPage) {

@@ -8,6 +8,7 @@
     "RESET":"Επαναφορά",
     "CANCEL":"Ακύρωση",
     "REFRESH":"Ανανέωση",
+    "SEARCH":"Αναζήτηση",
     "LANGUAGE":"En",
     "FILTER":"Φίλτρο",
     "OTHERS":"υπόλοιποι",
@@ -28,6 +29,7 @@
     "VALID_MAIL_ERR":"Η διεύθυνση email <strong>δεν είναι έγκυρη</strong>",
     "MATCHING_PASS_ERR":"Οι κωδικοί <strong>δεν ταιριάζουν</strong>",
     "SERVICES_ERROR_MSG":"Κάποιες υπηρεσίες δεν ανταποκρίνονται! Παρακαλώ δοκιμάστε αργότερα.",
+    "ADDRESS_NOT_FOUND_MSG":"Η διεύθυνση δε βρέθηκε",
     "UNDER_CONSTRUCTION":"Υπό κατασκευή",
 
     "ROLES":
@@ -36,6 +38,16 @@
         "cityAdmin":"Διαχειριστής Πόλης",
         "cityManager":"Διαχειριστής Προβλημάτων",
         "departmentAdmin":"Διαχειριστής Τμήματος",
+        "departmentUser":"Χρήστης Τμήματος",
+        "Anonymous":"Ανώνυμος Χρήστης"
+    },
+
+    "ROLE_ACTIONS":
+    {
+        "sensecityAdmin":"Διαχείριση SenseCity",
+        "cityAdmin":"Οργάνωση",
+        "cityManager":"Διαχείριση Προβλημάτων",
+        "departmentAdmin":"Διαχείριση Τμήματος",
         "departmentUser":"Χρήστης Τμήματος",
         "Anonymous":"Ανώνυμος Χρήστης"
     },

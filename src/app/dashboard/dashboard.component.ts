@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit {
         }
         this.issuesService.API = this.bootstrapComp.API;
         this.issuesService.statisticsUrl = this.bootstrapComp.STATISTICS_URL;
+        this.issuesService.googleKey =  this.bootstrapComp.GOOGLE_KEY;
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {console.log("usersChanged: " + status);}
