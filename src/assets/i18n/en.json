@@ -100,6 +100,7 @@
         "NAME":"Name",
         "SURNAME":"Surname",
         "TEL":"Phone",
+        "Mobile":"Mobile",
         "ADDRESS":"Address",
         "CITY":"City",
         "PROVINCE":"Province",
@@ -240,7 +241,9 @@
         "STATISTICS_DESC":"View city's statistics and graphs",
         "STATISTICS_TEMPORARY_MSG":"You may view temporary statistics at the link below",
         "ACCOUNT_EDIT_SUCCESS":"Your account was successfully edited!",
-        "ACCOUNT_EDIT_WRONG_PASS":"Wrong account password!"
+        "ACCOUNT_EDIT_WRONG_PASS":"Wrong account password!",
+        "SEARCH_DESC":"Parameterized issue search",
+        "ISSUE_NUM":"Issue number"
     },
 
     "CITIES":

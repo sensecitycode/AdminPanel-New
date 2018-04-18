@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { UsersService } from './users/users.service';
 import { DepartmentsService } from './departments/departments.service';
 import { TranslationService } from '../shared/translation.service';
@@ -19,7 +21,9 @@ import { AppBootStrapComponent } from '../../app/app-bootstrap.component';
 export class DashboardComponent implements OnInit {
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
-    constructor(private translationService: TranslationService,
+    constructor(private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private translationService: TranslationService,
         private usersServ: UsersService,
         private depServ: DepartmentsService,
         private authService: AuthService,
@@ -70,6 +74,7 @@ export class DashboardComponent implements OnInit {
         ));
         // this.usersServ.populate_userArray();
         // this.usersServ.get_userRoles();
+        // this.router.navigate(['home'], {relativeTo: this.activatedRoute});
     }
 
     langToEl() {

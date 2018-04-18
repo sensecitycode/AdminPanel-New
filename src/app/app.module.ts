@@ -76,6 +76,7 @@ import { IssuesComponent } from './dashboard/issues/issues.component';
 import { ListIssuesComponent } from './dashboard/issues/list-issues/list-issues.component';
 import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-issue.component';
 import { StatisticsComponent } from './dashboard/statistics/statistics.component';
+import { SearchIssueComponent } from './dashboard/issues/search-issue/search-issue.component';
 
 
 
@@ -117,7 +118,8 @@ registerLocaleData(localeEl);
         IssuesComponent,
         ListIssuesComponent,
         DisplayIssueComponent,
-        StatisticsComponent
+        StatisticsComponent,
+        SearchIssueComponent
     ],
     imports: [
         BrowserModule,

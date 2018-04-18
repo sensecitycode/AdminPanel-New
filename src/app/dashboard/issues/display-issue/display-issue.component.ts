@@ -41,7 +41,7 @@ export class DisplayIssueComponent implements OnInit {
     imageBroken = false;
     issueIcon:string;
     enableAdmin = false;
-    requestGuard = false;
+    requestGuard = true;
 
 
     mapInit:object;
@@ -98,7 +98,7 @@ export class DisplayIssueComponent implements OnInit {
                 this.departments = this.depServ.return_departmentsArray();
             }
         }))
-        
+
         if (this.departments.length == 0) this.depServ.populate_departmentsArray()
 
 
@@ -254,6 +254,8 @@ export class DisplayIssueComponent implements OnInit {
         this.issuesService.fetch_issues(this.fetch_params)
         .subscribe(
             data => {
+                this.requestGuard = false;
+
                 this.issue = data[0];
                 console.log(this.issue);
                 this.displayIssuesOnMap(data[0]);

@@ -1,0 +1,66 @@
+
+.fa-exclamation-triangle {
+    color:red
+}
+
+.fa-tasks {
+    color:orange
+}
+
+.fa-check-square {
+    color:green
+}
+
+.card-issue {
+    margin: 5px 0px;
+}
+
+.card-body-issue {
+    padding: 10px;
+    cursor:pointer;
+}
+
+.card-body-issue:hover {
+    background: #eee;
+}
+
+.results_btn{
+    color:#3c4858 !important;
+    padding: 0.35rem 0.63rem;
+}
+
+.refresh_btn_container {
+    display:flex;
+    align-items:center; /* vertically aligned! */
+    justify-content: flex-end;
+}
+
+.mat-button-toggle-checked .color_blue {
+    color:cornflowerblue;
+}
+
+.mat-button-toggle-checked .color_green {
+    color:forestgreen;
+}
+
+.mat-button-toggle-checked .color_orange {
+    color:orange;
+}
+
+.flex-input-group-append {
+    flex:1 0 auto;
+    width:auto;
+    margin-right:0.6em;
+    height: 36px;
+}
+
+.btn_search {
+    padding: 0.2em 0.9em;
+    font-size: 1em;
+    background:#e9ecef;
+    /* background:#e9ecef; */
+    /* text-transform: none; */
+    /* margin-left: 0; */
+    /* color:black */
+    /* padding: 0.55rem 1.63rem; */
+}

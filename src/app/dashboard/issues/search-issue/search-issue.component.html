@@ -1,0 +1,90 @@
+<div class="col-md-12">
+    <div class="card" >
+        <div class="card-header" data-background-color="red">
+            <h5>{{'SEARCH' | translate}}</h5>
+            <p class="category">{{'DASHBOARD.SEARCH_DESC' | translate}}</p>
+        </div>
+        <div class="card-content container-fluid">
+            <div class="row justify-content-center">
+                <form class="card example-form container" [formGroup]="searchForm" novalidate>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="{{'DASHBOARD.ISSUE_NUM' | translate}}" formControlName="bug_id"/>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="{{'SIGNUP.MOBILE' | translate}}" formControlName="mobile"/>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <mat-form-field class="full-width">
+                                    <input matInput placeholder="Email" formControlName="email"/>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button mat-button class="btn-light btn_search" (click)="searchIssue()"><i class="material-icons">search</i> {{'SEARCH' | translate}} </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-7 col-md-12">
+                    <div *ngFor='let issue of issues' class="card card-issue">
+                        <div class="card-body card-body-issue" (click)="onDisplayIssueDetails(issue)">
+                            <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
+                            {{issue.bug_id}} ({{'DASHBOARD.'+issue.issue | translate}} - {{issue.value_desc}}) -- {{issue.created_ago}}
+                        </div>
+                    </div>
+                    <!-- <div class='text-right'>
+                        <i style="vertical-align: middle;">{{'DASHBOARD.NUMBER_OF_ISSUES' | translate}}:</i>
+                        <div class="btn-group">
+                            <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="20" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
+                                20
+                            </label>
+                            <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="50" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
+                                50
+                            </label>
+                            <label class="btn btn-light waves-light results_btn" [(ngModel)]="issuesService.issuesViewPerPage" mdbRadio="100" mdbRippleRadius (click)='changePageSize(issuesService.issuesViewPerPage)'>
+                                100
+                            </label>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="col-lg-5 col-md-12">
+                    <div class="card card-issue">
+                        <!-- <div class="card-body"> -->
+                            <div>
+                                <div class="input-group" style='padding:0.5em'>
+                                    <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
+                                    <div class="input-group-append">
+                                        <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e9ecef;">{{'SEARCH' | translate}} </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="min-height:500px;" id="issuesmap"
+                            leaflet
+                            (leafletMapReady)="onMapReady($event)"
+                            (leafletMarkerClusterReady)="markerClusterReady($event)"
+                            [leafletOptions]="mapInit"
+                            [leafletMarkerCluster]="markerClusterData"
+                            [leafletMarkerClusterOptions]="markerClusterOptions"
+                            [leafletZoom]="issueZoom"
+                            [leafletCenter]="issueCenter"
+                            [leafletLayers]="mapLayers"
+                            [leafletLayersControl]="layersControl">
+                            </div>
+
+                        <!-- </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,7 +23,9 @@ import { EditDepartmentComponent } from './dashboard/departments/display-departm
 import { IssuesComponent } from './dashboard/issues/issues.component';
 import { ListIssuesComponent } from './dashboard/issues/list-issues/list-issues.component';
 import { DisplayIssueComponent } from './dashboard/issues/display-issue/display-issue.component';
+import { SearchIssueComponent } from './dashboard/issues/search-issue/search-issue.component';
 import { StatisticsComponent } from './dashboard/statistics/statistics.component';
+
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -57,6 +59,7 @@ const appRoutes: Routes = [
                 {path: '', component: ListIssuesComponent},
                 {path: ':name', component: DisplayIssueComponent}
             ]},
+            {path: 'search_issues', component: SearchIssueComponent},
             {path: 'statistics', component: StatisticsComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
