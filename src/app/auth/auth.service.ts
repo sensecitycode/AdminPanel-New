@@ -9,6 +9,7 @@ export class AuthService {
 
     constructor(private httpClient: HttpClient, private router: Router) {}
 
+    API:string;
 
     public isAuthenticated(): boolean {
         const uuid = sessionStorage.getItem('uuid');
@@ -20,7 +21,7 @@ export class AuthService {
     }
 
     login(loginData) {
-        return this.httpClient.post<[object]>(`https://apitest.sense.city:4443/api/1.0/login`,
+        return this.httpClient.post<[object]>(`${this.API}/login`,
             loginData,
             {responseType:'json'})
     }

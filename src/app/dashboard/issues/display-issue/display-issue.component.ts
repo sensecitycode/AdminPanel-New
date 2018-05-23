@@ -10,6 +10,7 @@ import { Lightbox } from 'angular2-lightbox';
 
 
 import * as L from 'leaflet';
+import 'leaflet.gridlayer.googlemutant';
 import 'leaflet.markercluster';
 import * as UntypedL from 'leaflet/dist/leaflet-src'
 import 'leaflet.awesome-markers/dist/leaflet.awesome-markers';
@@ -82,13 +83,31 @@ export class DisplayIssueComponent implements OnInit {
            thumb: this.imageFetchURL+"&resolution=medium"
         }];
 
+
+        let openStreetMaps = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>' })
+
+        let googleRoadMap = UntypedL.gridLayer.googleMutant({
+            type: 'roadmap',
+            maxZoom: 18
+        })
+        googleRoadMap.addGoogleLayer('TrafficLayer');
+
+        let googleHybrid = UntypedL.gridLayer.googleMutant({
+            type: 'hybrid',
+            maxZoom: 18
+        })
+
         this.mapInit = {
-            layers: [
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>' })
-            ],
+            layers: [openStreetMaps],
             zoom: 12,
             center: L.latLng(38.248028 , 21.7583104)
         };
+
+        this.layersControl['baseLayers'] = {
+            'Open Street Maps': openStreetMaps,
+            'Google Maps Traffic': googleRoadMap,
+            'Google Maps Satellite': googleHybrid,
+        }
 
         //get departments name for issue edit form
         this.departments = this.depServ.return_departmentsArray()

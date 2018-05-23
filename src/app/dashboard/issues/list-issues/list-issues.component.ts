@@ -12,6 +12,8 @@ import { DepartmentsService } from '../../departments/departments.service';
 import { ToastrService } from 'ngx-toastr';
 
 import * as L from 'leaflet';
+import 'leaflet.gridlayer.googlemutant';
+
 import 'leaflet.markercluster';
 
 // import * as L from 'leaflet/dist/leaflet';
@@ -39,6 +41,7 @@ export class ListIssuesComponent implements OnInit {
         {type: "all", icon: "fa fa-home"},
         {type: "garbage", icon: "fa fa-trash-o"},
         {type: "lighting", icon: "fa fa-lightbulb-o"},
+        {type: "plumbing", icon: "fa fa-umbrella"},
         {type: "road-constructor", icon: "fa fa-road"},
         {type: "protection-policy", icon: "fa fa-shield"},
         {type: "green", icon: "fa fa-tree"},
@@ -124,13 +127,31 @@ export class ListIssuesComponent implements OnInit {
             this.fetchIssues()
         }
 
+        let openStreetMaps = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>' })
+
+        let googleRoadMap = UntypedL.gridLayer.googleMutant({
+            type: 'roadmap',
+            maxZoom: 18
+        })
+        googleRoadMap.addGoogleLayer('TrafficLayer');
+
+        let googleHybrid = UntypedL.gridLayer.googleMutant({
+            type: 'hybrid',
+            maxZoom: 18
+        })
+
         this.mapInit = {
-            layers: [
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>' })
-            ],
+            layers: [openStreetMaps],
             zoom: 12,
             center: L.latLng(38.248028 , 21.7583104)
         };
+
+        this.layersControl['baseLayers'] = {
+            'Open Street Maps': openStreetMaps,
+            'Google Maps Traffic': googleRoadMap,
+            'Google Maps Satellite': googleHybrid,
+        }
+
     }
 
     onMapReady(map: L.Map){
