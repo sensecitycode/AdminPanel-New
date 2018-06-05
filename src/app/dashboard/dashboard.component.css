@@ -145,7 +145,7 @@ i, span {
 }
 
 .card .card-content {
-    padding: 10px 20px;
+    padding: 25px 20px;
 }
 
 .card-row {
@@ -163,14 +163,10 @@ i, span {
     border-color: #ac2925 !important;
 }
 
-.back_btn {
+/* .back_btn {
     margin-bottom: 15px;
-}
+} */
 
-.example-additional-selection {
-    opacity: 0.75;
-    font-size: 0.75em;
-}
 
 table.table td {
 	padding:0.70rem;
@@ -179,9 +175,4 @@ table.table td {
 
 strong, .font-bold {
     font-weight: bold;
-}
-
-.example-card {
-    background-color: #eee;
-    /* width: 500px; */
 }

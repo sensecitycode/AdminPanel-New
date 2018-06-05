@@ -1,24 +1,25 @@
-<mat-toolbar color="primary" style=" height:64px" class="header">
-    <ul>
-        <li><a routerLink='../'><i class="ion-ios-analytics-outline" style="left:-8px; top:1px; position:relative;"></i>sense.city</a></li>
-    </ul>
+<mat-toolbar class="header">
+    <div class='logo' routerLink='../'><span><i class="ion-ios-analytics-outline"></i>sense.city</span></div>
+    <!-- <ul>
+        <li><a routerLink='../'><i class="ion-ios-analytics-outline" style="left:-5px; top:1px; position:relative;"></i>sense.city</a></li>
+    </ul> -->
     <span class="example-fill-remaining-space"></span>
     <!-- <a><img class="translate-flag" src="assets/flags/el.png" (click)="langToEl()" /></a>
     <a><img class="translate-flag" src="assets/flags/en.png" (click)="langToEn()"/></a> -->
 
-        <button mat-icon-button (click)="onLangMenuTrigger()">
-            <i class="material-icons">language</i>
+    <button mat-icon-button (click)="onLangMenuTrigger()">
+        <i class="material-icons">language</i>
+    </button>
+    <span [matMenuTriggerFor]="menu">{{'LANGUAGE' | translate }}</span>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="langToEl()">
+            <img class="translate-flag" src="assets/flags/el.ico" />
+            <span [ngClass]="{'font-bold':currentLang == 'el'}">Ελληνικά</span>
         </button>
-        <span [matMenuTriggerFor]="menu">{{'LANGUAGE' | translate }}</span>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="langToEl()">
-                <img class="translate-flag" src="assets/flags/el.ico" />
-                <span [ngClass]="{'font-bold':currentLang == 'el'}">Ελληνικά</span>
-            </button>
-            <button mat-menu-item (click)="langToEn()">
-                <img class="translate-flag" src="assets/flags/en.ico" />
-                <span [ngClass]="{'font-bold':currentLang == 'en'}">English</span>
-            </button>
-        </mat-menu>
+        <button mat-menu-item (click)="langToEn()">
+            <img class="translate-flag" src="assets/flags/en.ico" />
+            <span [ngClass]="{'font-bold':currentLang == 'en'}">English</span>
+        </button>
+    </mat-menu>
 
 </mat-toolbar>

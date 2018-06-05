@@ -40,18 +40,40 @@ body {
     line-height: 1.315;
 }
 
+.mat-select-panel {
+    max-height: 512px !important;
+}
+
 /*  full width all forms in app */
 .example-form {
    // min-width: 150px;
    width: 100%;
 }
+
 .example-full-width {
    width: 100%;
    padding: 5px 0px;
 }
 
+.example-card {
+    background-color: #eee;
+    margin: 25px 0;
+    /* width: 500px; */
+}
+
 .full-width {
     width: 100%;
+}
+
+.message-info {
+	margin: 25px 0;
+	padding: 1em;
+	box-shadow: rgba(0,0,0,0.14902) 0px 1px 1px 0px,rgba(0,0,0,0.09804) 0px 1px 2px 0px;
+}
+
+.example-additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
 }
 
 .ag-cell-focus,.ag-cell-no-focus{
@@ -64,6 +86,15 @@ outline: none;
 
 .mat-button-toggle-label {
     margin-bottom: 0;
+}
+
+
+.mat-pseudo-checkbox-checked {
+    background: #3f51b5;
+}
+.mat-pseudo-checkbox-checked::after {
+    top: 6px !important;
+    left: 4px !important;
 }
 
 input[type=password] {
@@ -95,6 +126,17 @@ input[type=password].bs3-form-control:focus {
     border:2px solid #72aada !important
 }
 
+label {
+    margin-bottom: 0 !important;
+}
+
+.mat-checkbox-layout {
+    white-space: inherit !important;
+}
+
+.mat-slide-toggle {
+    white-space: inherit !important;
+}
 
 .bs3-form-control {
     display: block;

@@ -41,6 +41,7 @@ import { MatFormFieldModule,
          MatRadioModule,
          MatTooltipModule,
          MatButtonToggleModule} from '@angular/material';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -144,6 +145,7 @@ registerLocaleData(localeEl);
         MatRadioModule,
         MatTooltipModule,
         MatButtonToggleModule,
+        MatSlideToggleModule,
         LeafletModule,
         LeafletMarkerClusterModule,
         TranslateModule.forRoot({

@@ -82,13 +82,14 @@
                 </form>
 
             <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
-            <button mat-button [disabled]="userEditForm.invalid ||
+            <button mat-button type="submit" [disabled]="userEditForm.invalid ||
+            userEditForm.controls.passwordForm.controls.pw1.untouched && userEditForm.controls.passwordForm.controls.pw2.untouched &&
             (user.username == userEditForm.controls.username.value &&
             user.name == userEditForm.controls.name.value &&
             user.surname == userEditForm.controls.surname.value &&
             user.position == userEditForm.controls.position.value &&
             user.role_name.join('') == userEditForm.controls.role_name.value.join('') &&
-            user.email == userEditForm.controls.email.value) " (click)="submitEditedUser()" class="btn-light success_btn">{{'SUBMIT' |translate}}</button>
+            user.email == userEditForm.controls.email.value)" (click)="submitEditedUser()" class="btn-light success_btn">{{'SUBMIT' |translate}}</button>
             </mat-card-content>
         </mat-card>
 

@@ -32,7 +32,7 @@ import { IssuesService } from '../issues.service';
 export class DisplayIssueComponent implements OnInit {
     initial_language = this.translationService.getLanguage();
     fetch_params = {bug_id: this.activatedRoute.snapshot.url[0].path};
-    issue = {};
+    issue:any = {};
     imageFetchURL:string;
     issueImage: [{
         src:string,
@@ -123,7 +123,7 @@ export class DisplayIssueComponent implements OnInit {
 
         this.subscriptions.add(this.issuesService.updateIssueStatus.subscribe(
             (status:string) => {
-                if (status == "done") {
+                if (status) {
                     this.fetchIssue()
                     this.fetchComments()
                     this.requestGuard = false;
@@ -153,7 +153,7 @@ export class DisplayIssueComponent implements OnInit {
     checkStatusValue(event){
         event.value == 'IN_PROGRESS' ? this.issueAdminForm.get('assignee').enable() : this.issueAdminForm.get('assignee').disable()
 
-        if (event.value == 'CONFIRMED')  this.issueAdminForm.patchValue({assignee:'Τμήμα επίλυσης προβλημάτων'})
+        if (event.value == 'CONFIRMED')  this.issueAdminForm.patchValue({assignee:this.depServ.control_department})
     }
 
     uploadFilesFormData: FormData
@@ -178,7 +178,8 @@ export class DisplayIssueComponent implements OnInit {
             address:this.issue['bug_address'],
             comments:''
         })
-        this.issue['resolution'] == '' ? this.issueAdminForm.patchValue({resolution:this.issue['resolution']}) : this.issueAdminForm.patchValue({resolution:"FIXED"})
+        console.log(this.issue)
+        this.issue['resolution'] != '' ? this.issueAdminForm.patchValue({resolution:this.issue['resolution']}) : this.issueAdminForm.patchValue({resolution:"FIXED"})
         this.issue['status'] == 'IN_PROGRESS' ? this.issueAdminForm.get('assignee').enable() : this.issueAdminForm.get('assignee').disable()
 
         this.fileNamesArray = [];
@@ -226,6 +227,7 @@ export class DisplayIssueComponent implements OnInit {
         console.log(this.issueAdminForm.value)
         this.setAdminInitialForm()
         console.log(this.issueAdminForm.value)
+        this.mapLayers[0].setLatLng([this.issue.loc.coordinates[1],this.issue.loc.coordinates[0]]);
         this.enableAdmin = false;
     }
 

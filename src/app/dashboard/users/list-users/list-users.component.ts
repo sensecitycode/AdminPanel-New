@@ -95,7 +95,7 @@ export class ListUsersComponent implements OnInit {
                             suppressSorting:true,
                             suppressSizeToFit:true,
                             cellRenderer: "EditRendererComponent",
-                            pinned: 'left'
+                            pinned: 'right'
                         },
                         {
                             headerName: translatedStr.USERNAME,
@@ -201,7 +201,7 @@ export class ListUsersComponent implements OnInit {
         this.gridApi.setQuickFilter(this.renderer.selectRootElement('#filter-text-box').value);
     }
 
-    onDisplayUserDetails(cell) {
+    onDisplayUserDetails(cell, mode) {
         let data = {
             // rowData: this.gridApi.getModel().rowsToDisplay[cell].data,
             rowNode: this.gridApi.getDisplayedRowAtIndex(cell),
@@ -210,7 +210,11 @@ export class ListUsersComponent implements OnInit {
             gridApi: this.gridApi,
         }
         // this.usersServ.set_userDetails(data);
-        this.router.navigate([data.user.username], {relativeTo: this.activatedRoute});
+        if (mode == 'info') {
+            this.router.navigate([data.user.username], {relativeTo: this.activatedRoute});
+        } else {
+            this.router.navigate([data.user.username, 'edit'], {relativeTo: this.activatedRoute})
+        }
 
         // this.gridApi.getDisplayedRowAtIndex(cell).setData(returnedData);
         // // this.gridApi.refreshInMemoryRowModel("sort");

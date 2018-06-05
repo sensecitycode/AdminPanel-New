@@ -24,6 +24,7 @@ export class IssuesService {
     issuesViewPerPage: string = '20';
     issuesSorting:string = "-1";
     issuesSelected:string = "all";
+    actionGroupSelect:string = 'own_dep_issues';
 
     fetch_issues(reqparams) {
         //
@@ -34,7 +35,7 @@ export class IssuesService {
         //
         reqparams.city = this.city;
         console.log("fetch_issues");
-        console.log("departments ids -- ")
+        console.log("departments ids --")
         console.log(this.departments_ids)
         console.log("departments --")
         console.log(this.departments)
@@ -124,11 +125,11 @@ export class IssuesService {
                             error3 => {
                                 console.error(error3);
                                 console.error("error at 3rd request");
-                                this.toastr.error(this.translationService.get_instant('DASHBOARD.ISSUE_FAILURE_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true});
+                                this.toastr.error(this.translationService.get_instant('DASHBOARD.ISSUE_FAILURE_MSG_ID', {id:update_obj.ids[0]}), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true});
                             },
                             () => {
-                                this.updateIssueStatus.next("done")
-                                this.toastr.success(this.translationService.get_instant('DASHBOARD.ISSUE_SUCCESS_MSG'), this.translationService.get_instant('SUCCESS'), {timeOut:6000, progressBar:true, enableHtml:true});
+                                this.updateIssueStatus.next(update_obj.ids[0])
+                                this.toastr.success(this.translationService.get_instant('DASHBOARD.ISSUE_SUCCESS_MSG_ID', {id:update_obj.ids[0]}), this.translationService.get_instant('SUCCESS'), {timeOut:7000, progressBar:true, enableHtml:true});
                             }
                         )
                     },

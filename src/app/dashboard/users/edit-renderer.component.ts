@@ -3,7 +3,10 @@ import {ICellRendererAngularComp} from "ag-grid-angular";
 
 @Component({
     selector: 'child-cell',
-    template: `<span><button type="button" rel="tooltip" (click)="invokeParentMethod()" class="bs3-btn bs3-btn-default"><i class="material-icons">portrait</i></button></span>`,
+    template: `<span>
+    <button type="button" rel="tooltip" (click)="invokeParentMethod('info')" class="bs3-btn bs3-btn-default"><i class="material-icons">portrait</i></button>
+    <button type="button" rel="tooltip"  (click)="invokeParentMethod('edit')" class="bs3-btn bs3-btn-default"><i class="material-icons">edit</i></button>
+    </span>`,
     styles: [
         `.bs3-btn {
             line-height: 0.5;
@@ -23,9 +26,9 @@ export class EditRendererComponent implements ICellRendererAngularComp {
         this.params = params;
     }
 
-    public invokeParentMethod() {
+    public invokeParentMethod(mode) {
         // this.params.context.componentParent.onEdit(`Row: ${this.params.node.rowIndex}, Col: ${this.params.colDef.headerName}`)
-        this.params.context.componentParent.onDisplayUserDetails(this.params.node.rowIndex)
+        this.params.context.componentParent.onDisplayUserDetails(this.params.node.rowIndex, mode)
 
     }
 

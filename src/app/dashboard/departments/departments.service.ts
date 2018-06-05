@@ -24,6 +24,7 @@ export class DepartmentsService {
     usersChanged = new Subject();
 
     private departments = [];
+    control_department:string;
     departmentsChanged = new Subject();
 
     populate_departmentsArray() {
@@ -41,7 +42,20 @@ export class DepartmentsService {
                 },
                 () =>
                     {
-                    this.departmentsChanged.next("departmentsArrayPopulated");
+                        this.httpClient.get<any>(`${this.API}/admin/municipality?city=${this.city}`,  {headers: reqheaders})
+                        .subscribe(
+                            (data) => this.control_department = data[0].control_department,
+                            (error) => {
+                                this.toastr.error(this.translationService.get_instant('CONTROL_DEP_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true}),
+                                this.departmentsChanged.next("departmentsArrayPopulated");
+                            },
+                            () => {
+                                console.log("Control Department: " + this.control_department)
+                                this.departmentsChanged.next("departmentsArrayPopulated");
+                            }
+                        )
+
+
                     }
             )
     }
@@ -62,15 +76,5 @@ export class DepartmentsService {
         })
     }
 
-
-    edit_user(user) {
-        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        return this.httpClient.post<[object]>(`${this.API}/admin/edit_user`,
-          user,
-          {
-            headers: reqheaders
-          })
-          // this.usersChanged.next("userEdited");
-    }
 
 }

@@ -104,7 +104,7 @@ export class ListDepartmentsComponent implements OnInit {
                             suppressSorting:true,
                             suppressSizeToFit:true,
                             cellRenderer: "depEditRendererComponent",
-                            pinned: 'left'
+                            pinned: 'right'
                         },
                         {
                             headerName: translatedStr.DEPARTMENTS,
@@ -193,7 +193,7 @@ export class ListDepartmentsComponent implements OnInit {
         this.gridApi.setQuickFilter(this.renderer.selectRootElement('#filter-text-box').value);
     }
 
-    onDisplayDepartmentDetails(cell) {
+    onDisplayDepartmentDetails(cell, mode) {
         let data = {
             // rowData: this.gridApi.getModel().rowsToDisplay[cell].data,
             rowNode: this.gridApi.getDisplayedRowAtIndex(cell),
@@ -203,7 +203,12 @@ export class ListDepartmentsComponent implements OnInit {
         }
         // console.log(data);
         // this.usersServ.set_userDetails(data);
-        this.router.navigate([data.department.departmentID], {relativeTo: this.activatedRoute});
+
+        if (mode == 'info') {
+            this.router.navigate([data.department.departmentID], {relativeTo: this.activatedRoute});
+        } else {
+            this.router.navigate([data.department.departmentID, 'edit'], {relativeTo: this.activatedRoute});
+        }
 
         // this.gridApi.getDisplayedRowAtIndex(cell).setData(returnedData);
         // // this.gridApi.refreshInMemoryRowModel("sort");

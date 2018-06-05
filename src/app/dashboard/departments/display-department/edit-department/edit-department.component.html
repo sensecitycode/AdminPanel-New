@@ -1,8 +1,8 @@
 <div class="col-md-12 back_btn">
     <button mat-raised-button class="btn-light"[routerLink]="['../../', dep_id]"><i class="material-icons" style="font-size: 20px">arrow_back</i> {{'BACK' | translate}} </button>
 </div>
-<div class="row">
-    <div class="col-lg-5 col-md-12 offset-lg-1">
+<div class="row justify-content-center">
+    <div class="col-xl-5 col-lg-12">
         <mat-card class="example-card">
             <mat-card-header>
                 <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
@@ -102,12 +102,12 @@
                 </form>
 
             <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
-            <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedDep()" class="btn-light success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button>
+            <!-- <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedDep()" class="btn-light success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button> -->
             </mat-card-content>
         </mat-card>
     </div>
 
-    <div class="col-lg-4 col-md-12 offset-lg-1">
+    <div class="col-xl-5 col-lg-12">
         <div class="alert-info message-info text-justify" [innerHTML]="'DASHBOARD.DEPARTMENT_EDIT_INFO'|translate"></div>
     </div>
 

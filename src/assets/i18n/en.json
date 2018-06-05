@@ -14,6 +14,7 @@
     "OTHERS":"others",
     "SUCCESS":"Success",
     "ERROR":"Error",
+    "INFO":"Information",
     "SORTING":"Sorting",
     "SORTING_NEWER_FIRST":"Newer first",
     "SORTING_OLDER_FIRST":"Older first",
@@ -29,27 +30,37 @@
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
     "SERVICES_ERROR_MSG":"Some services are not responding! Please try again later.",
+    "CONTROL_DEP_ERROR_MSG":"Some error occured fetching city's control department!",
     "ADDRESS_NOT_FOUND_MSG":"Address not found",
     "UNDER_CONSTRUCTION":"Under construction",
 
     "ROLES":
     {
-        "sensecityAdmin":"SenseCity Administration",
-        "cityAdmin":"City Administration",
-        "cityManager":"Issues Administration",
-        "departmentAdmin":"Department Administration",
+        "sensecityAdmin":"SenseCity Administrator",
+        "cityAdmin":"City Administrator",
+        "cityManager":"Issues Administratior",
+        "departmentAdmin":"Department Administrator",
         "departmentUser":"Department User",
         "Anonymous":"Anonymous User"
     },
 
     "ROLE_ACTIONS":
     {
-        "sensecityAdmin":"Διαχειριστής SenseCity",
-        "cityAdmin":"Διαχειριστής Πόλης",
-        "cityManager":"Διαχειριστής Προβλημάτων",
-        "departmentAdmin":"Διαχειριστής Τμήματος",
-        "departmentUser":"Χρήστης Τμήματος",
-        "Anonymous":"Ανώνυμος Χρήστης"
+        "sensecityAdmin":"SenseCity Administration",
+        "cityAdmin":"City Organisation",
+        "cityManager":"Issues Administration",
+        "departmentAdmin":"Department Administration",
+        "departmentUser":"Department User",
+        "Anonymous":"Anonymous User"
+    },
+
+    "ROLES_DESCRIPTION":{
+        "sensecityAdmin":"Διαχειρίζεται την πλατφόρμα SenseCity",
+        "cityAdmin":"Organises and administers the city",
+        "cityManager":"Access to main city department and display of all issues",
+        "departmentAdmin":"Access to more than one departments",
+        "departmentUser":"Access only to one department",
+        "Anonymous":"Access only to non administration side"
     },
 
     "GRID":
@@ -136,7 +147,9 @@
         "DEPARTMENT_SETTINGS":"Department settings",
         "FIXED_ISSUES":"Fixed Issues",
         "LAST24HOURS":"Last 24 Hours",
+        "LAST30DAYS":"Last 30 Days",
         "ADD":"Add",
+        "NEW_USER":"New User",
         "USER":"User",
         "USERS":"Users",
         "USERS_DESC":"Create and edit users that manage city's issues",
@@ -168,8 +181,10 @@
         "EMAIL_EXISTS_MSG":"Email <strong>{{email}}</strong> is not available!",
         "USER_EDIT_MSG":"User <strong>{{username}}</strong> successfully edited!",
         "USER_EDIT_ERROR_MSG":"An error occured editing user <strong>{{username}}</strong>!",
-        "DEPARTMENT_ADD_INFO":"<strong>Ιnformation</strong><li>Users with the 'Issues Administrator' role are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
-        "DEPARTMENT_EDIT_INFO":"<strong>Ιnformation</strong><li>Department name, manager and notification list editing service is not yet available!</li><li>Users with the 'Issues Administrator' role are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
+        "USER_ROLES":"User roles",
+        "USER_ADD_INFO_EMAIL":"User email is not possible to be changed after user creation!",
+        "DEPARTMENT_ADD_INFO":"<p><strong>Ιnformation</strong></p><li>Users with the 'Issues Administrator' role are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
+        "DEPARTMENT_EDIT_INFO":"<p><strong>Ιnformation</strong></p><li>Department name, manager and notification list editing service is not yet available!</li><li>Users with the 'Issues Administrator' role are preselected as issue administrators of each department.</li><li>It is not possible to select a 'Department User' if he is assigned to another department. A change is of role is required possibly.</li><li>Someone of issue administrators is selected as department 'Manager'. In case of new issues reported, is also notified via email.</li><li>Select among city users, who are 'also notified' via email.</li>",
         "DEP_ADDED_MSG":"<strong>{{name}}</strong> was successfully added!",
         "DEP_ADDED_ERROR_MSG":"An error occured adding department <strong>{{name}}</strong>!",
         "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!",
@@ -186,6 +201,7 @@
         "environment":"Enviromental",
         "FIXED_POINTS":"Bins / Lighting",
         "NUMBER_OF_ISSUES":"Number of issues",
+        "BULK_EDITING":"Issue Bulk Editing",
         "ASSIGNED_DEPARTMENT":"Department assigned to",
         "STATE":"State",
         "STATE_STATUS":
@@ -235,8 +251,10 @@
         "OTHER_DEP_ISSUES":"In progres of other departments",
         "DEPARTENT_COMPLETED_ISSUES":"Completed department issues",
         "ADMIN_ADDRESS_CHANGED":"Address '{{old_addr}}' changed to '{{new_addr}}' from Administrator.",
-        "ISSUE_SUCCESS_MSG":"Your request was successful!",
-        "ISSUE_FAILURE_MSG":"An error occured completing your request!",
+        "ISSUE_SUCCESS_MSG":"Your edit request was successful!",
+        "ISSUE_SUCCESS_MSG_ID":"Editing issue #{{id}} was successful!",
+        "ISSUE_FAILURE_MSG":"An error occured while completing your request!",
+        "ISSUE_FAILURE_MSG_ID":"An error occured while editing issue #{{id}}!",
         "STATISTICS":"Statistics",
         "STATISTICS_DESC":"View city's statistics and graphs",
         "STATISTICS_TEMPORARY_MSG":"You may view temporary statistics at the link below",

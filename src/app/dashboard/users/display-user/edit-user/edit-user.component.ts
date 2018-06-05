@@ -86,12 +86,14 @@ export class EditUserComponent implements OnInit {
             'username': this.userEditForm.get('username').value,
             'role_name':this.userEditForm.get('role_name').value,
             'position':this.userEditForm.get('position').value,
-            'city': this.user.city
+            'city': this.user.city,
+            'password':this.userEditForm.get('passwordForm').get('pw1').value
         };
+        console.log(editedUser)
         this.usersServ.edit_user(editedUser).subscribe(
             data => {console.log(data)},
             error => {
-                // console.log(error);
+                console.log(error);
                 // this.userEditForm.markAsPristine();
                 if (error.error == "duplicate_username") {
                     // this.userServiceMsg = 'duplicate_username';
@@ -128,6 +130,9 @@ export class EditUserComponent implements OnInit {
             'role_name':this.user.role_name,
             'position': this.user.position
         })
+        this.userEditForm.get('passwordForm').get('pw1').markAsUntouched()
+        this.userEditForm.get('passwordForm').get('pw2').markAsUntouched()
+
         // this.userServiceMsg = '';
     }
 

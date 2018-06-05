@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { MapLinkComponent } from './map-link/map-link.component';
 import { AccountCreateComponent} from './account-create/account-create.component';
@@ -27,7 +30,7 @@ export class SignupComponent implements OnInit {
     submitForm:FormGroup;
 
 
-    constructor(private bootstrapComp : AppBootStrapComponent, private http: HttpClient) {
+    constructor(private bootstrapComp : AppBootStrapComponent, private http: HttpClient, private router: Router,) {
         this.personalInfoForm = new FormGroup({});
         this.mapForm = new FormGroup({});
         this.accountForm = new FormGroup({});
@@ -77,7 +80,7 @@ export class SignupComponent implements OnInit {
             department: this.accountForm.get('department').value,
         }
         console.log(submitObject)
-        this.http.post(`${this.API}/admin/add_city1`, submitObject, {responseType:'text'})
+        this.http.post(`${this.API}/admin/add_city`, submitObject, {responseType:'text'})
             .subscribe(
                 data => { console.log(data) },
                 error => {
@@ -92,7 +95,7 @@ export class SignupComponent implements OnInit {
                 },
                 () => {
                     this.success = true;
-
+                    this.router.navigate(['/login']);
                 }
             )
 

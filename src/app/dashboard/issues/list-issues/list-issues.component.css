@@ -20,6 +20,10 @@
     cursor:pointer;
 }
 
+.cursor-auto {
+    cursor: auto;
+}
+
 .card-body:hover {
     background: #eee;
 }
@@ -32,7 +36,7 @@
 .refresh_btn_container {
     display:flex;
     align-items:center; /* vertically aligned! */
-    justify-content: flex-end;
+    justify-content: center;
 }
 
 .mat-button-toggle-checked .color_blue {

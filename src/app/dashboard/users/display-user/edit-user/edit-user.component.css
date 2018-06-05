@@ -1,15 +1,5 @@
-.example-card {
-    background-color: #eee;
-    /* width: 500px; */
-}
-
 .example-header-image {
     background-size: cover;
-}
-
-.example-additional-selection {
-    opacity: 0.75;
-    font-size: 0.75em;
 }
 
 .message {

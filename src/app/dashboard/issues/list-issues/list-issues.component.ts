@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 
 
@@ -37,6 +38,8 @@ export class ListIssuesComponent implements OnInit {
 
     issuesPerPage = this.issuesService.issuesViewPerPage;
     sorting_value = this.issuesService.issuesSorting;
+    actionGroupSelected = this.issuesService.actionGroupSelect;
+
     issue_types = [
         {type: "all", icon: "fa fa-home"},
         {type: "garbage", icon: "fa fa-trash-o"},
@@ -47,6 +50,9 @@ export class ListIssuesComponent implements OnInit {
         {type: "green", icon: "fa fa-tree"},
         {type: "environment", icon: "fa fa-leaf"}
     ]
+    bulk_checked = false;
+    resolvedStatusList = ["FIXED","INVALID","WONTFIX"];
+
     fetch_params = {};
     issues = [];
     mapInit:object;
@@ -64,9 +70,12 @@ export class ListIssuesComponent implements OnInit {
     constructor(private issuesService: IssuesService,
                 private translationService: TranslationService,
                 private toastr: ToastrService,
+                private formBuilder: FormBuilder,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
                 private depServ: DepartmentsService) { }
+
+    bulkEditForm: FormGroup;
 
     ngOnInit() {
 
@@ -91,8 +100,11 @@ export class ListIssuesComponent implements OnInit {
                         }
                     } else {
                         // console.log('Τμήμα επίλυσης προβλημάτων')
-                        this.issuesService.departments.push('Τμήμα επίλυσης προβλημάτων')
-                        userdepartments.push('Τμήμα επίλυσης προβλημάτων')
+                        // this.issuesService.departments.push('Τμήμα επίλυσης προβλημάτων')
+                        // userdepartments.push('Τμήμα επίλυσης προβλημάτων')
+                        this.issuesService.departments.push(this.depServ.control_department)
+                        userdepartments.push(this.depServ.control_department)
+
                     }
                     // console.log(userdepartments)
                     // console.log(userdepartments.join('&'))
@@ -102,11 +114,13 @@ export class ListIssuesComponent implements OnInit {
                         limit: this.issuesPerPage,
                         sort: this.sorting_value,
                         startdate: '2016-08-01',
-                        status: 'CONFIRMED|IN_PROGRESS'
+                        // status: 'CONFIRMED|IN_PROGRESS'
                     }
 
                     if (this.issuesService.issuesSelected != 'all')  this.fetch_params['issue'] = this.issuesService.issuesSelected;
-                    this.fetchIssues()
+                    this.onActionGroupSelected(this.actionGroupSelected)
+
+                    // this.fetchIssues()
                 }
             }))
             this.depServ.populate_departmentsArray()
@@ -122,9 +136,13 @@ export class ListIssuesComponent implements OnInit {
                 limit: this.issuesPerPage,
                 sort: this.sorting_value,
                 startdate: '2016-08-01',
-                status: 'CONFIRMED|IN_PROGRESS'
+                // status: 'CONFIRMED|IN_PROGRESS'
             }
-            this.fetchIssues()
+
+            if (this.issuesService.issuesSelected != 'all')  this.fetch_params['issue'] = this.issuesService.issuesSelected;
+            this.onActionGroupSelected(this.actionGroupSelected)
+
+            // this.fetchIssues()
         }
 
         let openStreetMaps = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>' })
@@ -151,6 +169,12 @@ export class ListIssuesComponent implements OnInit {
             'Google Maps Traffic': googleRoadMap,
             'Google Maps Satellite': googleHybrid,
         }
+
+        this.bulkEditForm = new FormGroup({
+            status: new FormControl('RESOLVED'),
+            resolution: new FormControl('FIXED'),
+        })
+
 
     }
 
@@ -234,9 +258,10 @@ export class ListIssuesComponent implements OnInit {
         this.markerClusterGroup = group;
     }
 
-    actionGroupSelect = 'own_dep_issues';
-    actionGroupSelected(selection) {
-        // console.log(selection)
+    onActionGroupSelected(selection) {
+        this.issuesService.actionGroupSelect = selection
+
+        console.log(this.issuesService.actionGroupSelect)
         if (selection == 'own_dep_issues') {
             this.fetch_params['status'] = 'CONFIRMED|IN_PROGRESS'
         }
@@ -245,6 +270,13 @@ export class ListIssuesComponent implements OnInit {
         }
         if (selection == 'other_dep_issues') {
             this.fetch_params['status'] = 'IN_PROGRESS'
+
+            let other_departments = this.depServ.return_departmentsArray().map(el => el.component_name)
+            this.issuesService.departments.forEach(dep => {
+                other_departments.splice(other_departments.indexOf(dep), 1);
+            })
+
+            this.fetch_params['departments'] = other_departments.join('|')
         }
         // console.log(this.fetch_params['status'])
         this.fetchIssues()
@@ -347,6 +379,58 @@ export class ListIssuesComponent implements OnInit {
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
             () => {}
         )
+    }
+
+    onBulkSliderChange() {
+        this.issuesToBeBulkEdited = []
+    }
+
+    issuesToBeBulkEdited = []
+    onBulkEditChange(event, issue) {
+        if(event.checked) {
+           this.issuesToBeBulkEdited.push(issue)
+         } else {
+
+           this.issuesToBeBulkEdited.splice(this.issuesToBeBulkEdited.indexOf(issue), 1);
+         }
+     }
+
+    onSubmitBulkEdit() {
+        this.subscriptions.add(
+            this.issuesService.updateIssueStatus
+            .subscribe((id) => {
+                console.log(id)
+                if (id == this.issuesToBeBulkEdited[this.issuesToBeBulkEdited.length-1].bug_id) {
+                    console.log("last")
+                    this.fetchIssues()
+                    this.bulk_checked = false
+                }
+            })
+        )
+
+        console.log(this.issuesToBeBulkEdited)
+        this.issuesToBeBulkEdited.forEach((issue, index, array) => {
+            console.log(issue)
+            let update_obj = {
+                "ids": [issue.bug_id],
+                "status": this.bulkEditForm.get('status').value,
+                "component": issue.bug_component,
+                "priority": issue.bug_priority,
+                "severity": issue.bug_severity,
+                "cf_city_address": issue.bug_address,
+                "lat": issue.loc.coordinates[1],
+                "lng": issue.loc.coordinates[0]
+            }
+
+            if (this.bulkEditForm.get('status').value == 'RESOLVED') update_obj['resolution'] = this.bulkEditForm.get('resolution').value
+
+            console.log(update_obj)
+
+
+            this.issuesService.update_bug(update_obj, '', new FormData())
+
+            // this.bulk_checked = false
+        })
     }
 
     ngOnDestroy () {

@@ -7,9 +7,11 @@
 <div class="row">
     <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card card-stats" >
-            <div class="card-header" data-background-color="orange">
-                <i class="material-icons">person</i>
-            </div>
+            <a routerLink="../users">
+                <div class="card-header" data-background-color="orange">
+                    <i class="material-icons">person</i>
+                </div>
+            </a>
             <div class="card-content">
                 <p class="category">{{'DASHBOARD.USERS' | translate}}</p>
                 <h4 class="title">{{users.length}}</h4>
@@ -25,9 +27,11 @@
 
     <div class="col-lg-4 col-md-6 col-sm-12">
         <div class="card card-stats" >
-            <div class="card-header" data-background-color="green">
-                <i class="material-icons">build</i>
-            </div>
+            <a routerLink="../departments">
+                <div class="card-header" data-background-color="green">
+                    <i class="material-icons">build</i>
+                </div>
+            </a>
             <div class="card-content">
                 <p class="category">{{'DASHBOARD.DEPARTMENTS' | translate}}</p>
                 <h4 class="title">{{departments.length}}</h4>
@@ -47,11 +51,11 @@
             </div>
             <div class="card-content">
                 <p class="category">{{'DASHBOARD.FIXED_ISSUES' | translate}}</p>
-                <h4 class="title">0</h4>
+                <h4 class="title">{{resolvedIssues.length}}</h4>
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    <i class="material-icons">date_range</i> {{'DASHBOARD.LAST24HOURS' | translate}}
+                    <i class="material-icons">date_range</i> {{'DASHBOARD.LAST30DAYS' | translate}}
                 </div>
             </div>
         </div>
