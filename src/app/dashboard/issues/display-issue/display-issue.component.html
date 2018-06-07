@@ -8,11 +8,15 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
-                    <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
+                    <span [ngStyle]="{'margin-right':'0.3em', 'visibility':requestGuard ? 'hidden':'visible'}"  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
                     <span *ngIf="!requestGuard">{{issue?.bug_id}} ({{'DASHBOARD.'+issue?.issue | translate}} - {{issue?.value_desc}}) -- {{issue?.created_ago}}</span>
+                    <!-- <span  [ngClass]="{'fa':true, 'fa-lg fa-mobile':issue?.device_id == 'webapp', 'fa-sm fa-desktop':issue?.device_id != 'webapp'}"></span> -->
+                    <span style="flex:1"></span>
+                    <span  *ngIf="issue?.device_id != 'webapp'" class="fa fa-lg fa-mobile" matTooltip="{{'DASHBOARD.FROM_MOBILE' | translate}}" [ngStyle]="{'visibility':requestGuard ? 'hidden':'visible'}"></span>
+                    <span  *ngIf="issue?.device_id == 'webapp'" class="fa fa-sm fa-desktop" matTooltip="{{'DASHBOARD.FROM_DESKTOP' | translate}}" [ngStyle]="{'visibility':requestGuard ? 'hidden':'visible'}"></span>
                 </h5>
                 <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-                <div id="displayIssue" *ngIf="!enableAdmin">
+                <div id="displayIssue" *ngIf="!enableAdmin" class="table-responsive">
                     <table class="table table-user-information">
                         <tbody>
                             <tr>

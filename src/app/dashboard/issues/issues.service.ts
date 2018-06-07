@@ -24,7 +24,7 @@ export class IssuesService {
     issuesViewPerPage: string = '20';
     issuesSorting:string = "-1";
     issuesSelected:string = "all";
-    actionGroupSelect:string = 'own_dep_issues';
+    actionGroupSelect:string = 'DEPARTMENT_ISSUES';
 
     fetch_issues(reqparams) {
         //

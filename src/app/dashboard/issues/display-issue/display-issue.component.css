@@ -25,6 +25,11 @@
     background:#3c4858;
     color:white
 }
+
+.card-title {
+    display: flex;
+
+}
 .card-text {
     color:inherit;
 }

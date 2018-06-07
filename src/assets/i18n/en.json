@@ -27,6 +27,8 @@
     "NEW":"New",
     "ACTIVE":"Active",
     "REQ_ERR":"Field is <strong>required</strong>",
+    "CATEGORY":"Category",
+    "ISSUE_TYPE":"Issue type",
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
     "SERVICES_ERROR_MSG":"Some services are not responding! Please try again later.",
@@ -38,7 +40,7 @@
     {
         "sensecityAdmin":"SenseCity Administrator",
         "cityAdmin":"City Administrator",
-        "cityManager":"Issues Administratior",
+        "cityManager":"Issues Administrator",
         "departmentAdmin":"Department Administrator",
         "departmentUser":"Department User",
         "Anonymous":"Anonymous User"
@@ -250,6 +252,7 @@
         "DEPARTMENT_ISSUES":"Confirmed department issues",
         "OTHER_DEP_ISSUES":"In progres of other departments",
         "DEPARTENT_COMPLETED_ISSUES":"Completed department issues",
+        "ISSUES_TO_PDF":"Issues to PDF",
         "ADMIN_ADDRESS_CHANGED":"Address '{{old_addr}}' changed to '{{new_addr}}' from Administrator.",
         "ISSUE_SUCCESS_MSG":"Your edit request was successful!",
         "ISSUE_SUCCESS_MSG_ID":"Editing issue #{{id}} was successful!",
@@ -261,7 +264,9 @@
         "ACCOUNT_EDIT_SUCCESS":"Your account was successfully edited!",
         "ACCOUNT_EDIT_WRONG_PASS":"Wrong account password!",
         "SEARCH_DESC":"Parameterized issue search",
-        "ISSUE_NUM":"Issue number"
+        "ISSUE_NUM":"Issue number",
+        "FROM_MOBILE":"added by mobile",
+        "FROM_DESKTOP":"added by desktop"
     },
 
     "CITIES":

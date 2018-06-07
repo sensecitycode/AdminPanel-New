@@ -90,20 +90,18 @@
         <div class="row">
             <div class="col-12">
                 <mat-button-toggle-group #group="matButtonToggleGroup" [ngModel]="actionGroupSelected" (ngModelChange)="onActionGroupSelected($event)">
-                    <mat-button-toggle value="own_dep_issues" matTooltip="{{ 'DASHBOARD.DEPARTMENT_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}" >
+                    <mat-button-toggle value="DEPARTMENT_ISSUES" matTooltip="{{ 'DASHBOARD.DEPARTMENT_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}" >
                         <i class='fa fa-sm fa-building color_blue'></i>
                     </mat-button-toggle>
-                    <mat-button-toggle value="dep_completed_issues" matTooltip="{{ 'DASHBOARD.DEPARTENT_COMPLETED_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}">
+                    <mat-button-toggle value="DEPARTENT_COMPLETED_ISSUES" matTooltip="{{ 'DASHBOARD.DEPARTENT_COMPLETED_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}">
                         <i class='fa fa-sm fa-check-circle color_green'></i>
                     </mat-button-toggle>
-                    <mat-button-toggle *ngIf="userRoles.indexOf('cityManager')!=-1" value="other_dep_issues" matTooltip="{{ 'DASHBOARD.OTHER_DEP_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}">
+                    <mat-button-toggle *ngIf="userRoles.indexOf('cityManager')!=-1" value="OTHER_DEP_ISSUES" matTooltip="{{ 'DASHBOARD.OTHER_DEP_ISSUES'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}">
                         <i class='material-icons color_orange'>location_city</i>
                     </mat-button-toggle>
                 </mat-button-toggle-group>
 
-                <span style='float:right'>
-                    <button mat-raised-button style="min-width: inherit; color: rgba(0,0,0,.38);"><i class='fa fa-lg fa-print'></i></button>
-                </span>
+                <button mat-raised-button style="min-width: inherit; color: rgba(0,0,0,.38); float:right" (click)="fetchIssues4Printing()" [disabled]='printRequestGuard' matTooltip="{{ 'DASHBOARD.ISSUES_TO_PDF'| translate}}" [matTooltipClass]="{'example-tooltip-host':true}"><i class='material-icons'>picture_as_pdf</i></button>
                 <!-- <mat-button-toggle><i class='fa fa-lg fa-check-circle'></i></mat-button-toggle>
                 <mat-button-toggle><i class='fa fa-lg fa-question-circle'></i></mat-button-toggle> -->
                 <!-- <mat-button-toggle><i class='fa fa-lg fa-print'></i></mat-button-toggle> -->

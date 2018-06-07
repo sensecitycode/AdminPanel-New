@@ -59,6 +59,7 @@ const appRoutes: Routes = [
                 {path: '', component: ListIssuesComponent},
                 {path: ':name', component: DisplayIssueComponent}
             ]},
+
             {path: 'search_issues', component: SearchIssueComponent},
             {path: 'statistics', component: StatisticsComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}

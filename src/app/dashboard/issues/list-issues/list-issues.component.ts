@@ -26,6 +26,10 @@ import 'leaflet.awesome-markers/dist/leaflet.awesome-markers';
 
 import * as moment from 'moment';
 
+import pdfMake from 'pdfmake/build/pdfmake.min'
+import pdfFonts from 'pdfmake/build/vfs_fonts'
+pdfMake.vfs = pdfFonts.pdfMake.vfs
+
 
 @Component({
     selector: 'app-list-issues',
@@ -262,13 +266,15 @@ export class ListIssuesComponent implements OnInit {
         this.issuesService.actionGroupSelect = selection
 
         console.log(this.issuesService.actionGroupSelect)
-        if (selection == 'own_dep_issues') {
+        if (selection == 'DEPARTMENT_ISSUES') {
             this.fetch_params['status'] = 'CONFIRMED|IN_PROGRESS'
+            this.fetch_params['departments'] = this.issuesService.departments.join('|')
         }
-        if (selection == 'dep_completed_issues') {
+        if (selection == 'DEPARTENT_COMPLETED_ISSUES') {
             this.fetch_params['status'] = 'RESOLVED'
+            this.fetch_params['departments'] = this.issuesService.departments.join('|')
         }
-        if (selection == 'other_dep_issues') {
+        if (selection == 'OTHER_DEP_ISSUES') {
             this.fetch_params['status'] = 'IN_PROGRESS'
 
             let other_departments = this.depServ.return_departmentsArray().map(el => el.component_name)
@@ -280,6 +286,81 @@ export class ListIssuesComponent implements OnInit {
         }
         // console.log(this.fetch_params['status'])
         this.fetchIssues()
+    }
+
+    printRequestGuard = false;
+    fetchIssues4Printing() {
+        this.printRequestGuard = true;
+        console.log('print')
+        let print_params = JSON.parse(JSON.stringify(this.fetch_params))
+        delete print_params['limit']
+        print_params['image_field'] = 1
+        console.log(print_params)
+        console.log(this.fetch_params)
+        let print_issues = []
+        this.issuesService.fetch_issues(print_params)
+        .subscribe(
+            data => {
+                print_issues = data;
+            },
+            error => {
+                this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true}),
+                this.printRequestGuard = false;
+            },
+            () => {
+                this.printRequestGuard = false;
+
+                console.log(print_issues);
+                let docDefinition = {
+                    info: {
+                        title:`Issues (${moment(new Date()).format('DD-MM-YYYY')})`,
+                        creator:`Sense.City`
+                    },
+                    pageOrientation: 'landscape',
+                    pageMargins: [ 15, 15, 15, 15 ],
+                    content: [
+                        {text: `Sense.City ${this.translationService.get_instant('ROLE_ACTIONS.cityManager')} (${moment(new Date()).format('DD-MM-YYYY')})`, style: 'header'},
+                        {text:`${this.translationService.get_instant('DASHBOARD.DEPARTMENTS')}: ${this.issuesService.departments.join(', ')}`, style: 'subheader'},
+                        {text:`${this.translationService.get_instant('CATEGORY')}: ${this.translationService.get_instant('DASHBOARD.'+this.issuesService.actionGroupSelect)}`,  style: 'subheader'},
+                        {style:'tableExample', table: {
+                            // widths: ['auto', 'auto','auto','auto','*','auto'],
+                            body: [
+                                [{text: 'ID', style: 'tableHeader'}, {text: this.translationService.get_instant('ISSUE_TYPE'), style: 'tableHeader'}, {text: this.translationService.get_instant('DASHBOARD.REPORTED'), style: 'tableHeader'}, {text: this.translationService.get_instant('DASHBOARD.FULL_NAME'), style: 'tableHeader'}, {text: this.translationService.get_instant('SIGNUP.CONTACT_INFO'), style: 'tableHeader'}, {text: this.translationService.get_instant('SIGNUP.ADDRESS'), style: 'tableHeader'}]
+                            ]
+                        }}
+                    ],
+                    styles: {
+                        header: {
+                            fontSize: 15,
+                            bold: true,
+                            margin: [0, 0, 0, 10]
+                        },
+                        subheader: {
+                            fontSize: 13,
+                            margin: [0, 0, 0, 8]
+                        },
+                        tableExample: {
+                            margin: [0, 0, 0, 8],
+                            alignment: 'center'
+                        },
+                        tableHeader: {
+                            bold: true,
+                            fontSize: 13,
+                            alignment: 'center'
+                        }
+                    }
+                };
+
+                print_issues.forEach(issue => {
+                    docDefinition.content[3]['table'].body.push([issue.bug_id, issue.value_desc, moment(new Date(issue.create_at)).format('DD-MM-YYYY HH:MM'), issue.name, `${issue.email}\n${issue.phone}`, issue.bug_address ])
+                })
+                // console.log(docDefinition.content[3]['table'].body)
+                pdfMake.createPdf(docDefinition).open();
+            }
+        )
+
+
+
     }
 
     searchAddress(address) {
@@ -423,6 +504,8 @@ export class ListIssuesComponent implements OnInit {
             }
 
             if (this.bulkEditForm.get('status').value == 'RESOLVED') update_obj['resolution'] = this.bulkEditForm.get('resolution').value
+
+            if (this.bulkEditForm.get('status').value == 'CONFIRMED') update_obj['component'] = this.depServ.control_department
 
             console.log(update_obj)
 

@@ -73,8 +73,6 @@ export class DisplayIssueComponent implements OnInit {
 
 
     ngOnInit() {
-        this.fetchIssue()
-        this.fetchComments()
 
         this.imageFetchURL = this.issuesService.API + "/image_issue?bug_id=" + this.fetch_params.bug_id;
         this.issueImage = [{
@@ -82,8 +80,49 @@ export class DisplayIssueComponent implements OnInit {
            caption: 'caption',
            thumb: this.imageFetchURL+"&resolution=medium"
         }];
+        // this.fetchFullIssue()
+        //
+        //
+        this.departments = this.depServ.return_departmentsArray()
 
+        if (this.issuesService.departments.length == 0) {
+            this.subscriptions.add(this.depServ.departmentsChanged.subscribe(
+                (status:string) => {
+                if (status == "departmentsArrayPopulated"){
+                    this.departments = this.depServ.return_departmentsArray();
+                    this.issuesService.departments = []
+                    if (this.issuesService.departments_ids.length > 0) {
 
+                        for (let dep_id of this.issuesService.departments_ids) {
+                            this.issuesService.departments.push(this.departments.find((dep) => dep.departmentID == dep_id)['component_name'])
+                        }
+                    } else {
+                        this.issuesService.departments.push(this.depServ.control_department)
+                    }
+
+                    if (!this.issuesService.departments.includes(this.depServ.control_department)) {
+                        this.fetch_params['departments'] = this.issuesService.departments.join('|')
+                    }
+
+                    this.fetchIssue()
+                    this.fetchComments()
+                }
+            }))
+        }
+
+        if (this.departments.length == 0) {
+            this.depServ.populate_departmentsArray()
+        } else {
+            // page comeback with no reload
+            if (!this.issuesService.departments.includes(this.depServ.control_department)) {
+                this.fetch_params['departments'] = this.issuesService.departments.join('|')
+            }
+            this.fetchIssue()
+            this.fetchComments()
+        }
+
+        //
+        //
         let openStreetMaps = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>' })
 
         let googleRoadMap = UntypedL.gridLayer.googleMutant({
@@ -110,16 +149,16 @@ export class DisplayIssueComponent implements OnInit {
         }
 
         //get departments name for issue edit form
-        this.departments = this.depServ.return_departmentsArray()
-        this.subscriptions.add(this.depServ.departmentsChanged.subscribe(
-            (status:string) => {
-            if (status == "departmentsArrayPopulated"){
-                this.departments = this.depServ.return_departmentsArray();
-            }
-        }))
-
-        if (this.departments.length == 0) this.depServ.populate_departmentsArray()
-
+        // this.departments = this.depServ.return_departmentsArray()
+        // this.subscriptions.add(this.depServ.departmentsChanged.subscribe(
+        //     (status:string) => {
+        //     if (status == "departmentsArrayPopulated"){
+        //         this.departments = this.depServ.return_departmentsArray();
+        //     }
+        // }))
+        //
+        // if (this.departments.length == 0) this.depServ.populate_departmentsArray()
+        //
 
         this.subscriptions.add(this.issuesService.updateIssueStatus.subscribe(
             (status:string) => {

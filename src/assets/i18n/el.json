@@ -26,6 +26,8 @@
     "OLD":"Παλαιός",
     "NEW":"Νέος",
     "ACTIVE":"Ενεργός",
+    "CATEGORY":"Κατηγορία",
+    "ISSUE_TYPE":"Τύπος προβλήματος",
     "REQ_ERR":"Το πεδίο είναι <strong>απαραίτητο</strong>",
     "VALID_MAIL_ERR":"Η διεύθυνση email <strong>δεν είναι έγκυρη</strong>",
     "MATCHING_PASS_ERR":"Οι κωδικοί <strong>δεν ταιριάζουν</strong>",
@@ -250,6 +252,7 @@
         "DEPARTMENT_ISSUES":"Ανοιχτά προβλήματα τμήματος",
         "OTHER_DEP_ISSUES":"Σε εκτέλεση άλλων τμημάτων",
         "DEPARTENT_COMPLETED_ISSUES":"Ολοκληρωμένα προβλήματα τμήματος",
+        "ISSUES_TO_PDF":"Εξαγωγή σε PDF",
         "ADMIN_ADDRESS_CHANGED":"Η διεύθυνση '{{old_addr}}' άλλαξε σε '{{new_addr}}' από το Διαχειριστή.",
         "ISSUE_SUCCESS_MSG_ID":"Η τροποποίηση του προβλήματος #{{id}} ήταν επιτυχής!",
         "ISSUE_SUCCESS_MSG":"Η τροποποίηση του προβλήματος ήταν επιτυχής!",
@@ -261,7 +264,9 @@
         "ACCOUNT_EDIT_SUCCESS":"Ο λογαριασμός σας τροποποιήθηκε επιτυχώς!",
         "ACCOUNT_EDIT_WRONG_PASS":"Λανθασμένος κωδικός λογαριασμού!",
         "SEARCH_DESC":"Παραμετροποιημένη αναζήτηση προβλημάτων",
-        "ISSUE_NUM":"Αριθμός Προβλήματος"
+        "ISSUE_NUM":"Αριθμός Προβλήματος",
+        "FROM_MOBILE":"από κινητό",
+        "FROM_DESKTOP":"από υπολογιστή"
     },
 
     "CITIES":
