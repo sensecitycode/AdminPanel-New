@@ -26,8 +26,8 @@ import 'leaflet.awesome-markers/dist/leaflet.awesome-markers';
 
 import * as moment from 'moment';
 
-import pdfMake from 'pdfmake/build/pdfmake.min'
-import pdfFonts from 'pdfmake/build/vfs_fonts'
+import * as pdfMake from 'pdfmake/build/pdfmake.min'
+import * as pdfFonts from 'pdfmake/build/vfs_fonts'
 pdfMake.vfs = pdfFonts.pdfMake.vfs
 
 
