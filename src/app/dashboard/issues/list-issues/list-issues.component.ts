@@ -188,9 +188,9 @@ export class ListIssuesComponent implements OnInit {
             }
         ))
 
-        setInterval( () => {
-            this.fetchIssues()
-        }, 300000)
+        // setInterval( () => {
+        //     this.fetchIssues()
+        // }, 300000)
     }
 
     onMapReady(map: L.Map){
