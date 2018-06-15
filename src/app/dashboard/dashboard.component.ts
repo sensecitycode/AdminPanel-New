@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
         private translationService: TranslationService,
         private usersServ: UsersService,
         private depServ: DepartmentsService,
-        private authService: AuthService,
+        public authService: AuthService,
         private bootstrapComp : AppBootStrapComponent,
         private issuesService: IssuesService) { }
 
@@ -67,10 +67,8 @@ export class DashboardComponent implements OnInit {
         this.issuesService.googleKey =  this.bootstrapComp.GOOGLE_KEY;
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(
-            (status:string) => {console.log("usersChanged: " + status);}
         ));
         this.subscription.add(this.depServ.departmentsChanged.subscribe(
-            (status:string) => {console.log(`departmentsChanged: ${status}`)}
         ));
         // this.usersServ.populate_userArray();
         // this.usersServ.get_userRoles();

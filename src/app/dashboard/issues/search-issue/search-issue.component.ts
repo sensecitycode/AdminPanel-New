@@ -129,12 +129,10 @@ export class SearchIssueComponent implements OnInit {
     }
 
     searchIssue() {
-        console.log(this.searchForm.value)
         this.issuesService.fetch_issues(this.searchForm.value)
             .subscribe(
                 (data) =>
                 {
-                    console.log(data)
                     this.issues = data
                     this.displayIssuesOnMap(data);
                 },
@@ -161,17 +159,13 @@ export class SearchIssueComponent implements OnInit {
             issueMarker.on('click', ev => {this.router.navigate(['../issues', ev.target.options.alt], {relativeTo: this.activatedRoute});})
             allIssueMarkers.push(issueMarker)
         })
-        console.log(allIssueMarkers.length)
         this.mapLayers = allIssueMarkers
     }
 
     onMapReady(map: L.Map){
-        console.log("map ready")
-        // console.log(map);
         this.issuesService.fetch_fixed_points()
         .subscribe(
             data => {
-                // console.log(data);
                 let StaticGarbageMarkers:L.Layer[] = []
                 let StaticLightingMarkers:L.Layer[] = []
                 for (let FixPnt of data) {
@@ -210,7 +204,6 @@ export class SearchIssueComponent implements OnInit {
                     }
                 }
 
-                // console.log(StaticGarbageMarkers)
                 this.markerClusterData =  StaticLightingMarkers.concat(StaticGarbageMarkers);
                 this.markerClusterOptions = {
                     disableClusteringAtZoom: 19,
@@ -232,16 +225,13 @@ export class SearchIssueComponent implements OnInit {
             	// 	}
             	// };
             },
-            error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
-            () => {    }
+            error => { },
+            () => {  }
         )
-        // map.on ('layeradd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
-        // map.on ('click', (ev:L.LeafletMouseEvent) => {console.log(ev)});
     }
 
 
     markerClusterReady(group: L.MarkerClusterGroup) {
-        // console.log(group)
         this.markerClusterGroup = group;
     }
 
@@ -265,7 +255,6 @@ export class SearchIssueComponent implements OnInit {
     }
 
     onDisplayIssueDetails(issue) {
-        console.log(issue);
         this.router.navigate(['../issues', issue.bug_id], {relativeTo: this.activatedRoute});
     }
 

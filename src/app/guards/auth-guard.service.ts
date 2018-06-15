@@ -8,7 +8,6 @@ export class AuthGuardService implements CanActivate {
     constructor(private router: Router, private auth:AuthService) { }
 
     canActivate() {
-        console.log("Auth Guard");
         if (this.auth.isAuthenticated())
         {
             return true;

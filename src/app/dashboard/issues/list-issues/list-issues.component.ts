@@ -38,7 +38,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs
     encapsulation: ViewEncapsulation.Emulated
 })
 export class ListIssuesComponent implements OnInit {
-    initial_language = this.translationService.getLanguage()
+    // initial_language = this.translationService.getLanguage()
 
     issuesPerPage = this.issuesService.issuesViewPerPage;
     sorting_value = this.issuesService.issuesSorting;
@@ -71,7 +71,7 @@ export class ListIssuesComponent implements OnInit {
     issueCenter: L.LatLng
 
     userRoles = sessionStorage.getItem('role').split(',')
-    constructor(private issuesService: IssuesService,
+    constructor(public issuesService: IssuesService,
                 private translationService: TranslationService,
                 private toastr: ToastrService,
                 private formBuilder: FormBuilder,
@@ -82,6 +82,9 @@ export class ListIssuesComponent implements OnInit {
     bulkEditForm: FormGroup;
 
     ngOnInit() {
+        //cached problem for reloading
+        this.issues = this.issuesService.cachedIssues
+        this.displayIssuesOnMap(this.issues)
 
         //get departments name to replace departments_ids
         let departments = []
@@ -94,7 +97,6 @@ export class ListIssuesComponent implements OnInit {
                 (status:string) => {
                 if (status == "departmentsArrayPopulated"){
                     departments = this.depServ.return_departmentsArray()
-                    // console.log(departments)
                     this.issuesService.departments = []
                     if (this.issuesService.departments_ids.length > 0) {
 
@@ -103,15 +105,10 @@ export class ListIssuesComponent implements OnInit {
                             userdepartments.push(departments.find((dep) => dep.departmentID == dep_id)['component_name'])
                         }
                     } else {
-                        // console.log('Τμήμα επίλυσης προβλημάτων')
-                        // this.issuesService.departments.push('Τμήμα επίλυσης προβλημάτων')
-                        // userdepartments.push('Τμήμα επίλυσης προβλημάτων')
                         this.issuesService.departments.push(this.depServ.control_department)
                         userdepartments.push(this.depServ.control_department)
 
                     }
-                    // console.log(userdepartments)
-                    // console.log(userdepartments.join('&'))
                     this.fetch_params = {
                         departments: userdepartments.join('|'),
                         image_field: '0',
@@ -179,16 +176,27 @@ export class ListIssuesComponent implements OnInit {
             resolution: new FormControl('FIXED'),
         })
 
+        this.subscriptions.add(this.translationService.languageChanged.subscribe(
+            (new_lang: string) => {
+                this.issues.forEach( (element) => {
+                    element.created_ago = moment(new Date(element.create_at)).locale(new_lang).fromNow()
+                })
 
+                this.layersControl['overlays'] = {}
+                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+            }
+        ))
+
+        setInterval( () => {
+            this.fetchIssues()
+        }, 300000)
     }
 
     onMapReady(map: L.Map){
-        console.log("map ready")
-        // console.log(map);
         this.issuesService.fetch_fixed_points()
         .subscribe(
             data => {
-                // console.log(data);
                 let StaticGarbageMarkers:L.Layer[] = []
                 let StaticLightingMarkers:L.Layer[] = []
                 for (let FixPnt of data) {
@@ -227,7 +235,6 @@ export class ListIssuesComponent implements OnInit {
                     }
                 }
 
-                // console.log(StaticGarbageMarkers)
                 this.markerClusterData =  StaticLightingMarkers.concat(StaticGarbageMarkers);
                 this.markerClusterOptions = {
                     disableClusteringAtZoom: 19,
@@ -249,23 +256,19 @@ export class ListIssuesComponent implements OnInit {
             	// 	}
             	// };
             },
-            error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
-            () => {    }
+            error => { },
+            () => {  }
         )
-        // map.on ('layeradd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
-        // map.on ('click', (ev:L.LeafletMouseEvent) => {console.log(ev)});
     }
 
 
     markerClusterReady(group: L.MarkerClusterGroup) {
-        // console.log(group)
         this.markerClusterGroup = group;
     }
 
     onActionGroupSelected(selection) {
         this.issuesService.actionGroupSelect = selection
 
-        console.log(this.issuesService.actionGroupSelect)
         if (selection == 'DEPARTMENT_ISSUES') {
             this.fetch_params['status'] = 'CONFIRMED|IN_PROGRESS'
             this.fetch_params['departments'] = this.issuesService.departments.join('|')
@@ -284,19 +287,15 @@ export class ListIssuesComponent implements OnInit {
 
             this.fetch_params['departments'] = other_departments.join('|')
         }
-        // console.log(this.fetch_params['status'])
         this.fetchIssues()
     }
 
     printRequestGuard = false;
     fetchIssues4Printing() {
         this.printRequestGuard = true;
-        console.log('print')
         let print_params = JSON.parse(JSON.stringify(this.fetch_params))
         delete print_params['limit']
         print_params['image_field'] = 1
-        console.log(print_params)
-        console.log(this.fetch_params)
         let print_issues = []
         this.issuesService.fetch_issues(print_params)
         .subscribe(
@@ -310,7 +309,6 @@ export class ListIssuesComponent implements OnInit {
             () => {
                 this.printRequestGuard = false;
 
-                console.log(print_issues);
                 let docDefinition = {
                     info: {
                         title:`Issues (${moment(new Date()).format('DD-MM-YYYY')})`,
@@ -354,7 +352,6 @@ export class ListIssuesComponent implements OnInit {
                 print_issues.forEach(issue => {
                     docDefinition.content[3]['table'].body.push([issue.bug_id, issue.value_desc, moment(new Date(issue.create_at)).format('DD-MM-YYYY HH:MM'), issue.name, `${issue.email}\n${issue.phone}`, issue.bug_address ])
                 })
-                // console.log(docDefinition.content[3]['table'].body)
                 pdfMake.createPdf(docDefinition).open();
             }
         )
@@ -385,7 +382,6 @@ export class ListIssuesComponent implements OnInit {
     changePageSize(issuesPerPage) {
         if (this.fetch_params['limit'] != issuesPerPage){
             this.fetch_params['limit'] = issuesPerPage;
-            console.log(this.fetch_params);
             this.fetchIssues()
         }
     }
@@ -393,7 +389,6 @@ export class ListIssuesComponent implements OnInit {
     changeIssueSorting(sort_select) {
         if (this.fetch_params['sort'] != sort_select){
             this.fetch_params['sort'] = sort_select;
-            console.log(this.fetch_params);
             this.issuesService.issuesSorting = sort_select;
             // this.fetchIssues()
         }
@@ -412,14 +407,12 @@ export class ListIssuesComponent implements OnInit {
 
             this.issuesService.issuesSelected = type_select;
 
-            console.log(this.fetch_params);
 
             // this.fetchIssues()
         }
     }
 
     onDisplayIssueDetails(issue) {
-        console.log(issue);
         this.router.navigate([issue.bug_id], {relativeTo: this.activatedRoute});
     }
 
@@ -431,7 +424,7 @@ export class ListIssuesComponent implements OnInit {
         let icon:string;
         // for (let [index, issue] of issues.entries()) {
         issues.forEach((issue, index) => {
-            this.issues[index].created_ago = moment(new Date(issue.create_at)).locale(this.initial_language).fromNow();
+            this.issues[index].created_ago = moment(new Date(issue.create_at)).locale(this.translationService.getLanguage()).fromNow();
 
             icon = this.issuesService.get_issue_icon(issue.issue)
             let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
@@ -445,7 +438,6 @@ export class ListIssuesComponent implements OnInit {
 
             allIssueMarkers.push(issueMarker)
         })
-        console.log(allIssueMarkers.length)
         this.mapLayers = allIssueMarkers
     }
 
@@ -454,7 +446,7 @@ export class ListIssuesComponent implements OnInit {
         .subscribe(
             data => {
                 this.issues = data;
-                console.log(this.issues);
+                this.issuesService.cachedIssues = data;
                 this.displayIssuesOnMap(data);
             },
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
@@ -480,18 +472,14 @@ export class ListIssuesComponent implements OnInit {
         this.subscriptions.add(
             this.issuesService.updateIssueStatus
             .subscribe((id) => {
-                console.log(id)
                 if (id == this.issuesToBeBulkEdited[this.issuesToBeBulkEdited.length-1].bug_id) {
-                    console.log("last")
                     this.fetchIssues()
                     this.bulk_checked = false
                 }
             })
         )
 
-        console.log(this.issuesToBeBulkEdited)
         this.issuesToBeBulkEdited.forEach((issue, index, array) => {
-            console.log(issue)
             let update_obj = {
                 "ids": [issue.bug_id],
                 "status": this.bulkEditForm.get('status').value,
@@ -506,8 +494,6 @@ export class ListIssuesComponent implements OnInit {
             if (this.bulkEditForm.get('status').value == 'RESOLVED') update_obj['resolution'] = this.bulkEditForm.get('resolution').value
 
             if (this.bulkEditForm.get('status').value == 'CONFIRMED') update_obj['component'] = this.depServ.control_department
-
-            console.log(update_obj)
 
 
             this.issuesService.update_bug(update_obj, '', new FormData())

@@ -25,7 +25,6 @@ export class UsersService {
 
 
     populate_userArray() {
-        console.log("populate_userArray()");
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
         const fetchUsers = this.httpClient.get<[object]>(`${this.API}/admin/users`,
             {
@@ -34,7 +33,6 @@ export class UsersService {
             .subscribe(
                 data => { this.users = data;},
                 error => {
-                    // console.log('error occured populating UserArray');
                     this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 },
                 () =>
@@ -65,8 +63,8 @@ export class UsersService {
                 headers: reqheaders
             })
             .subscribe(
-                data => { this.roleslist = data; console.log(data)},
-                error => {console.log('error occured fetching user roles')},
+                data => { this.roleslist = data},
+                error => {},
                 () =>
                     {
                         clearTimeout(fetchUserRoles_canc);

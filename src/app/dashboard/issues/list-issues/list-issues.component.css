@@ -18,6 +18,7 @@
 .card-body {
     padding: 10px;
     cursor:pointer;
+    display: flex
 }
 
 .cursor-auto {
@@ -26,6 +27,22 @@
 
 .card-body:hover {
     background: #eee;
+}
+
+.issue-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.issue-info {
+    font-size: 15.5px;
+    line-height: 20px
+}
+
+.address-info {
+    opacity: .85;
+    font-size: 13px;
 }
 
 .results_btn{

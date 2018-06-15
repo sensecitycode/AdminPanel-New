@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import localeEl from '@angular/common/locales/el'
 import { ToastrService } from 'ngx-toastr';
 import { Lightbox } from 'angular2-lightbox';
 
+import {} from '@types/googlemaps'
 
 import * as L from 'leaflet';
 import 'leaflet.gridlayer.googlemutant';
@@ -30,7 +31,6 @@ import { IssuesService } from '../issues.service';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class DisplayIssueComponent implements OnInit {
-    initial_language = this.translationService.getLanguage();
     fetch_params = {bug_id: this.activatedRoute.snapshot.url[0].path};
     issue:any = {};
     imageFetchURL:string;
@@ -43,6 +43,10 @@ export class DisplayIssueComponent implements OnInit {
     issueIcon:string;
     enableAdmin = false;
     requestGuard = true;
+    adminGuard = true;
+
+    activeMap = 'leaflet';
+    @ViewChild('gmap1') gmapElement: any;
 
 
     mapInit:object;
@@ -163,9 +167,9 @@ export class DisplayIssueComponent implements OnInit {
         this.subscriptions.add(this.issuesService.updateIssueStatus.subscribe(
             (status:string) => {
                 if (status) {
+                    this.requestGuard = false;
                     this.fetchIssue()
                     this.fetchComments()
-                    this.requestGuard = false;
                 }
             }
         ))
@@ -182,6 +186,18 @@ export class DisplayIssueComponent implements OnInit {
             'comments': [''],
             'files': ['']
         })
+
+        this.subscriptions.add(this.translationService.languageChanged.subscribe(
+            (new_lang: string) => {
+                if (this.issue.hasOwnProperty('created_ago')) {
+                    this.issue.created_ago = moment(new Date(this.issue.create_at)).locale(new_lang).fromNow()
+                }
+
+                this.layersControl['overlays'] = {}
+                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+            }
+        ))
 
     }
 
@@ -217,7 +233,6 @@ export class DisplayIssueComponent implements OnInit {
             address:this.issue['bug_address'],
             comments:''
         })
-        console.log(this.issue)
         this.issue['resolution'] != '' ? this.issueAdminForm.patchValue({resolution:this.issue['resolution']}) : this.issueAdminForm.patchValue({resolution:"FIXED"})
         this.issue['status'] == 'IN_PROGRESS' ? this.issueAdminForm.get('assignee').enable() : this.issueAdminForm.get('assignee').disable()
 
@@ -227,7 +242,6 @@ export class DisplayIssueComponent implements OnInit {
     }
 
     submitAdmin() {
-        // console.log (this.issueAdminForm.value)
         let updatedIssue = {
             "ids": [this.issue['bug_id']],
             "status": this.issueAdminForm.get('status').value,
@@ -263,10 +277,10 @@ export class DisplayIssueComponent implements OnInit {
     }
 
     resetAdmin() {
-        console.log(this.issueAdminForm.value)
         this.setAdminInitialForm()
-        console.log(this.issueAdminForm.value)
         this.mapLayers[0].setLatLng([this.issue.loc.coordinates[1],this.issue.loc.coordinates[0]]);
+        this.issueZoom = 17;
+        this.issueCenter = L.latLng([this.issue.loc.coordinates[1],this.issue.loc.coordinates[0]])
         this.enableAdmin = false;
     }
 
@@ -317,7 +331,6 @@ export class DisplayIssueComponent implements OnInit {
                 this.requestGuard = false;
 
                 this.issue = data[0];
-                console.log(this.issue);
                 this.displayIssuesOnMap(data[0]);
 
                 this.issueImage[0].caption = `${this.issue['bug_id']} (${this.issue['value_desc']})`
@@ -328,7 +341,11 @@ export class DisplayIssueComponent implements OnInit {
                 this.setAdminInitialForm()
             },
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
-            () => {}
+            () => {
+                if (this.issuesService.departments.includes(this.issue.bug_component) || this.issuesService.departments.includes(this.depServ.control_department) ) {
+                    this.adminGuard = false
+                }
+            }
         )
     }
 
@@ -340,7 +357,6 @@ export class DisplayIssueComponent implements OnInit {
         this.issuesService.fetch_issue_comment(this.fetch_params.bug_id)
         .subscribe(
             data => {
-                console.log(data)
                 let id = this.fetch_params.bug_id;
                 let com_text:string
 
@@ -371,7 +387,6 @@ export class DisplayIssueComponent implements OnInit {
                     var name:string;
                     var user_status:string;
                     for (let l = 0; l < comment.tags.length; l++) {
-                        // console.log(comment.tags[l])
 
                         if (comment.tags[l].split(":")[0].toUpperCase() == "STATUS") {status_index = l}
 
@@ -388,7 +403,6 @@ export class DisplayIssueComponent implements OnInit {
 
                         if (comment.tags[l].split(":")[0].toUpperCase() == "ACTION" && comment.tags[l].split(":")[1].toUpperCase() == "NEW-USER") {
                             user_status = "NEW-USER";
-                            // console.log("NEW-USER")
                             for (let j = 0; j < comment.tags.length; j++){
                                 if (comment.tags[j].split(":")[0].toUpperCase() == "NAME") {
                                     var cc_name = comment.tags[j].split(":")[1];
@@ -403,7 +417,6 @@ export class DisplayIssueComponent implements OnInit {
                         }
 
                         if (comment.tags[l].split(":")[0].toUpperCase() == "ACTION" && comment.tags[l].split(":")[1].toUpperCase() == "USER-EXISTED") {
-                            // console.log("USER-EXISTED")
                             user_status = "USER-EXISTED";
                         }
 
@@ -445,9 +458,6 @@ export class DisplayIssueComponent implements OnInit {
                     }
 
                     this.history.push(history_object)
-
-                    // console.log(this.history[comment_index])
-                    // console.log(this.cc_list)
                 })
             },
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
@@ -457,7 +467,7 @@ export class DisplayIssueComponent implements OnInit {
 
     displayIssuesOnMap(issue) {
 
-        this.issue['created_ago'] = moment(new Date(issue.create_at)).locale(this.initial_language).fromNow();
+        this.issue['created_ago'] = moment(new Date(issue.create_at)).locale(this.translationService.getLanguage()).fromNow();
 
         let icon = this.issuesService.get_issue_icon(issue.issue)
         let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
@@ -474,13 +484,12 @@ export class DisplayIssueComponent implements OnInit {
         this.issueCenter = L.latLng([issue.loc.coordinates[1],issue.loc.coordinates[0]])
     }
 
+    leafletMap: L.Map
     onMapReady(map: L.Map){
-        console.log("map ready")
-        // console.log(map);
+        this.leafletMap = map
         this.issuesService.fetch_fixed_points()
         .subscribe(
             data => {
-                // console.log(data);
                 let StaticGarbageMarkers:L.Layer[] = []
                 let StaticLightingMarkers:L.Layer[] = []
                 for (let FixPnt of data) {
@@ -539,11 +548,9 @@ export class DisplayIssueComponent implements OnInit {
             	// 	}
             	// };
             },
-            error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
-            () => {    }
+            error => {},
+            () => { }
         )
-        // map.on ('layeradd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
-        // map.on ('overlayadd', (ev:L.LeafletMouseEvent) => {console.log(ev)});
 
         map.on('click', (ev:L.LeafletMouseEvent) => {
             if (this.enableAdmin) {
@@ -553,19 +560,63 @@ export class DisplayIssueComponent implements OnInit {
                         data =>
                         {
                             if (data.results.length > 1) {
-                                // console.log(data.results[0].formatted_address)
                                 this.issueAdminForm.patchValue({address:data.results[0].formatted_address})
                             }
                         },
                         error => this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     )
             }
+            // map.invalidateSize()
+
         })
+
     }
 
     markerClusterReady(group: L.MarkerClusterGroup) {
-        // console.log(group)
         this.markerClusterGroup = group;
+    }
+
+    panorama: any
+    initGoogleStreetView() {
+        let issueType = this.issue.issue;
+
+        var sv = new google.maps.StreetViewService();
+        this.panorama = new google.maps.StreetViewPanorama(this.gmapElement.nativeElement);
+
+        sv.getPanoramaByLocation({lat: this.issue.loc.coordinates[1], lng: this.issue.loc.coordinates[0]}, 200, checkNearestStreetView);
+
+
+        // sv.getPanorama({location: berkeley, radius: 50}, processSVData);
+        let panorama = this.panorama
+        let issueLoc = [this.issue.loc.coordinates[1], this.issue.loc.coordinates[0]]
+        function checkNearestStreetView(panoData, status) {
+            if (panoData != null) {
+                var issueMarker = new google.maps.Marker({
+                    position: panoData.location.latLng,
+                    map: panorama,
+                    icon: `../assets/issue_icons/red2x.png`,
+                    visible: true
+                });
+                if (panorama != undefined)
+                    panorama.setPosition(panoData.location.latLng);
+                google.maps.event.trigger(panorama, "resize");
+            }
+        }
+    }
+
+    onMapSelection(map) {
+        this.activeMap = map
+
+        if (map == "google" && this.panorama == undefined) {
+            this.initGoogleStreetView()
+        }
+
+        if (map == "leaflet") {
+            setTimeout(() => {
+                this.leafletMap.invalidateSize()
+            }, 50)
+        }
+
     }
 
     //

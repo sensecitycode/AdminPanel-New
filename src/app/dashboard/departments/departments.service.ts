@@ -28,7 +28,6 @@ export class DepartmentsService {
     departmentsChanged = new Subject();
 
     populate_departmentsArray() {
-        console.log("populate_departmentsArray()");
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
         const fetchDepartments = this.httpClient.get<any>(`${this.API}/admin/departments`,
             {
@@ -37,7 +36,6 @@ export class DepartmentsService {
             .subscribe(
                 data => { this.departments = data},
                 error => {
-                    console.log('error occured populating departmentsArray');
                     this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 },
                 () =>
@@ -50,12 +48,9 @@ export class DepartmentsService {
                                 this.departmentsChanged.next("departmentsArrayPopulated");
                             },
                             () => {
-                                console.log("Control Department: " + this.control_department)
                                 this.departmentsChanged.next("departmentsArrayPopulated");
                             }
                         )
-
-
                     }
             )
     }
@@ -64,8 +59,6 @@ export class DepartmentsService {
     return_departmentsArray() {
         return this.departments.slice();
     }
-
-
 
     add_department(department) {
       const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;

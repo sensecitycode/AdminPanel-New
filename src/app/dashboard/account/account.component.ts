@@ -36,7 +36,6 @@ export class AccountComponent implements OnInit {
     }
 
     noMatchingPassword(AC: AbstractControl) {
-    // console.log(AC);
         let pass = AC.get('pass');
         let confirmPass = AC.get('confirm_pass');
         if (pass.value != confirmPass.value) {

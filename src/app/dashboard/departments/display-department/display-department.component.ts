@@ -14,13 +14,12 @@ export class DisplayDepartmentComponent implements OnInit {
 
     constructor(private depServ:DepartmentsService, private usersServ:UsersService, private activatedRoute:ActivatedRoute) { }
 
-    department:object;
+    department:any = {};
 
     ngOnInit() {
 
         let dep_id = this.activatedRoute.snapshot.url[0].path;
         let department = this.depServ.return_departmentsArray().find(idx => {return idx.departmentID == dep_id});
-        // console.log(department);
         if (department)
             this.department = {
                 name:department.component_name,

@@ -43,10 +43,12 @@
 
                 <!-- right side form -->
                 <ul class="navbar-nav mr-right">
-                    <span class="navbar-element">
+
+                    <li class="navbar-element">
                         <button mat-icon-button [matMenuTriggerFor]="langMenu">
                             <i class="material-icons">language</i>
                         </button>
+
                         <span [matMenuTriggerFor]="langMenu">{{'LANGUAGE' | translate }}</span>
                         <mat-menu #langMenu="matMenu">
                             <button mat-menu-item (click)="langToEl()">
@@ -58,9 +60,10 @@
                                 <span [ngClass]="{'font-bold':currentLang == 'en'}">English</span>
                             </button>
                         </mat-menu>
-                    </span>
+                    </li>
 
-                    <span class="navbar-element">
+
+                    <li class="navbar-element">
                         <span class="font-weight-bold">{{username}} ({{city}})</span>
                         <button mat-icon-button [matMenuTriggerFor]="userMenu">
                             <i class="material-icons">arrow_drop_down</i>
@@ -75,7 +78,7 @@
                                 {{ 'DASHBOARD.LOGOUT' | translate }}
                             </button>
                         </mat-menu>
-                    </span>
+                    </li>
                 </ul >
 
                 <!-- Search form -->

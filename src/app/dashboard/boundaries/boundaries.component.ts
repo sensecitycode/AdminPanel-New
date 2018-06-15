@@ -40,7 +40,6 @@ export class BoundariesComponent implements OnInit {
             zoom: 6,
             center: latLng(38.074208 , 22.824312)
         };
-        // console.log(this.mapInit);
         const getBoundaries = this.http.get<any>(`https://apitest.sense.city:4443/api/1.0/city_coordinates?city=${this.city}`,
             {
                 responseType:'json'
@@ -63,7 +62,6 @@ export class BoundariesComponent implements OnInit {
         }
 
     onMapReady(map: Map){
-        // console.log("ready");
         map.on ('layeradd', (ev:LeafletMouseEvent) => {
             map.fitBounds(this.geoJSON.getBounds(), {
                 padding: point(24, 24),

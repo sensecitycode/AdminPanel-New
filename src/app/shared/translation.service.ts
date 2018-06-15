@@ -15,11 +15,10 @@ export class TranslationService {
 
     switchLanguage(language: string) {
         this.translate.use(language);
-        this.languageChanged.next("language changed to: " + language);
+        this.languageChanged.next(language);
     }
 
     getLanguage() {
-        console.log(this.translate.currentLang)
         return this.translate.currentLang;
     }
 
@@ -28,9 +27,6 @@ export class TranslationService {
     }
 
     get_instant(keyword:string, params?:object):string {
-        // console.log(keyword)
-        // console.log(params)
-        // console.log(this.translate.instant(keyword));
         if (params) {
             return this.translate.instant(keyword, params);
         }

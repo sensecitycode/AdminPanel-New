@@ -16,9 +16,6 @@ export const ROUTES: RouteInfo[] = [
     { path: 'issues', title: 'DASHBOARD.ISSUES', icon:'tv', role: ['cityManager','departmentAdmin','departmentUser']},
     { path: 'search_issues', title: 'SEARCH', icon:'search', role: ['cityManager','departmentAdmin','departmentUser']},
     { path: 'statistics', title: 'DASHBOARD.STATISTICS', icon:'show_chart', role: ['cityManager']},
-    // { path: 'maps', title: 'Maps',  icon:'library_books'},
-    // { path: 'notifications', title: 'Notifications',  icon:'notifications'},
-    // { path: 'upgrade', title: 'Upgrade to PRO',  icon:'unarchive'},
 ];
 
 
@@ -30,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
 })
 
 export class SidebarComponent implements OnInit {
-    @Input() isToggled: string;
+    @Input() isToggled: boolean;
     userRoles = [];
     selectedRole:string;
 
@@ -39,7 +36,6 @@ export class SidebarComponent implements OnInit {
     menuItems: any[];
     ngOnInit() {
         this.userRoles =  sessionStorage.getItem('role').split(',');
-        console.log(this.userRoles);
         // if (this.activatedRoute.children[0].routeConfig.path != 'account') {
         //     let routeIndex = ROUTES.map((o) => o.path).indexOf(this.activatedRoute.children[0].routeConfig.path);
         //     this.selectedRole = this.userRoles[this.userRoles.indexOf(ROUTES[routeIndex].role)];
@@ -61,15 +57,11 @@ export class SidebarComponent implements OnInit {
             this.selectedRole = this.userRoles[0]
         }
 
-        console.log(this.selectedRole)
 
         this.menuItems = ROUTES.filter(menuItem => menuItem);
-        // console.log(this.menuItems);
-        // console.log(this.isToggled);
     }
 
     selectRole(role){
-        console.log(role);
         this.selectedRole == role ? this.selectedRole = '': this.selectedRole = role ;
         // if (this.selectedRole == role)
         // this.selectedRole = role;

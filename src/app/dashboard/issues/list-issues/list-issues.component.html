@@ -62,13 +62,31 @@
         <div *ngFor='let issue of issues' class="card">
             <div *ngIf="bulk_checked" class="card-body cursor-auto">
                 <mat-checkbox color="primary" (change)="onBulkEditChange($event, issue)">
-                    <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
-                    {{issue.bug_id}} ({{'DASHBOARD.'+issue.issue | translate}} - {{issue.value_desc}}) -- {{issue.created_ago}}
+                    <!-- <div  [ngClass]="{'issue-icon':true, 'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></div> -->
+                    <div class="issue-info">
+                        <div>
+                            <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
+
+                            {{issue.bug_id}} ({{'DASHBOARD.'+issue.issue | translate}} - {{issue.value_desc}}) -- {{issue.created_ago}}
+                        </div>
+                        <div class="address-info">
+                            <span *ngIf = "issue.bug_address != ''">{{issue.bug_address}}</span>
+                            <span *ngIf = "issue.bug_address == ''">{{'DASHBOARD.ADDRESS_NOT_AVAILABLE' | translate}}</span>
+                        </div>
+                    </div>
                 </mat-checkbox>
             </div>
             <div *ngIf="!bulk_checked" class="card-body" (click)="onDisplayIssueDetails(issue)">
-                <span  [ngClass]="{'fa fa-sm':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></span>
-                {{issue.bug_id}} ({{'DASHBOARD.'+issue.issue | translate}} - {{issue.value_desc}}) -- {{issue.created_ago}}
+                <div  [ngClass]="{'issue-icon':true, 'fa fa-lg':true, 'fa-tasks':issue.status == 'IN_PROGRESS', 'fa-exclamation-triangle':issue.status == 'CONFIRMED', 'fa-check-square':issue.status == 'RESOLVED'}"></div>
+                <div class="issue-info">
+                    <div>
+                        {{issue.bug_id}} ({{'DASHBOARD.'+issue.issue | translate}} - {{issue.value_desc}}) -- {{issue.created_ago}}
+                    </div>
+                    <div class="address-info">
+                        <span *ngIf = "issue.bug_address != ''">{{issue.bug_address}}</span>
+                        <span *ngIf = "issue.bug_address == ''">{{'DASHBOARD.ADDRESS_NOT_AVAILABLE' | translate}}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class='text-right' style="margin-top:25px">
@@ -115,7 +133,7 @@
                     <div class="input-group" style='padding:0.5em'>
                         <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
                         <div class="input-group-append">
-                            <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e9ecef;">{{'SEARCH' | translate}} </button>
+                            <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e0e0e0;">{{'SEARCH' | translate}} </button>
                         </div>
                     </div>
                 </div>

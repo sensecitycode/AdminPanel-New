@@ -20,13 +20,13 @@ import { UsersService } from '../users.service';
 export class ListUsersComponent implements OnInit {
     users:any[];
     localeText:any;
-    private gridOptions: GridOptions;
-    private gridApi: GridApi;
-    private gridColumnApi: ColumnApi;
-    private frameworkComponents;
-    private context;
-    private rowData: any[];
-    private columnDefs: any[];
+    public gridOptions: GridOptions;
+    public gridApi: GridApi;
+    public gridColumnApi: ColumnApi;
+    public frameworkComponents;
+    public context;
+    public rowData: any;
+    public columnDefs: any;
 
     private subscriptions = new Subscription();
 
@@ -41,7 +41,7 @@ export class ListUsersComponent implements OnInit {
     @ViewChild ('addButton') addButton:ElementRef;
 
     ngOnInit() {
-        this.gridOptions = <GridOptions>{};
+        this.gridOptions = {};
         const rowData = [];
 
 
@@ -49,7 +49,6 @@ export class ListUsersComponent implements OnInit {
         this.subscriptions.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {
                 if (status == "userArrayPopulated"){
-                    console.log("status == userArrayPopulated");
                     this.users = this.usersServ.return_userArray();
                     this.subscriptions.add(this.translationService.get('ROLES')
                         .subscribe(translatedStr =>
@@ -122,11 +121,6 @@ export class ListUsersComponent implements OnInit {
                     this.columnDefs = columnDefs;
                 }
         ))
-        // console.log(this.subscriptions)
-
-
-        // this.rowData = this.createRowData();
-        // this.columnDefs = this.createColumnDefs();
         this.context = { componentParent: this };
         this.frameworkComponents = {
           EditRendererComponent: EditRendererComponent
@@ -134,14 +128,13 @@ export class ListUsersComponent implements OnInit {
 
 
 
-        this.translationService.languageChanged.subscribe(
+        this.subscriptions.add(this.translationService.languageChanged.subscribe(
             lang =>
                 {
                     let usernameColDef = this.gridColumnApi.getColumn("username").getColDef();
                     let departmentsColDef = this.gridColumnApi.getColumn("departments").getColDef();
                     let positionColDef = this.gridColumnApi.getColumn("position").getColDef();
                     let rolesColDef = this.gridColumnApi.getColumn("roles").getColDef();
-
                     this.translationService.get('GRID')
                     .subscribe(translatedStr =>
                         {
@@ -160,7 +153,7 @@ export class ListUsersComponent implements OnInit {
                         }
                     )
                 }
-        );
+        ));
 
         this.usersServ.populate_userArray();
     }
@@ -171,7 +164,6 @@ export class ListUsersComponent implements OnInit {
     }
 
     onGridSizeChanged(params) {
-        // console.log(params);
         let gridApi = params.api;
         let gridColumnApi = params.columnApi;
 

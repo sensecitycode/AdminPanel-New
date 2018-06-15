@@ -68,7 +68,7 @@
                                             <input type="password" class="bs3-form-control" formControlName="pw2">
                                         </div>
                                     </div>
-                                    <div class="small form-text"><mat-error *ngIf="userEditForm.controls.passwordForm.controls.pw2.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error></div>
+                                    <div class="small form-text"><mat-error *ngIf="userEditForm.get('passwordForm').get('pw2').hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error></div>
 
                                 </td>
 
@@ -83,7 +83,7 @@
 
             <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
             <button mat-button type="submit" [disabled]="userEditForm.invalid ||
-            userEditForm.controls.passwordForm.controls.pw1.untouched && userEditForm.controls.passwordForm.controls.pw2.untouched &&
+            userEditForm.get('passwordForm').get('pw1').untouched && userEditForm.get('passwordForm').get('pw2').untouched &&
             (user.username == userEditForm.controls.username.value &&
             user.name == userEditForm.controls.name.value &&
             user.surname == userEditForm.controls.surname.value &&

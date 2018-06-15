@@ -18,13 +18,12 @@ export class DisplayUserComponent implements OnInit {
     constructor(private usersServ: UsersService, private activatedRoute: ActivatedRoute, private translationService:TranslationService, private toastr: ToastrService) { }
 
     username:string;
-    user:object;
+    user:any = {};
     // userServiceMsg:string;
 
     ngOnInit() {
 
         this.username = this.activatedRoute.snapshot.url[0].path;
-        // console.log(this.username);
         this.usersServ.get_userDetails(this.username)
             .subscribe(
                 data => {this.user = data[0]},

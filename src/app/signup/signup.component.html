@@ -1,4 +1,4 @@
-<ng-progress [id]="signup" [meteor]="true" [thick]="true" [color]="'#FFFFFF'"></ng-progress>
+<ng-progress [meteor]="true" [thick]="true" [color]="'#FFFFFF'"></ng-progress>
 
 <app-header></app-header>
 
@@ -12,7 +12,7 @@
 <div class="container" style="margin-top:2%; padding:1%;">
     <div class="row">
         <div class="col-md-12">
-            <mat-horizontal-stepper [linear]="true" style="background:rgb(220, 220, 220); min-height:400px">
+            <mat-horizontal-stepper color="accent" [linear]="true" style="background:rgb(220, 220, 220); min-height:400px">
                 <mat-step [stepControl]="mapForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
                     <app-map-link></app-map-link>
@@ -69,7 +69,7 @@
                         <button mat-button matStepperPrevious> {{'BACK' | translate}} </button>
                     </div>
                     <div class="text-center" >
-                        <button style="padding: 3px 40px; margin-top: 1%;" color="primary" mat-raised-button [disabled]="(submitForm.controls.terms_acknowledge.value == false) || (requestGuard == true) " (click)="onSubmit()"> {{'SIGNUP.STEP4_LABEL' | translate}} </button>
+                        <button style="padding: 3px 40px; margin-top: 1%;" color="accent" mat-raised-button [disabled]="(submitForm.controls.terms_acknowledge.value == false) || (requestGuard == true) " (click)="onSubmit()"> {{'SIGNUP.STEP4_LABEL' | translate}} </button>
                     </div>
 
                 </mat-step>

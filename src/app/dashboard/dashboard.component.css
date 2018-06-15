@@ -31,13 +31,13 @@ i, span {
 /*  */
 
 .navbar {
-    padding: 16px 10px;
+    /* padding: 16px 10px; */
     background: #fff;
     /* background: #6d7fcc; */
     border: none;
     border-radius: 0;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-    min-height:80px;
+    min-height:65px;
 }
 
 .navbar-brand {
@@ -129,6 +129,16 @@ i, span {
 .card [data-background-color=purple] {
     background: linear-gradient(60deg,#ab47bc,#8e24aa);
     box-shadow: 0 12px 20px -10px rgba(156,39,176,.28), 0 4px 20px 0 rgba(0,0,0,.12), 0 7px 8px -5px rgba(156,39,176,.2);
+}
+
+.card [data-background-color=grey] {
+    background: linear-gradient(60deg,#37474f,#808081);
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,.42), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+}
+
+.card [data-background-color=teal] {
+    background: linear-gradient(60deg,#00695c,#00897B);
+    box-shadow: 0 10px 30px -12px rgba(0,0,0,.42), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
 }
 
 .card .card-header {

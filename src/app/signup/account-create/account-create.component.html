@@ -19,18 +19,17 @@
                             <i class="fa fa-lock prefix" style="padding:0 0.2em"></i>
                             <mat-form-field class="example-full-width">
                                 <input matInput type="password" placeholder="{{'PASSWORD'| translate}}" formControlName="pw1"/>
-                                <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw1.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                                <mat-error *ngIf="accountForm.get('passwordForm').get('pw1').hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                             </mat-form-field>
 
                             <i class="fa fa-lock prefix" style="padding:0 0.2em"></i>
                             <mat-form-field class="example-full-width">
                                 <input matInput type="password" placeholder="{{'CONFIRM_PASS'| translate}}" formControlName="pw2"/>
-                                <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw2.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                                <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw2.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error>
+                                <mat-error *ngIf="accountForm.get('passwordForm').get('pw2').hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                                <mat-error *ngIf="accountForm.get('passwordForm').get('pw2').hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate"></mat-error>
                             </mat-form-field>
-                            <mat-error *ngIf="accountForm.controls.passwordForm.controls.pw2.value &&
-                            accountForm.controls.passwordForm.controls.pw2.touched &&
-                            accountForm.controls.passwordForm.hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate">
+                            <mat-error *ngIf="accountForm.get('passwordForm').get('pw2').value &&
+                            accountForm.get('passwordForm').hasError('noMatchingPassword')" [innerHTML]="'MATCHING_PASS_ERR' | translate">
                             </mat-error>
                         </div>
                     </div>

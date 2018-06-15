@@ -67,7 +67,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <button mat-button  class="btn-light" (click)="enableAdmin=true"  [disabled] = 'requestGuard' style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">settings</i><span>{{'DASHBOARD.ADMINISTRATION' | translate}}</span></button>
+                    <button mat-button  class="btn-light" (click)="enableAdmin=true"  *ngIf = '!adminGuard' style="color:#fff; background-color: #f0ad4e;  border-color: #eea236;"><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">settings</i><span>{{'DASHBOARD.ADMINISTRATION' | translate}}</span></button>
                 </div>
 
                 <div id="adminIssue" *ngIf="enableAdmin">
@@ -242,15 +242,25 @@
     <div class="col-lg-5 col-md-12">
         <div class="card">
             <!-- <div class="card-body"> -->
-                <div>
+                <div class="map-utilities">
                     <div class="input-group" style='padding:0.5em'>
                         <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
                         <div class="input-group-append">
-                            <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e9ecef;">{{'SEARCH' | translate}} </button>
+                            <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e0e0e0;">{{'SEARCH' | translate}} </button>
                         </div>
                     </div>
+                    <div style='padding:0.5em' *ngIf="!requestGuard" class="map-actions">
+                        <mat-button-toggle-group style="background-color: #fff" [ngModel]="activeMap" (ngModelChange)="onMapSelection($event)">
+                            <mat-button-toggle value="leaflet" matTooltip="{{ 'DASHBOARD.ISSUE_MAP'| translate}}"><i class="fa fa-map color_blue"></i></mat-button-toggle>
+                            <mat-button-toggle value="google" matTooltip="Street View"><i class="fa fa-street-view color_blue"></i></mat-button-toggle>
+                        </mat-button-toggle-group>
+
+                    </div>
                 </div>
-                <div style="min-height:500px;" id="issuesmap"
+                <div #gmap1 [ngStyle]="{'min-height':'500px', 'height':'40vh', 'display': activeMap == 'google' ? 'block' : 'none'}">
+                </div>
+
+                <div [ngStyle]="{'min-height':'500px', 'height':'40vh', 'display': activeMap == 'leaflet' ? 'block' : 'none'}"
                 leaflet
                 (leafletMapReady)="onMapReady($event)"
                 (leafletMarkerClusterReady)="markerClusterReady($event)"

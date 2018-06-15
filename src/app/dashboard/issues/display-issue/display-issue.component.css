@@ -67,6 +67,10 @@ textarea {
     max-height: 170px;
 }
 
+.mat-button-toggle-checked .color_blue {
+    color:cornflowerblue;
+}
+
 .flex-input-group {
     flex:1 0 auto;
     width:auto;
@@ -79,4 +83,20 @@ textarea {
     width:auto;
     margin-right:0.6em;
     height: 36px;
+}
+
+.map-utilities {
+    display: flex;
+}
+
+.map-actions {
+    justify-content: flex-end;
+    align-items: center;
+    display:flex
+}
+
+@media screen and (max-width: 1200px) {
+    .map-utilities {
+        display: block;
+    }
 }

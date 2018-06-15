@@ -58,7 +58,6 @@ export class MapLinkComponent implements OnInit{
                 })
                 .subscribe(
                     data => {
-                        // console.log(data);
                         if (data.status=="OK")
                         {
                             this.invalidcity=false;
@@ -109,20 +108,6 @@ export class MapLinkComponent implements OnInit{
                     })
                     .subscribe(
                         data => {
-                            // console.log(data.results);
-                            // this.translationService.getLanguage();
-                            // for (let res_index in data.results){
-                            //    // console.log(data.results[res_index]);
-                            //    for (let addr_ind in data.results[res_index].address_components ){
-                            //       // console.log(data.results[res_index].address_components[addr_ind]);
-                            //       if (data.results[res_index].address_components[addr_ind].types.indexOf("administrative_area_level_4")!=-1){
-                            //          this.city = data.results[res_index].address_components[addr_ind].short_name;
-                            //          this.onCitySelect();
-                            //          break;
-                            //       }
-                            //    }
-                            //    break;
-                            // }
                             if (data.results.length > 1) {
                                 this.invalidcity = false;
                                 for (let addr_index in data.results[1].address_components) {
@@ -179,7 +164,6 @@ export class MapLinkComponent implements OnInit{
             this.mapForm.get('domain').markAsTouched();
 
             this.sugg_domain = this.sugg_domain.replace(/ /g,"");
-            // console.log((this.sugg_domain).toLowerCase())
             if (this.sugg_domain!=this.last_domain){
                 this.domain = (this.sugg_domain).toLowerCase()
             }
@@ -189,8 +173,6 @@ export class MapLinkComponent implements OnInit{
 
         cityExists:boolean = false;
         checkCityExists(city) {
-            // console.log(city)
-            // console.log(`${this.API}/available_city?city=${city}`)
             this.http.get<{bool_flag: boolean}>(`${this.API}/available_city?city=${city}`)
                 .subscribe(
                     data => { this.cityExists = data.bool_flag },
@@ -200,11 +182,8 @@ export class MapLinkComponent implements OnInit{
                     },
                     () => {
                         if (this.cityExists == true ) {
-                            // console.log('error set')
-                            // console.log(this.mapForm.get('domain'))
                             this.mapForm.get('domain').setErrors({cityExists:true})
                         }
-                        // clearTimeout(fetchUsers_canc);
                     }
                 )
         }

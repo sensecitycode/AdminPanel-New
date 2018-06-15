@@ -241,6 +241,8 @@
             "TRIVIAL":"Trivial",
             "ENHANCEMENT":"Enhancement"
         },
+        "ADDRESS_NOT_AVAILABLE":"Address not available",
+        "ISSUE_MAP":"Issue Map",
         "FULL_NAME":"Full name",
         "CC_LIST":"Also interested",
         "ADMINISTRATION":"Administration",

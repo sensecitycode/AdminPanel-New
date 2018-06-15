@@ -67,7 +67,7 @@ i, span {
 
 #sidebar.active .sidebar-header strong {
     display: block;
-    padding:0;
+    padding: 0px 3px;
 }
 
 #sidebar ul li a {
@@ -110,14 +110,18 @@ i, span {
 }
 
 #sidebar .sidebar-header {
-    padding: 7px 10px;
+    /* padding: 7px 10px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #6d7fcc;
-    height:80px;
+    height:65px;
 }
 
 #sidebar .sidebar-header strong {
     display: none;
     font-size: 1.3em;
+
 }
 
 #sidebar ul li.components {
@@ -157,9 +161,12 @@ i {
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
     color: #fff;
-    /* background: #6d7fcc; */
+    /* background: red */
     background-color: #f44336;
     box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2);
+
+    /* background-color: #00695c; */
+    /* box-shadow: 0 12px 20px -10px rgba(0, 137, 123, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12); */
 }
 
 #sidebar ul li.active > a[aria-expanded="true"] {

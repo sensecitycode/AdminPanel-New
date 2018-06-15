@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
         this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {
                 if (status == "userArrayPopulated"){
-                    console.log("status == userArrayPopulated");
                     this.users = this.usersServ.return_userArray();
                 }
             }
@@ -41,9 +40,7 @@ export class HomeComponent implements OnInit {
         this.subscription.add(this.depServ.departmentsChanged.subscribe(
             (status:string) => {
                 if (status == "departmentsArrayPopulated"){
-                    console.log("status == departmentsArrayPopulated");
                     this.departments = this.depServ.return_departmentsArray();
-                    console.log(this.departments);
                 }
             }
         ));
@@ -54,7 +51,6 @@ export class HomeComponent implements OnInit {
             startdate: moment(new Date()).subtract(30, 'days').format("YYYY-MM-DD"),
             enddate: moment(new Date()).format("YYYY-MM-DD"),
         }
-        console.log(resolvedIssues_obj)
         this.issuesService.fetch_issues(resolvedIssues_obj)
         .subscribe(
             data => this.resolvedIssues = data,

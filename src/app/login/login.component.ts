@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
             const loginReq = this.authService.login(loginData)
                 .subscribe(
                     data => {
-                                // console.log(data[0]);
                                 sessionStorage.setItem('uuid', data[0]['uuid']);
                                 sessionStorage.setItem('role', data[0]['role_id']);
                                 sessionStorage.setItem('city', data[0]['city']);
@@ -47,7 +46,6 @@ export class LoginComponent implements OnInit {
                                 this.router.navigate(['/dashboard/home']);
                             },
                     error =>{
-                                console.log(error);
                                 this.loginForm.controls.username.markAsPristine();
                                 this.loginForm.controls.password.markAsPristine();
                                 this.loginForm.markAsUntouched();

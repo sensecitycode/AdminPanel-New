@@ -19,13 +19,13 @@ import { DepartmentsService } from '../departments.service';
 export class ListDepartmentsComponent implements OnInit {
     users:any[];
     departments:any[];
-    private gridOptions: GridOptions;
-    private gridApi: GridApi;
-    private gridColumnApi: ColumnApi;
-    private frameworkComponents;
-    private context;
-    private rowData: any[];
-    private columnDefs: any[];
+    public gridOptions: GridOptions;
+    public gridApi: GridApi;
+    public gridColumnApi: ColumnApi;
+    public frameworkComponents;
+    public context;
+    public rowData: any[];
+    public columnDefs: any[];
 
     private subscriptions = new Subscription();
 
@@ -45,45 +45,12 @@ export class ListDepartmentsComponent implements OnInit {
         this.subscriptions.add(this.depServ.departmentsChanged.subscribe(
             (status:string) => {
                 if (status == "departmentsArrayPopulated"){
-                    console.log("status == departmentsArrayPopulated");
                     this.departments = this.depServ.return_departmentsArray();
-                    console.log(this.departments);
-                    // rowData.push(this.departments);
                     for (let dep of this.departments) {
                         let dep_manager = dep.default_assigned_email[0].username;
                         let dep_manager_position = dep.default_assigned_email[0].position ? dep.default_assigned_email[0].position : '';
-                        // let cclist = [];
-                        // for (let person of dep.default_cc_list) {
-                        //     cclist.push(person.login_name);
-                        // }
                         rowData.push({departments: dep.component_name, manager: dep_manager, manager_position: dep_manager_position})
                     }
-
-
-                    // this.subscriptions.add(this.translationService.get('ROLES')
-                    //     .subscribe(translatedStr =>
-                    //         {
-                    //             for (let user of this.users) {
-                    //                 let departments = [];
-                    //                 if (user.departments){
-                    //                     if (user.departments[0]){
-                    //                         for (let deps of user.departments) {
-                    //                             // departments.push(deps.department);
-                    //                             departments.push(deps);
-                    //                         }
-                    //                     }
-                    //                 }
-                    //                 let roles = [];
-                    //                 if (user.role_name){
-                    //                     for (let role of user.role_name) {
-                    //                         roles.push(translatedStr[role]);
-                    //                     }
-                    //                 }
-                    //                 rowData.push({username: user.username, name:user.name, surname:user.surname, roles: roles, departments: departments})
-                    //             }
-                    //         }
-                    //     )
-                    // )
                 }
                 this.rowData = rowData;
             }
@@ -195,24 +162,17 @@ export class ListDepartmentsComponent implements OnInit {
 
     onDisplayDepartmentDetails(cell, mode) {
         let data = {
-            // rowData: this.gridApi.getModel().rowsToDisplay[cell].data,
             rowNode: this.gridApi.getDisplayedRowAtIndex(cell),
             department: this.departments[this.gridApi.getDisplayedRowAtIndex(cell).id],
             // row: cell,
             gridApi: this.gridApi,
         }
-        // console.log(data);
-        // this.usersServ.set_userDetails(data);
 
         if (mode == 'info') {
             this.router.navigate([data.department.departmentID], {relativeTo: this.activatedRoute});
         } else {
             this.router.navigate([data.department.departmentID, 'edit'], {relativeTo: this.activatedRoute});
         }
-
-        // this.gridApi.getDisplayedRowAtIndex(cell).setData(returnedData);
-        // // this.gridApi.refreshInMemoryRowModel("sort");
-        // this.gridApi.refreshInMemoryRowModel("filter");
 
     }
 

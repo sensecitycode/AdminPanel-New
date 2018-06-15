@@ -79,10 +79,9 @@ export class SignupComponent implements OnInit {
             password: this.accountForm.get('passwordForm').value.pw1,
             department: this.accountForm.get('department').value,
         }
-        console.log(submitObject)
         this.http.post(`${this.API}/admin/add_city`, submitObject, {responseType:'text'})
             .subscribe(
-                data => { console.log(data) },
+                data => {  },
                 error => {
                     console.error(error);
                     this.requestGuard = false;

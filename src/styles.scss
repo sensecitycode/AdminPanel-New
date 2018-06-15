@@ -5,12 +5,13 @@
 @import '~leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~@angular/material/theming';
-$custom-typography: mat-typography-config(
-    $font-family: 'Open Sans, sans-serif'
-);
-@include angular-material-typography($custom-typography);
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+// @import '~@angular/material/theming';
+// $custom-typography: mat-typography-config(
+//     $font-family: 'Open Sans, sans-serif'
+// );
+// @include angular-material-typography($custom-typography);
+
 
 body {
     background-color: #eee !important;
@@ -36,6 +37,13 @@ body {
     text-align: center !important;
 }
 
+.grey300-material-palette {
+    background-color: #e0e0e0 !important;
+    color: rgba(0, 0, 0, 0.87) !important;
+}
+
+
+
 .mat-form-field {
     line-height: 1.315;
 }
@@ -44,6 +52,17 @@ body {
     max-height: 512px !important;
 }
 
+// google street view i-frame
+
+.gm-iv-address {
+    height: auto !important;
+}
+
+.mat-option {
+    overflow: visible !important;
+}
+
+//
 /*  full width all forms in app */
 .example-form {
    // min-width: 150px;

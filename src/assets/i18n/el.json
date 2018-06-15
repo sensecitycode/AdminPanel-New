@@ -241,6 +241,8 @@
             "TRIVIAL":"Μηδαμινό",
             "ENHANCEMENT":"Βελτίωση"
         },
+        "ADDRESS_NOT_AVAILABLE":"Μη διαθέσιμη διεύθυνση",
+        "ISSUE_MAP":"Χάρτης Προβλήματος",
         "FULL_NAME":"Ονοματεπώνυμο",
         "CC_LIST":"Επίσης ενδιαφέρονται",
         "ADMINISTRATION":"Διαχείριση",

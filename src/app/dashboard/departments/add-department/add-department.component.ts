@@ -39,11 +39,9 @@ export class AddDepartmentComponent implements OnInit {
             'cclist': [[]]
         })
 
-
         this.subscription.add(this.usersServ.usersChanged.subscribe(
             (status:string) => {
                 if (status == "userArrayPopulated"){
-                    console.log("status == userArrayPopulated");
                     this.users = this.usersServ.return_userArray();
                     this.possibleAdminUsers = this.users.slice();
                     for (let user of this.possibleAdminUsers){
@@ -60,26 +58,17 @@ export class AddDepartmentComponent implements OnInit {
                         }
                     }
 
-
-                    console.log(this.users);
                     this.departmentAddForm.patchValue({users:this.issueAdmins});
                     this.allDepartmentUsers = this.issueAdmins;
-
-
-                    console.log(this.possibleAdminUsers);
                 }
             }
         ));
-
-
         this.usersServ.populate_userArray();
     }
 
 
     onAddUser(){
         let selectedUsers = this.departmentAddForm.get('users').value;
-        // console.log(selectedUsers);
-        // console.log(this.issueAdmins);
 
         this.nonIssueAdmins = [];
         for (let selUser of selectedUsers) {
@@ -93,27 +82,17 @@ export class AddDepartmentComponent implements OnInit {
             if (matchFound == false) {
                 this.nonIssueAdmins.push(selUser)
             }
-            // console.log(this.nonIssueAdmins);
         }
-        // this.departmentUsers.push(...this.issueAdmins);
-        // this.nonIssueAdmins.push(...selectedUsers);
-        // this.departmentAddForm.patchValue({users:selectedUsers});
         this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
-        // console.log(this.allDepartmentUsers.length);
-        // console.log(this.allDepartmentUsers);
     }
 
     onRemoveUser(index){
-        // console.log(index);
-        // console.log(this.issueAdmins.length);
-        // console.log(this.issueAdmins.length+index);
         this.nonIssueAdmins.splice(index, 1);
         this.allDepartmentUsers = this.issueAdmins.concat(this.nonIssueAdmins);
         this.departmentAddForm.patchValue({users:this.allDepartmentUsers});
         if (this.departmentAddForm.get('users').value.indexOf(this.departmentAddForm.get('manager').value) === -1) {
             this.departmentAddForm.patchValue({manager:[]});
         }
-
     }
 
     submitNewDepartment() {
@@ -127,23 +106,18 @@ export class AddDepartmentComponent implements OnInit {
         // if (form.cclist) {
         //     tobeAddedDepartment['default_cc'] = form.cclist.map(idx => idx.email);
         // }
-        console.log(tobeAddedDepartment);
         this.depServ.add_department(tobeAddedDepartment).subscribe(
-            data => {console.log(data)},
+            data => {},
             error => {
                 this.departmentAddForm.markAsPristine();
-                console.log(error);
                 if (error.error == "DUPLICATE_DEPARTMENT") {
-                    // this.departmentServiceMsg = 'duplicate_name';
                     this.toastr.error(this.translationService.get_instant('DASHBOARD.DEP_NAME_EXISTS_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     this.departmentAddForm.get('name').setErrors({nameExists: true});
                 } else {
-                    // this.departmentServiceMsg = 'services_error';
                     this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 }
             },
             () => {
-                // this.departmentServiceMsg = 'success';
                 this.toastr.success(this.translationService.get_instant('DASHBOARD.DEP_ADDED_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
                 this.newAddedDep = tobeAddedDepartment.department;
                 this.onReset();

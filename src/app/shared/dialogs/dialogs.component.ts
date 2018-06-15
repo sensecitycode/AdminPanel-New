@@ -31,7 +31,6 @@ export class DialogsComponent implements OnInit {
     roleList: [string];
 
     ngOnInit() {
-        console.log(this.data);
         switch (this.data.action) {
             case "userEdit":
                 this.userEditForm = this.formBuilder.group({
@@ -40,8 +39,6 @@ export class DialogsComponent implements OnInit {
                 })
                 this.originalNameField = this.data.rowData.username;
                 this.originalEmailField = this.data.rowData.email;
-                // console.log(this.userEditForm);
-                console.log(this.dialogRef);
                 break;
 
             case "userAdd":
@@ -52,7 +49,6 @@ export class DialogsComponent implements OnInit {
                     'email': ['', [Validators.required,Validators.email]],
                     'roles': ['',Validators.required]
                 })
-                console.log(this.userAddForm);
 
                 break;
         }
@@ -68,7 +64,6 @@ export class DialogsComponent implements OnInit {
     }
 
     onSubmitAddUser() {
-        console.log('submit add user');
         this.usersServ.add_user(this.userAddForm.value);
         this.dialogRef.close(this.userAddForm.value);
 

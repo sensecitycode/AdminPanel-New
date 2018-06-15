@@ -40,7 +40,6 @@ export class AddUserComponent implements OnInit {
     }
 
     noMatchingPassword(AC: AbstractControl) {
-        // console.log(AC);
         let pass = AC.get('pw1');
         let confirmPass = AC.get('pw2');
 

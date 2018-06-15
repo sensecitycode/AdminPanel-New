@@ -44,7 +44,7 @@ export class AccountCreateComponent implements OnInit {
 
     }
 
-    noMatchingPassword(AC: AbstractControl) {
+    noMatchingPassword(AC: any) {
         let pass = AC.get('pw1');
         let confirmPass = AC.get('pw2');
 
@@ -74,10 +74,7 @@ export class AccountCreateComponent implements OnInit {
             )
     }
 
-    onSubmit() {
-        console.log("submitted");
-        console.log(this.accountForm);
-    };
+    onSubmit() {    };
     // accountFormControl = new FormControl('', Validators.required);
     // passwordFormControl = new FormControl('', Validators.required);
     // confirmPasswordFormControl = new FormControl('', Validators.required);

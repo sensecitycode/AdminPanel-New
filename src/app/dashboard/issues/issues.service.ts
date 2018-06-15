@@ -24,6 +24,7 @@ export class IssuesService {
     issuesViewPerPage: string = '20';
     issuesSorting:string = "-1";
     issuesSelected:string = "all";
+    cachedIssues = [];
     actionGroupSelect:string = 'DEPARTMENT_ISSUES';
 
     fetch_issues(reqparams) {
@@ -34,17 +35,12 @@ export class IssuesService {
         //
         //
         reqparams.city = this.city;
-        console.log("fetch_issues");
-        console.log("departments ids --")
-        console.log(this.departments_ids)
-        console.log("departments --")
-        console.log(this.departments)
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
         return this.httpClient.get<any>(`${this.API}/admin/issue`,{params: reqparams, headers: reqheaders})
     }
 
     fetch_fixed_points() {
-        return this.httpClient.get<any>(`assets/env-specific/dev/${this.city}.json`)
+        return this.httpClient.get<any>(`assets/env-specific/${this.city}.json`)
     }
 
     fetch_issue_comment(bug_id) {
@@ -54,7 +50,6 @@ export class IssuesService {
         // this.role = 'cityAdmin';
         //
         //
-        console.log("fetch_issue_comment");
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
         return this.httpClient.post<any>(`${this.API}/admin/bugs/comment`, {id:bug_id}, {headers: reqheaders})
     }
@@ -91,16 +86,9 @@ export class IssuesService {
     update_bug(update_obj, comment, files) {
         // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
         // this.role = 'cityAdmin';
-        console.log("bug_update");
 
         //add mantatory field 'product' at update object
         update_obj['product'] = this.city;
-
-
-
-        console.log(update_obj)
-        console.log(comment)
-        console.log(files)
 
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
         this.httpClient.post<any>(`${this.API}/admin/bugs/update`, update_obj, {headers: reqheaders})
@@ -152,7 +140,6 @@ export class IssuesService {
     get_address_coordinates(address) {
         this.city != 'testcity1' ? address += ` ,${this.city}` : address += ' ,patra';
         let query_lang = this.translationService.getLanguage();
-        // console.log(address)
         return this.httpClient.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&sensor=false&language=${query_lang}&key=${this.googleKey}`)
     }
 }

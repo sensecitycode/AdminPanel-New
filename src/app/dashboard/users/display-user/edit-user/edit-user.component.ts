@@ -64,7 +64,6 @@ export class EditUserComponent implements OnInit {
         )
     }
     noMatchingPassword(AC: AbstractControl) {
-        // console.log(AC);
         let pass = AC.get('pw1');
         let confirmPass = AC.get('pw2');
 
@@ -89,11 +88,9 @@ export class EditUserComponent implements OnInit {
             'city': this.user.city,
             'password':this.userEditForm.get('passwordForm').get('pw1').value
         };
-        console.log(editedUser)
         this.usersServ.edit_user(editedUser).subscribe(
-            data => {console.log(data)},
+            data => {},
             error => {
-                console.log(error);
                 // this.userEditForm.markAsPristine();
                 if (error.error == "duplicate_username") {
                     // this.userServiceMsg = 'duplicate_username';
