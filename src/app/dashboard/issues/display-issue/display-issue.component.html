@@ -226,7 +226,7 @@
                                 <div *ngFor="let fileURL of progress.fileURLs; index as fileIndex;" style="height: 4rem; width: 4rem; float: left; margin-right: 0.5rem;">
                                     <a *ngIf="progress.file_types[fileIndex] === 'application'" href="{{fileURL}}" class="file-thumb-wrapper fa fa-file-o"></a>
                                     <a *ngIf="progress.file_types[fileIndex] === 'image'" href="{{fileURL}}" class="file-thumb-wrapper">
-                                        <img  class="img-responsive img-text" src="{{fileURL}}&thumb=1" alt="image" style="width:100%">
+                                        <img  class="img-responsive img-text" src="{{fileURL}}&thumb=1" alt="image" style="max-width:100%; max-height:100%">
                                     </a>
                                 </div>
                             </div>

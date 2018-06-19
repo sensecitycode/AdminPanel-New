@@ -94,7 +94,10 @@ export class SignupComponent implements OnInit {
                 },
                 () => {
                     this.success = true;
-                    this.router.navigate(['/login']);
+                    // setTimeout(() => {
+                    //     this.router.navigate(['/login']);
+                    // }, 10000)
+
                 }
             )
 

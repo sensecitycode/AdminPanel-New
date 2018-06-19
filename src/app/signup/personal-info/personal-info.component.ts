@@ -28,7 +28,7 @@ export class PersonalInfoComponent implements OnInit {
         position: new FormControl('', Validators.required),
         firstname: new FormControl('', Validators.required),
         lastname: new FormControl('', Validators.required),
-        telephone: new FormControl('', Validators.required),
+        telephone: new FormControl('', [Validators.required,Validators.pattern(/^[0-9]*$/)]),
         email: new FormControl('', [Validators.required,Validators.pattern(EMAIL_REGEX)])
         // addressForm: new FormGroup ({
         //    road: new FormControl(''),

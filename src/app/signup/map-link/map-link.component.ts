@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, NgZone} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, Validators, AbstractControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -11,6 +11,9 @@ import { Map } from 'leaflet';
 import { tileLayer, latLng, marker, icon, LeafletMouseEvent, Marker } from 'leaflet';
 
 import { AppBootStrapComponent } from '../../../app/app-bootstrap.component';
+
+const domainREGEX = /^[a-z0-9]*$/;
+
 @Component({
     selector: 'app-map-link',
     templateUrl: './map-link.component.html',
@@ -19,7 +22,7 @@ import { AppBootStrapComponent } from '../../../app/app-bootstrap.component';
 })
 export class MapLinkComponent implements OnInit{
 
-    constructor(private http: HttpClient, private translationService: TranslationService, private bootstrapComp : AppBootStrapComponent, private toastr: ToastrService) { }
+    constructor(private http: HttpClient, private translationService: TranslationService, private bootstrapComp : AppBootStrapComponent, private toastr: ToastrService, private zone: NgZone) { }
 
     mapInit:object;
     API:string;
@@ -36,7 +39,7 @@ export class MapLinkComponent implements OnInit{
     }
     mapForm = new FormGroup({
         city: new FormControl('', Validators.required),
-        domain:  new FormControl('', Validators.required)
+        domain:  new FormControl('', [Validators.required,Validators.pattern(domainREGEX)])
         // checkbox:  new FormControl(false , this.checkedValidator)
     });
 
@@ -49,13 +52,11 @@ export class MapLinkComponent implements OnInit{
     invalidcity=false;
 
     onCitySelect(){
-        // this.sugg_domain = this.city;
+
+
         this.markerLayer = [];
         if (this.city){
-            const request1 = this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.city}&sensor=false&language=EN&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM`,
-                {
-                    responseType:'json'
-                })
+            const request1 = this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.city}&sensor=false&language=EN&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM`, {responseType:'json'})
                 .subscribe(
                     data => {
                         if (data.status=="OK")
@@ -76,6 +77,7 @@ export class MapLinkComponent implements OnInit{
                             this.onDomainSelect();
                         } else {
                             this.invalidcity= true;
+                            this.mapForm.get('city').setErrors({notFound:true})
                         }
                     },
                     error => {
@@ -88,74 +90,83 @@ export class MapLinkComponent implements OnInit{
         };
 
         onMapReady(map: Map){
-            map.on ('click', (ev:LeafletMouseEvent) => {
-                this.markerLayer = [];
-                this.marker = marker([ev.latlng.lat, ev.latlng.lng], {
-                    icon:icon ({
-                        iconSize: [25,41],
-                        iconAnchor: [13,41],
-                        iconUrl: 'assets/marker-icon.png',
-                        shadowUrl: 'assets/marker-shadow.png'
-                    })
-                });
-                this.markerLayer.push(this.marker);
-                this.markerCenter = latLng(ev.latlng.lat, ev.latlng.lng);
-                this.markerZoom = 11;
-                let query_lang = this.translationService.getLanguage();
-                const request2 = this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${ev.latlng.lat},${ev.latlng.lng}&sensor=false&language=${query_lang}&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM`,
-                    {
-                        responseType:'json'
-                    })
-                    .subscribe(
-                        data => {
-                            if (data.results.length > 1) {
-                                this.invalidcity = false;
-                                for (let addr_index in data.results[1].address_components) {
-                                    if (data.results[1].address_components[addr_index].types.indexOf("country")!=-1){
-                                        for (let addr_index in data.results[0].address_components) {
-                                            if (data.results[0].address_components[addr_index].types.indexOf("political")!=-1){
-                                                this.city = data.results[0].address_components[addr_index].long_name;
+
+                map.on ('click', (ev:LeafletMouseEvent) => {
+                    this.resetCitySearch()
+                    this.zone.run( () => {
+                        this.markerLayer = [];
+                        this.marker = marker([ev.latlng.lat, ev.latlng.lng], {
+                            icon:icon ({
+                                iconSize: [25,41],
+                                iconAnchor: [13,41],
+                                iconUrl: 'assets/marker-icon.png',
+                                shadowUrl: 'assets/marker-shadow.png'
+                            })
+                        });
+                        this.markerLayer.push(this.marker);
+                        this.markerCenter = latLng(ev.latlng.lat, ev.latlng.lng);
+                        this.markerZoom = 11;
+                        let query_lang = this.translationService.getLanguage();
+                        const request2 = this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${ev.latlng.lat},${ev.latlng.lng}&sensor=false&language=${query_lang}&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM`,
+                            {
+                                responseType:'json'
+                            })
+                            .subscribe(
+                                data => {
+                                    if (data.results.length > 1) {
+                                        this.invalidcity = false;
+                                        for (let addr_index in data.results[1].address_components) {
+                                            if (data.results[1].address_components[addr_index].types.indexOf("country")!=-1){
+                                                for (let addr_index in data.results[0].address_components) {
+                                                    if (data.results[0].address_components[addr_index].types.indexOf("political")!=-1){
+                                                        this.city = data.results[0].address_components[addr_index].long_name;
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                            if (data.results[1].address_components[addr_index].types.indexOf("locality")!=-1){
+                                                this.city = data.results[1].address_components[addr_index].long_name;
+                                                break;
+                                            }
+                                            if (data.results[1].address_components[addr_index].types.indexOf("political")!=-1){
+                                                this.city = data.results[1].address_components[addr_index].long_name;
                                                 break;
                                             }
                                         }
-                                        break;
-                                    }
-                                    if (data.results[1].address_components[addr_index].types.indexOf("locality")!=-1){
-                                        this.city = data.results[1].address_components[addr_index].long_name;
-                                        break;
-                                    }
-                                    if (data.results[1].address_components[addr_index].types.indexOf("political")!=-1){
-                                        this.city = data.results[1].address_components[addr_index].long_name;
-                                        break;
-                                    }
-                                }
-                                // this.onCitySelect();
-                                const request1 = this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.city}&sensor=false&language=EN&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM`,
-                                    {
-                                        responseType:'json'
-                                    })
-                                    .subscribe(
-                                        data => {
-                                            this.sugg_domain = data.results['0'].address_components['0'].long_name;
-                                            this.onDomainSelect();
-                                        },
-                                        error => {
-                                            this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-                                        },
-                                        () => {}
-                                    )
+                                        // this.onCitySelect();
+                                        const request1 = this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${this.city}&sensor=false&language=EN&key=AIzaSyCHBdH6Zw1z3H6NOmAaTIG2TwIPTXUhnvM`,
+                                            {
+                                                responseType:'json'
+                                            })
+                                            .subscribe(
+                                                data => {
+                                                    if (data.results.length > 0) {
+                                                        this.sugg_domain = data.results['0'].address_components['0'].long_name;
+                                                        this.onDomainSelect();
+                                                    }
+                                                },
+                                                error => {
+                                                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                                                },
+                                                () => {}
+                                            )
 
-                            } else {
-                                this.invalidcity = true;
+                                    } else {
+                                        this.invalidcity = true;
+                                        this.mapForm.get('city').setErrors({notFound:true})
+                                        this.mapForm.get('city').markAsTouched();
+                                        // this.mapForm.get('city').updateValueAndValidity()
+                                    }
+                            },
+                            error => {
+                                this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                            },
+                            () => {
                             }
-                    },
-                    error => {
-                        this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-                    },
-                    () => {
-                    }
-                );
-            });
+                        );
+                    })
+                });
         }
 
         domain:string;
@@ -186,5 +197,12 @@ export class MapLinkComponent implements OnInit{
                         }
                     }
                 )
+        }
+
+        resetCitySearch() {
+            this.mapForm.setValue({city:'', domain: ''})
+            this.city = '';
+            this.domain = '';
+            this.sugg_domain = '';
         }
     }

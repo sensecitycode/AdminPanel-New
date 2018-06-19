@@ -30,6 +30,7 @@
     "CATEGORY":"Category",
     "ISSUE_TYPE":"Issue type",
     "VALID_MAIL_ERR":"This email address is <strong>invalid</strong>",
+    "INVALID_PHONE_ERR":"This phone number is <strong>invalid</strong>",
     "MATCHING_PASS_ERR":"Passwords do not <strong>match</strong>",
     "SERVICES_ERROR_MSG":"Some services are not responding! Please try again later.",
     "CONTROL_DEP_ERROR_MSG":"Some error occured fetching city's control department!",
@@ -131,7 +132,8 @@
         "EMAIL_EXISTS_ERR":"This email is <strong>already registered</strong> in platform",
         "USERNAME_EXISTS_ERR":"This username is <strong>already registered</strong> in platform",
         "CITY_ADD_SUCCESS_MSG":"Υour city was successfully registed for inspection!",
-        "CITY_ADD_ERROR_MSG":"An error occured during city registration. Please check the submission form again!"
+        "CITY_ADD_ERROR_MSG":"An error occured during city registration. Please check the submission form again!",
+        "INVALID_DOMAIN_ERR":"Only <strong>lowercase latin letters</strong> and <strong>numbers</strong> without spaces are allowed"
     },
 
     "LOGIN":

@@ -64,6 +64,7 @@
                         <mat-form-field class="example-full-width">
                             <input matInput placeholder="{{'SIGNUP.TEL' | translate}}" formControlName="telephone"/>
                             <mat-error *ngIf="personalInfoForm.controls.telephone.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            <mat-error *ngIf="personalInfoForm.controls.telephone.hasError('pattern')" [innerHTML]="'INVALID_PHONE_ERR' | translate"></mat-error>
                         </mat-form-field>
                     </div>
                 </div>

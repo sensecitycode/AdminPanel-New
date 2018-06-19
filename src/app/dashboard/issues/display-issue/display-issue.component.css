@@ -28,7 +28,7 @@
 
 .card-title {
     display: flex;
-
+    align-items: center;
 }
 .card-text {
     color:inherit;

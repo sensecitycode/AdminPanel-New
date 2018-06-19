@@ -7,22 +7,24 @@
                     name="city"
                     formControlName="city"
                     [(ngModel)]="city"
-                    (blur)="onCitySelect()" />
+                    (change)="onCitySelect()" />
                     <mat-error *ngIf="mapForm.controls.city.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                    <mat-error *ngIf="mapForm.controls.city.hasError('notFound')" [innerHTML]="'SIGNUP.CITY_NOT_FOUND'| translate"></mat-error>
 
                 </mat-form-field>
-                <mat-form-field *ngIf="sugg_domain" class="example-full-width">
+                <mat-form-field *ngIf="city" class="example-full-width">
                     <input matInput placeholder="{{'SIGNUP.DOMAIN_REQUEST' | translate : {city: sugg_domain | lowercase} }}"
                     name="domain"
                     formControlName="domain"
                     [(ngModel)]="domain"
                     (focus)="onDomainSelect()"
-                    (blur)="checkCityExists(mapForm.controls.domain.value)" />
+                    (change)="checkCityExists(mapForm.controls.domain.value)" />
                     <span class='suffix' matSuffix>.sense.city</span>
                     <mat-error *ngIf="mapForm.controls.domain.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                     <mat-error *ngIf="mapForm.controls.domain.hasError('cityExists')" [innerHTML]="'SIGNUP.CITY_EXISTS_ERR' | translate"></mat-error>
+                    <mat-error *ngIf="mapForm.controls.domain.hasError('pattern')" [innerHTML]="'SIGNUP.INVALID_DOMAIN_ERR' | translate"></mat-error>
                 </mat-form-field>
-                <mat-error style="padding:0px 5px" *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">{{'SIGNUP.CITY_NOT_FOUND'| translate}}</span></mat-error>
+                <!-- <mat-error style="padding:0px 5px" *ngIf="invalidcity"><i class="material-icons" style="left:-8px; top:1px; position:relative">new_releases</i><span style="top:-5px; position:relative">{{'SIGNUP.CITY_NOT_FOUND'| translate}}</span></mat-error> -->
                 <div style="min-height:500px; margin-top:1%;"
                 (leafletMapReady)=onMapReady($event)
                 leaflet
