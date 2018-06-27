@@ -19,6 +19,11 @@ export class IssuesService {
     departments = [];
     statisticsUrl:string;
     googleKey:string;
+    cityCenter:{
+        lat:number,
+        lng:number,
+        zoom:number
+    }
 
 
     issuesViewPerPage: string = '20';

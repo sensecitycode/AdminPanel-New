@@ -192,6 +192,15 @@
         "DEP_ADDED_MSG":"To <strong>{{name}}</strong> προστέθηκε επιτυχώς!",
         "DEP_ADDED_ERROR_MSG":"Προέκυψε σφάλμα στην εισαγωγή του τμήματος <strong>{{name}}</strong>!",
         "DEP_NAME_EXISTS_MSG":"Το όνομα τμήματος <strong>{{name}}</strong> δεν είναι διαθέσιμο!",
+        "CITY_BOUNDARIES_ERROR":"Τα όρια της πόλης δεν έχουν οριστεί!",
+        "CITY_BOUNDARIES_OVERVIEW":"Επισκόπηση ορίων πόλης",
+        "INVALID_BOUNDARIES_FILE_ERROR":"Μη έγκυρο αρχείο ορίων πόλης JSON!",
+        "CITY_BOUNDARIES_CONFIG":"Διαμόρφωση ορίων πόλης",
+        "JSON_FILES_INFO":"Μπορείτε να ανεβάσετε ένα JSON αρχείο με τα όρια της πόλης. Η πλατφόρμα υποστηρίζει GEOJSON Polygon και MultiPolygon.",
+        "CITY_BOUNDARIES_REQUIRED":"Η οριοθέτηση της πόλης είναι απαραίτητη, για να μπορεί να δεχτεί και να διαχειριστεί αιτήματα!",
+        "GEOJSON_TYPES":"Υποστηριζόμενοι GEOJSON τύποι",
+        "POLYGON_MATCH":"Το πρώτο ζεύγος τιμών συντεταγμένων πρέπει να είναι ίδιο με το τελευταίο, σε κάθε πολύγωνο!",
+        "LATLONG_TRANSLATE":"Long: Γεωγρ. Πλάτος, Lat: Γεωγρ. Μήκος",
         "ISSUES":"Προβλήματα",
         "ISSUES_DESC":"Εποπτεία και διαχείριση προβλημάτων επιλεγμένης κατηγορίας",
         "ISSUES_TYPE":"Τύπος προβλημάτων",
@@ -270,7 +279,8 @@
         "SEARCH_DESC":"Παραμετροποιημένη αναζήτηση προβλημάτων",
         "ISSUE_NUM":"Αριθμός Προβλήματος",
         "FROM_MOBILE":"από κινητό",
-        "FROM_DESKTOP":"από υπολογιστή"
+        "FROM_DESKTOP":"από υπολογιστή",
+        "ID":"Αριθ."
     },
 
     "CITIES":

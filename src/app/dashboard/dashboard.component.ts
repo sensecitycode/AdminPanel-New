@@ -65,6 +65,8 @@ export class DashboardComponent implements OnInit {
         this.issuesService.API = this.bootstrapComp.API;
         this.issuesService.statisticsUrl = this.bootstrapComp.STATISTICS_URL;
         this.issuesService.googleKey =  this.bootstrapComp.GOOGLE_KEY;
+        this.issuesService.cityCenter = this.bootstrapComp.CITY_CENTERS[this.city]
+
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(
         ));

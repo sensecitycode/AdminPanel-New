@@ -161,8 +161,8 @@ export class ListIssuesComponent implements OnInit {
 
         this.mapInit = {
             layers: [openStreetMaps],
-            zoom: 12,
-            center: L.latLng(38.248028 , 21.7583104)
+            zoom: this.issuesService.cityCenter.zoom,
+            center: L.latLng(this.issuesService.cityCenter.lat , this.issuesService.cityCenter.lng)
         };
 
         this.layersControl['baseLayers'] = {
@@ -323,7 +323,7 @@ export class ListIssuesComponent implements OnInit {
                         {style:'tableExample', table: {
                             // widths: ['auto', 'auto','auto','auto','*','auto'],
                             body: [
-                                [{text: 'ID', style: 'tableHeader'}, {text: this.translationService.get_instant('ISSUE_TYPE'), style: 'tableHeader'}, {text: this.translationService.get_instant('DASHBOARD.REPORTED'), style: 'tableHeader'}, {text: this.translationService.get_instant('DASHBOARD.FULL_NAME'), style: 'tableHeader'}, {text: this.translationService.get_instant('SIGNUP.CONTACT_INFO'), style: 'tableHeader'}, {text: this.translationService.get_instant('SIGNUP.ADDRESS'), style: 'tableHeader'}]
+                                [{text: this.translationService.get_instant('DASHBOARD.ID'), style: 'tableHeader'}, {text: this.translationService.get_instant('ISSUE_TYPE'), style: 'tableHeader'}, {text: this.translationService.get_instant('DASHBOARD.REPORTED'), style: 'tableHeader'}, {text: this.translationService.get_instant('DASHBOARD.FULL_NAME'), style: 'tableHeader'}, {text: this.translationService.get_instant('SIGNUP.CONTACT_INFO'), style: 'tableHeader'}, {text: this.translationService.get_instant('SIGNUP.ADDRESS'), style: 'tableHeader'}]
                             ]
                         }}
                     ],
@@ -350,7 +350,7 @@ export class ListIssuesComponent implements OnInit {
                 };
 
                 print_issues.forEach(issue => {
-                    docDefinition.content[3]['table'].body.push([issue.bug_id, issue.value_desc, moment(new Date(issue.create_at)).format('DD-MM-YYYY HH:MM'), issue.name, `${issue.email}\n${issue.phone}`, issue.bug_address ])
+                    docDefinition.content[3]['table'].body.push([issue.bug_id, issue.value_desc, moment(new Date(issue.create_at)).format('DD-MM-YYYY HH:mm'), issue.name, `${issue.email}\n${issue.phone}`, issue.bug_address ])
                 })
                 pdfMake.createPdf(docDefinition).open();
             }
@@ -434,7 +434,10 @@ export class ListIssuesComponent implements OnInit {
             });
 
             let issueMarker = new L.Marker([issue.loc.coordinates[1],issue.loc.coordinates[0]], {icon: AwesomeMarker, alt:issue.bug_id})
-            issueMarker.on('click', ev => {this.router.navigate([ev.target.options.alt], {relativeTo: this.activatedRoute});})
+
+            issueMarker.on('click', (ev:L.LeafletEvent) => {
+                this.router.navigate([ev.target.options.alt], {relativeTo: this.activatedRoute});
+            })
 
             allIssueMarkers.push(issueMarker)
         })

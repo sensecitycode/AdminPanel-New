@@ -1,17 +1,58 @@
-<div class="col-md-12">
+<div class="col-12">
     <div class="card" >
         <div class="card-header" data-background-color="red">
             <h5 class="title">{{ 'DASHBOARD.BOUNDARIES' | translate }}</h5>
             <p class="category">{{ 'DASHBOARD.BOUND_DESC' | translate }}</p>
         </div>
         <div class="card-content">
-            <div class="tab-content">
-                <div class="col-lg-8 offset-lg-2">
-                    <div style="min-height:500px; margin:2%;"
-                       leaflet
-                       (leafletMapReady)="onMapReady($event)"
-                       [leafletOptions]="mapInit"
-                       [leafletLayers]="boundaryLayer">
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card no-margin-top">
+                        <div class="card-header-bootstrap text-center">
+                            {{ 'DASHBOARD.CITY_BOUNDARIES_OVERVIEW' | translate }}
+                        </div>
+                        <div style="min-height:500px;  height:65vh"
+                        leaflet
+                        (leafletMapReady)="onMapReady($event)"
+                        [leafletOptions]="mapInit"
+                        [leafletLayers]="boundaryLayer">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="card no-margin-top">
+                        <div class="card-header-bootstrap text-center">
+                            {{ 'DASHBOARD.CITY_BOUNDARIES_CONFIG' | translate }}
+                        </div>
+
+                        <div class="card-body">
+                            <div class="alert-info message-info text-justify">
+                                <p><strong>{{'INFO' | translate}}</strong></p>
+
+                                <p><strong>{{'DASHBOARD.CITY_BOUNDARIES_REQUIRED' | translate}}</strong></p>
+
+                                <p>{{'DASHBOARD.JSON_FILES_INFO' | translate}}</p>
+
+                                <div>{{'DASHBOARD.GEOJSON_TYPES' | translate}}</div>
+                                <ul>
+                                    <li [innerHTML]="polygonStr"></li>
+                                    <li [innerHTML]="multiPolygonStr"></li>
+                                    <li>{{'DASHBOARD.LATLONG_TRANSLATE' | translate}}</li>
+                                    <li><strong>{{'DASHBOARD.POLYGON_MATCH' | translate}}</strong></li>
+                                </ul>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <label for="inputGroupFile01" class="input-group-text" style="padding: 5px 12px; font-size:15px">{{'DASHBOARD.BROWSE' | translate}}
+                                        <input type="file" class="custom-file-input" id="inputGroupFile01" (change)="fileUploadHandler($event.target.files)" style="display:none">
+                                    </label>
+                                </div>
+                                <div class="bs3-form-control flex-input-group-append">
+                                    <span>{{fileName}}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

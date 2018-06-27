@@ -142,8 +142,8 @@ export class DisplayIssueComponent implements OnInit {
 
         this.mapInit = {
             layers: [openStreetMaps],
-            zoom: 12,
-            center: L.latLng(38.248028 , 21.7583104)
+            zoom: this.issuesService.cityCenter.zoom,
+            center: L.latLng(this.issuesService.cityCenter.lat , this.issuesService.cityCenter.lng)
         };
 
         this.layersControl['baseLayers'] = {

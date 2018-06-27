@@ -59,7 +59,7 @@
                                 <td class="align-top">{{'DASHBOARD.CC_LIST' | translate}}</td>
                                 <td>
                                     <div *ngFor="let interested of cc_list">
-                                        <strong matTooltip="{{interested.name}}&#013;&#010;{{interested.mobile}}" [matTooltipClass]="{'example-tooltip-host':true}" style="cursor:pointer">{{interested.mail}}</strong>
+                                        <strong *ngIf="!requestGuard" matTooltip="{{interested.mail}}&#013;&#010;{{interested.mobile}}" [matTooltipClass]="{'example-tooltip-host':true}" style="cursor:pointer">{{interested.name}}</strong>
                                         <!-- <strong (click)="tooltip.show()" style="cursor:pointer">{{interested.mail}}</strong> -->
                                         <!-- <div  #tooltip="matTooltip" matTooltip="{{interested.name}}&#013;&#010;{{interested.mobile}}" [matTooltipClass]="{'example-tooltip-host':true}"></div> -->
                                     </div>

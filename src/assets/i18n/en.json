@@ -192,6 +192,15 @@
         "DEP_ADDED_MSG":"<strong>{{name}}</strong> was successfully added!",
         "DEP_ADDED_ERROR_MSG":"An error occured adding department <strong>{{name}}</strong>!",
         "DEP_NAME_EXISTS_MSG":"Department <strong>{{name}}</strong> is not available!",
+        "CITY_BOUNDARIES_ERROR":"Your city boundaries are not defined!",
+        "CITY_BOUNDARIES_OVERVIEW":"City's boundaries overview",
+        "INVALID_BOUNDARIES_FILE_ERROR":"This is an invalid boundaries JSON file!",
+        "CITY_BOUNDARIES_CONFIG":"City's boundaries configuration",
+        "JSON_FILES_INFO":"You should upload a JSON file defining city's boundaries. Platform supports Polygon and MultiPolygon GEOJSON types",
+        "CITY_BOUNDARIES_REQUIRED":"Defining city's boundaries is required, so as to report and administer issues!",
+        "GEOJSON_TYPES":"Supported GEOJSON types",
+        "POLYGON_MATCH":"First and last pair of coordinates must be identical in all polygons!",
+        "LATLONG_TRANSLATE":"Long: Longitude, Lat: Latitude",
         "ISSUES":"Issues",
         "ISSUES_DESC":"View and administer city issues of a selected category",
         "ISSUES_TYPE":"Issues type",
@@ -270,7 +279,8 @@
         "SEARCH_DESC":"Parameterized issue search",
         "ISSUE_NUM":"Issue number",
         "FROM_MOBILE":"added by mobile",
-        "FROM_DESKTOP":"added by desktop"
+        "FROM_DESKTOP":"added by desktop",
+        "ID":"ID"
     },
 
     "CITIES":
