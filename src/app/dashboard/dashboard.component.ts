@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from './users/users.service';
 import { DepartmentsService } from './departments/departments.service';
 import { TranslationService } from '../shared/translation.service';
+import { MunicipalityService } from "./municipality.service";
 import { IssuesService } from './issues/issues.service';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { AuthService } from '../auth/auth.service';
@@ -15,7 +16,7 @@ import { AppBootStrapComponent } from '../../app/app-bootstrap.component';
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css'],
     encapsulation: ViewEncapsulation.None,
-    providers: [ UsersService, DepartmentsService, IssuesService ]
+    providers: [ UsersService, DepartmentsService, IssuesService, MunicipalityService ]
 })
 
 export class DashboardComponent implements OnInit {
@@ -28,7 +29,8 @@ export class DashboardComponent implements OnInit {
         private depServ: DepartmentsService,
         public authService: AuthService,
         private bootstrapComp : AppBootStrapComponent,
-        private issuesService: IssuesService) { }
+        private issuesService: IssuesService,
+        private municService: MunicipalityService) { }
 
     // onLangMenuTrigger() {
     //   this.trigger.openMenu();
@@ -66,6 +68,9 @@ export class DashboardComponent implements OnInit {
         this.issuesService.statisticsUrl = this.bootstrapComp.STATISTICS_URL;
         this.issuesService.googleKey =  this.bootstrapComp.GOOGLE_KEY;
         this.issuesService.cityCenter = this.bootstrapComp.CITY_CENTERS[this.city]
+        this.municService.API = this.bootstrapComp.API
+        this.municService.city = this.city
+        this.municService.uuid = this.uuid
 
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(

@@ -61,6 +61,11 @@ h5 {
     align-items: center;
 }
 
+.flex-align-center {
+    display: flex;
+    align-items: center;
+}
+
 textarea {
     height:inherit;
     min-height: 34px;
@@ -83,6 +88,37 @@ textarea {
     width:auto;
     margin-right:0.6em;
     height: 36px;
+}
+
+.card-header-bootstrap {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+
+.list-tags {
+    /* float: left; */
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-tags li {
+    display: block;
+    float: left;
+    background: #F5F5F5;
+    border: 1px solid #D5D5D5;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    line-height: 23px;
+    font-size: 13px;
+    margin: 2px 5px 2px 0px;
+    padding: 0px 8px;
+    color: #22262e;
 }
 
 .map-utilities {

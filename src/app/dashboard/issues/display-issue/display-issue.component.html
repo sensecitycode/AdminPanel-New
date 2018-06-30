@@ -196,6 +196,28 @@
             </div>
         </div>
 
+        <div class="card" *ngIf="IBMwatson">
+            <div class="card-header-bootstrap flex-box-center">
+                <img src="assets/ibm-watson-logo.png" class="mat-elevation-z2" style="margin-right:1em"/>
+                <h5>{{ 'DASHBOARD.IBM_WATSON_DESC' | translate }}</h5>
+            </div>
+            <div class="card-body" *ngIf = 'IBMwatsonSuggestions.length > 0' >
+                <div style="display:flex">
+                    <ul class="list-tags">
+                        <li *ngFor = "let suggestion of IBMwatsonSuggestions">
+                            <i class='fa fa-eye icon-margin'></i><span>{{suggestion.class}}</span>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="flex-box-center" style="margin-top:1em">
+                    <button mat-raised-button color="primary" *ngIf = "IBMwatsonSuggDep == 'green'">Προώθηση στο Τμήμα Πρασίνου</button>
+                    <button mat-raised-button color="primary" *ngIf = "IBMwatsonSuggDep == 'road'">Προώθηση στο Τμήμα Ελέγχου Κοινοχρήστων Χώρων</button>
+                    <button mat-raised-button color="primary" *ngIf = "IBMwatsonSuggDep == 'light'">Προώθηση στο Τμήμα Ηλεκτροφωτισμού</button>
+                </div>
+            </div>
+        </div>
+
         <div class="card" style="margin: 3rem 0 1rem 0; background: #f8f9fa">
             <!-- <div class="card-body"> -->
             <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
@@ -278,7 +300,7 @@
             <div class="card-body flex-box-center">
                 <a>
                     <!-- <img *ngIf="!imageBroken" src="{{this.imageFetchURL}}&resolution=medium" (error)="imageLoadError()" style="max-width:100%"/> -->
-                    <img *ngIf="!imageBroken" [src]="issueImage[0].thumb" (click)="openLightbox()" (error)="imageLoadError()" style="max-width:100%"/>
+                    <img *ngIf="!imageBroken" [src]="issueImage[0].thumb" (click)="openLightbox()" (error)="imageLoadError()" (load)="imageLoaded()" style="max-width:100%"/>
 
                 </a>
                 <i *ngIf="imageBroken" class="{{issueIcon}}" style="font-size:10rem"></i>

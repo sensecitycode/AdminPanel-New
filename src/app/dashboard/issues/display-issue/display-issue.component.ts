@@ -319,6 +319,32 @@ export class DisplayIssueComponent implements OnInit {
         this.imageBroken = true;
     }
 
+    IBMwatson = false;
+    IBMwatsonSuggestions = []
+    IBMwatsonSuggDep = ''
+    imageLoaded() {
+        this.imageBroken == false
+            this.IBMwatson = true
+            this.issuesService.get_IBMwatson_recommendations(this.fetch_params.bug_id)
+            .subscribe(
+                data => {
+                    this.IBMwatsonSuggestions = data
+                    this.IBMwatsonSuggestions.forEach( (sugg) => {
+                        if (sugg.class == "streetlight" || sugg.class == "lamp") {
+                            this.IBMwatsonSuggDep = "light"
+                        }
+                        if (sugg.class == "vehicle"){
+                            this.IBMwatsonSuggDep = "road"
+                        }
+                        if (sugg.class == "tree" || sugg.class == "plant"){
+                            this.IBMwatsonSuggDep = "green"
+                        }
+                    })
+                }
+            )
+
+    }
+
     openLightbox() {
         this.lightbox.open(this.issueImage)
     }

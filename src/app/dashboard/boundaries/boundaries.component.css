@@ -23,3 +23,10 @@
 .no-margin-top {
     margin-top:0
 }
+
+.submit-button {
+    margin-top:25px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}

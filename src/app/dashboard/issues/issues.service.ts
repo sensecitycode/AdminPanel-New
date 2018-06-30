@@ -147,4 +147,8 @@ export class IssuesService {
         let query_lang = this.translationService.getLanguage();
         return this.httpClient.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&sensor=false&language=${query_lang}&key=${this.googleKey}`)
     }
+
+    get_IBMwatson_recommendations(bug_id) {
+        return this.httpClient.post<any>(`${this.API}/watson`, {bugID:bug_id})
+    }
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tileLayer, latLng, marker, icon, LeafletMouseEvent, geoJSON, GeoJSON, point } from 'leaflet';
 import { Map } from 'leaflet';
 import { TranslationService } from '../../shared/translation.service';
+import { MunicipalityService } from '../municipality.service'
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -10,11 +11,11 @@ import { ToastrService } from 'ngx-toastr';
     selector: 'app-boundaries',
     templateUrl: './boundaries.component.html',
     styleUrls: ['./boundaries.component.css'],
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.Emulated
 })
 export class BoundariesComponent implements OnInit {
 
-    constructor(private http: HttpClient, private translationService:TranslationService, private toastr: ToastrService) { }
+    constructor(private http: HttpClient, private translationService:TranslationService, private toastr: ToastrService, private municService: MunicipalityService) { }
 
     polygonStr = `
     <pre>{\n"type": "Polygon",\n"coordinates": [
@@ -55,11 +56,7 @@ export class BoundariesComponent implements OnInit {
             zoom: 6,
             center: latLng(38.074208 , 22.824312)
         };
-        // https://apitest.sense.city:4443/api/1.0/city_coordinates?city=${'zakynthos'}`
-        const getBoundaries = this.http.get<any>(`https://apitest.sense.city:4443/api/1.0/city_coordinates?city=${this.city}`,
-            {
-                responseType:'json'
-            })
+        this.municService.get_boundaries()
             .subscribe(
                 data => {
                     console.log(data)
@@ -93,13 +90,23 @@ export class BoundariesComponent implements OnInit {
         });
     }
 
+    submitBoundaries() {
+        console.log(this.boundariesObj)
+        this.municService.update_municipality(this.boundariesObj)
+        .subscribe(
+            data => console.log(data),
+            error => console.error(error)
+        )
+    }
+
     displayCityOnMap(boundaries) {
         console.log('displayCityOnMap')
-        console.log
         this.boundaryLayer = []
 
-        this.validateJSON(boundaries)
+        // this.validateJSON(boundaries)
+        this.boundariesObj = boundaries
 
+        console.log(this.boundariesObj)
 
 
         this.geojsonFeature.features[0].geometry = {"type": boundaries.type, "coordinates": boundaries.coordinates}
@@ -110,6 +117,8 @@ export class BoundariesComponent implements OnInit {
         this.boundaryLayer = [
             this.geoJSON
         ];
+
+        this.submitButtonEnabled = true;
 
     }
 
@@ -154,7 +163,11 @@ export class BoundariesComponent implements OnInit {
     }
 
     fileName = ""
+    submitButtonEnabled = false;
+    boundariesObj = {}
     fileUploadHandler(files: FileList) {
+        this.boundariesObj = {}
+        this.submitButtonEnabled = false;
         this.fileName = ""
 
         if (files[0]) {

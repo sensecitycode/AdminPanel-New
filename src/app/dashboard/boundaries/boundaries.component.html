@@ -52,6 +52,9 @@
                                     <span>{{fileName}}</span>
                                 </div>
                             </div>
+                            <div class="submit-button" *ngIf = "submitButtonEnabled">
+                                <button mat-raised-button color="primary" (click)="submitBoundaries()" style="padding: 0.2em 1em;">{{'DASHBOARD.SUBMIT_BOUNDARIES' | translate}}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
