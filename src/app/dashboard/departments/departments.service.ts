@@ -18,10 +18,6 @@ export class DepartmentsService {
     city:string;
     API:string;
 
-    private roleslist = [];
-    private users = [];
-    private userDetails:[object];
-    usersChanged = new Subject();
 
     private departments = [];
     control_department:string;
@@ -68,6 +64,22 @@ export class DepartmentsService {
           headers: reqheaders
         })
     }
+
+    set_assignee(assigneeObj) {
+      const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+      return this.httpClient.post<any>(`${this.API}/admin/setasignee`, assigneeObj, {headers: reqheaders})
+    }
+
+    set_ccList(ccListObj) {
+      const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+      return this.httpClient.post<any>(`${this.API}/admin/setcomponentcclist`, ccListObj, {headers: reqheaders})
+    }
+
+    set_cpAccess(cpAccessObj) {
+      const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+      return this.httpClient.post<any>(`${this.API}/admin/setcpaccessuser`, cpAccessObj, {headers: reqheaders})
+    }
+
 
 
 }

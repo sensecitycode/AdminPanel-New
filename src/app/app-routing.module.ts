@@ -35,7 +35,7 @@ import { EnvironmentSpecificService } from './envSpecific/environment-specific-s
 
 const appRoutes: Routes = [
     { path: '', component: AppBootStrapComponent, resolve: { envSpecific: EnvironmentSpecificResolver }, children:[
-        { path: 'welcome', component: WelcomeComponent},
+        { path: '', component: WelcomeComponent},
         { path: 'signup', component: SignupComponent},
         { path: 'login', component: LoginComponent},
         { path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuardService], children:[
@@ -64,7 +64,7 @@ const appRoutes: Routes = [
             {path: 'statistics', component: StatisticsComponent},
             {path: '**', redirectTo: 'home', pathMatch: 'full'}
         ]},
-        { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+        { path: '**', redirectTo: '', pathMatch: 'full'}
     ]}
 ];
 

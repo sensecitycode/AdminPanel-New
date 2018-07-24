@@ -1,0 +1,26 @@
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* mat-expansion-panel{
+    background: #eee
+} */
+
+mat-card {
+    background: rgba(220, 220, 225, 0.2)
+}
+
+mat-slide-toggle {
+    display: flex
+}
+
+.flex-align-center {
+    display: flex;
+    align-items: center
+}

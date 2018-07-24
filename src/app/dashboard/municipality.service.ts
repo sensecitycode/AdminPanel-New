@@ -15,22 +15,46 @@ export class MunicipalityService {
     uuid:string;
     city:string;
     API:string;
+    cityCenter:{
+        lat:number,
+        lng:number,
+        zoom:number
+    }
+
     // usersChanged = new Subject();
 
     get_boundaries() {
-        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
         return this.httpClient.get<any>(`${this.API}/city_coordinates?city=${this.city}`, {responseType:'json'})
     }
 
-    update_municipality(updateObj) {
+    update_municipality_boundaries(updateObj) {
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
-        console.log(updateObj)
-        return this.httpClient.post<[object]>(`${this.API}/admin/edit_city`,
-            {"boundaries":updateObj},
+        return this.httpClient.post<any>(`${this.API}/admin/edit_city`,
+            updateObj,
             {
                 headers: reqheaders
             })
             // this.usersChanged.next("userEdited");
-
     }
+
+    get_municipality_policy() {
+        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+        return this.httpClient.get<any>(`${this.API}/admin/municipality?city=${this.city}`, {headers: reqheaders})
+    }
+
+    get_municipality_issue_policy(issue) {
+        return this.httpClient.get<any>(`${this.API}/city_policy?coordinates=[${this.cityCenter.lng},${this.cityCenter.lat}]&issue=${issue}`)
+    }
+
+    update_municipality_policy(updateObj) {
+        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+        return this.httpClient.post<any>(`${this.API}/admin/municipality` , updateObj, {headers: reqheaders})
+    }
+
+    update_municipality_issue_policy(updateObj) {
+        const reqheaders = new HttpHeaders().set('x-uuid', this.uuid)/*.append('x-role', this.role)*/;
+        return this.httpClient.post<any>(`${this.API}/admin/citypolicy` , updateObj, {headers: reqheaders})
+    }
+
+
 }

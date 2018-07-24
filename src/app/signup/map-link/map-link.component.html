@@ -17,8 +17,7 @@
                     name="domain"
                     formControlName="domain"
                     [(ngModel)]="domain"
-                    (focus)="onDomainSelect()"
-                    (change)="checkCityExists(mapForm.controls.domain.value)" />
+                    (blur)="checkCityExists(mapForm.controls.domain.value)" />
                     <span class='suffix' matSuffix>.sense.city</span>
                     <mat-error *ngIf="mapForm.controls.domain.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
                     <mat-error *ngIf="mapForm.controls.domain.hasError('cityExists')" [innerHTML]="'SIGNUP.CITY_EXISTS_ERR' | translate"></mat-error>
@@ -38,8 +37,7 @@
         </div>
     </mat-expansion-panel>
 
-    <!-- <div class="example-full-width" style="margin-top:1%">
-    <mat-checkbox color="primary" id="checkbox" name="checkbox" formControlName="checkbox"><span>I have entered the correct city</span></mat-checkbox>
-    <mat-error *ngIf="mapForm.controls.checkbox.hasError('checkedValidator') && mapForm.controls.checkbox.touched">Please confirm your <strong>city selection!</strong></mat-error>
-    </div> -->
+    <div class="text-right" style="margin-top:2%">
+        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
+    </div>
 </form>

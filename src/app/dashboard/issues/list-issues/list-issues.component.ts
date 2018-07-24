@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { interval } from 'rxjs/observable/interval'
 
 
 
@@ -65,6 +66,8 @@ export class ListIssuesComponent implements OnInit {
     markerClusterGroup: L.MarkerClusterGroup;
 
     subscriptions = new Subscription();
+    refreshInterval:any
+
     mapLayers = [];
     layersControl = {};
     issueZoom:number ;
@@ -80,6 +83,8 @@ export class ListIssuesComponent implements OnInit {
                 private depServ: DepartmentsService) { }
 
     bulkEditForm: FormGroup;
+
+    @ViewChild('addressSearchInput') addressSearchInput: ElementRef;
 
     ngOnInit() {
         //cached problem for reloading
@@ -99,10 +104,13 @@ export class ListIssuesComponent implements OnInit {
                     departments = this.depServ.return_departmentsArray()
                     this.issuesService.departments = []
                     if (this.issuesService.departments_ids.length > 0) {
-
+                        let departmentObj = {}
                         for (let dep_id of this.issuesService.departments_ids) {
-                            this.issuesService.departments.push(departments.find((dep) => dep.departmentID == dep_id)['component_name'])
-                            userdepartments.push(departments.find((dep) => dep.departmentID == dep_id)['component_name'])
+                            departmentObj = departments.find((dep) => dep.departmentID == dep_id)
+                            if (departmentObj) {
+                                this.issuesService.departments.push(departmentObj['component_name'])
+                                userdepartments.push(departmentObj['component_name'])
+                            }
                         }
                     } else {
                         this.issuesService.departments.push(this.depServ.control_department)
@@ -182,88 +190,90 @@ export class ListIssuesComponent implements OnInit {
                     element.created_ago = moment(new Date(element.create_at)).locale(new_lang).fromNow()
                 })
 
-                this.layersControl['overlays'] = {}
-                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
-                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+                // this.layersControl['overlays'] = {}
+                // let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+                // this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
             }
         ))
 
-        // setInterval( () => {
-        //     this.fetchIssues()
-        // }, 300000)
+        this.subscriptions.add(interval(600000)
+          .subscribe(() => {
+            this.fetchIssues()
+          })
+        )
     }
 
     onMapReady(map: L.Map){
-        this.issuesService.fetch_fixed_points()
-        .subscribe(
-            data => {
-                let StaticGarbageMarkers:L.Layer[] = []
-                let StaticLightingMarkers:L.Layer[] = []
-                for (let FixPnt of data) {
-                    if (FixPnt.type == 'garbage') {
-                        let AwesomeMarker;
-                        switch (FixPnt.notes[0].ANAKIKLOSI) {
-                            case '0':
-                                AwesomeMarker = UntypedL.AwesomeMarkers.icon({
-                                    icon: 'fa-trash-o',
-                                    markerColor: 'green',
-                                    prefix: 'fa',
-                                    className: 'awesome-marker awesome-marker-square'
-                                });
-                                break;
-                            case '1':
-                                AwesomeMarker = UntypedL.AwesomeMarkers.icon({
-                                    icon: 'fa-trash-o',
-                                    markerColor: 'blue',
-                                    prefix: 'fa',
-                                    className: 'awesome-marker awesome-marker-square'
-                                });
-                        }
-                        let TrashMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
-                        StaticGarbageMarkers.push(TrashMarker);
-                    }
-
-                    if (FixPnt.type == 'fotistiko') {
-                        let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
-                            icon: 'fa-lightbulb-o',
-                            markerColor: 'orange',
-                            prefix: 'fa',
-                            className: 'awesome-marker awesome-marker-square'
-                        });
-                        let LightMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
-                        StaticLightingMarkers.push(LightMarker);
-                    }
-                }
-
-                this.markerClusterData =  StaticLightingMarkers.concat(StaticGarbageMarkers);
-                this.markerClusterOptions = {
-                    disableClusteringAtZoom: 19,
-                    animateAddingMarkers: false,
-                    spiderfyDistanceMultiplier: 2,
-                    singleMarkerMode: false,
-                    showCoverageOnHover: true,
-                    chunkedLoading: true
-                }
-
-                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
-
-                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
-
-                // this.layersControl = {
-            	// 	overlays: {
-            	// 		"<span class='fa fa-trash-o fa-2x'></span> Static Points": this.markerClusterGroup,
-            	// 		// StaticLightingMarkers: StaticLightingMarkers
-            	// 	}
-            	// };
-            },
-            error => { },
-            () => {  }
-        )
+        // this.issuesService.fetch_fixed_points()
+        // .subscribe(
+        //     data => {
+        //         let StaticGarbageMarkers:L.Layer[] = []
+        //         let StaticLightingMarkers:L.Layer[] = []
+        //         for (let FixPnt of data) {
+        //             if (FixPnt.type == 'garbage') {
+        //                 let AwesomeMarker;
+        //                 switch (FixPnt.notes[0].ANAKIKLOSI) {
+        //                     case '0':
+        //                         AwesomeMarker = UntypedL.AwesomeMarkers.icon({
+        //                             icon: 'fa-trash-o',
+        //                             markerColor: 'green',
+        //                             prefix: 'fa',
+        //                             className: 'awesome-marker awesome-marker-square'
+        //                         });
+        //                         break;
+        //                     case '1':
+        //                         AwesomeMarker = UntypedL.AwesomeMarkers.icon({
+        //                             icon: 'fa-trash-o',
+        //                             markerColor: 'blue',
+        //                             prefix: 'fa',
+        //                             className: 'awesome-marker awesome-marker-square'
+        //                         });
+        //                 }
+        //                 let TrashMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
+        //                 StaticGarbageMarkers.push(TrashMarker);
+        //             }
+        //
+        //             if (FixPnt.type == 'fotistiko') {
+        //                 let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
+        //                     icon: 'fa-lightbulb-o',
+        //                     markerColor: 'orange',
+        //                     prefix: 'fa',
+        //                     className: 'awesome-marker awesome-marker-square'
+        //                 });
+        //                 let LightMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
+        //                 StaticLightingMarkers.push(LightMarker);
+        //             }
+        //         }
+        //
+        //         this.markerClusterData =  StaticLightingMarkers.concat(StaticGarbageMarkers);
+        //         this.markerClusterOptions = {
+        //             disableClusteringAtZoom: 19,
+        //             animateAddingMarkers: false,
+        //             spiderfyDistanceMultiplier: 2,
+        //             singleMarkerMode: false,
+        //             showCoverageOnHover: true,
+        //             chunkedLoading: true
+        //         }
+        //
+        //         let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+        //
+        //         this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+        //
+        //         // this.layersControl = {
+        //     	// 	overlays: {
+        //     	// 		"<span class='fa fa-trash-o fa-2x'></span> Static Points": this.markerClusterGroup,
+        //     	// 		// StaticLightingMarkers: StaticLightingMarkers
+        //     	// 	}
+        //     	// };
+        //     },
+        //     error => { },
+        //     () => {  }
+        // )
     }
 
 
     markerClusterReady(group: L.MarkerClusterGroup) {
-        this.markerClusterGroup = group;
+        // this.markerClusterGroup = group;
     }
 
     onActionGroupSelected(selection) {
@@ -377,6 +387,12 @@ export class ListIssuesComponent implements OnInit {
                     error => this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                 )
         }
+    }
+
+    checkEnterKey(event) {
+      if (event.keyCode == 13) {
+        this.searchAddress(this.addressSearchInput.nativeElement.value)
+      }
     }
 
     changePageSize(issuesPerPage) {

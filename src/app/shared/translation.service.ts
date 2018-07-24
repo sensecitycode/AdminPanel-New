@@ -14,8 +14,8 @@ export class TranslationService {
     }
 
     switchLanguage(language: string) {
-        this.translate.use(language);
-        this.languageChanged.next(language);
+        this.translate.use(language)
+        .subscribe( () => this.languageChanged.next(language));
     }
 
     getLanguage() {

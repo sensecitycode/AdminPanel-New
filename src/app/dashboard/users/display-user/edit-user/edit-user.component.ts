@@ -25,6 +25,7 @@ export class EditUserComponent implements OnInit {
     roleList: [string];
     // userServiceMsg:string;
 
+    loaded = false
 
     ngOnInit() {
         this.userEditForm = this.formBuilder.group({
@@ -60,6 +61,7 @@ export class EditUserComponent implements OnInit {
                     'role_name': this.user.role_name,
                     'position': this.user.position
                 })
+                this.loaded = true
             }
         )
     }
@@ -76,6 +78,7 @@ export class EditUserComponent implements OnInit {
     }
 
     submitEditedUser() {
+      if (this.userEditForm.valid) {
         let editedUser =
         {
             'id': this.user._id,
@@ -111,7 +114,7 @@ export class EditUserComponent implements OnInit {
                 // this.userServiceMsg = 'success';
             }
         )
-
+      }
     }
 
     onResetEdit() {

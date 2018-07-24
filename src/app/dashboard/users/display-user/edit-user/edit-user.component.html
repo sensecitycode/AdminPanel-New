@@ -17,7 +17,10 @@
                         <tbody>
                             <tr>
                                 <td style="vertical-align:middle"><strong>{{'USERNAME' | translate}}</strong></td>
-                                <td><input  class="bs3-form-control" formControlName="username"></td>
+                                <td>
+                                  <input  [ngClass]="{'bs3-form-control':true, 'is-invalid':(userEditForm.controls.username.invalid && loaded)}"  formControlName="username">
+                                  <div class="invalid-feedback" [ngStyle]="{'display':(userEditForm.controls.username.invalid && loaded) ? 'block' : 'none'}" [innerHTML]="'REQ_ERR' | translate"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align:middle"><strong>Email</strong></td>
@@ -25,12 +28,15 @@
                             </tr>
                             <tr>
                                 <td style="vertical-align:middle"><strong>{{'GRID.POSITION' | translate}}</strong></td>
-                                <td><input class="bs3-form-control" formControlName="position"></td>
+                                <td>
+                                  <input class="bs3-form-control" [ngClass]="{'bs3-form-control':true, 'is-invalid':(userEditForm.controls.position.invalid && loaded)}" formControlName="position">
+                                  <div class="invalid-feedback" [ngStyle]="{'display':(userEditForm.controls.position.invalid && loaded) ? 'block' : 'none'}" [innerHTML]="'REQ_ERR' | translate"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align:middle"><strong>{{'DASHBOARD.USEROLE' | translate}}</strong></td>
                                 <td>
-                                    <mat-select formControlName="role_name" multiple class="bs3-form-control">
+                                    <mat-select formControlName="role_name" multiple [ngClass]="{'bs3-form-control':true, 'is-invalid':(userEditForm.controls.role_name.invalid && loaded)}">
                                         <mat-select-trigger>
                                             {{userEditForm.controls.role_name.value ? ('ROLES.'+userEditForm.controls.role_name.value[0] | translate) : ''}}
                                             <span *ngIf="userEditForm.controls.role_name.value?.length > 1" class="example-additional-selection">
@@ -39,6 +45,8 @@
                                         </mat-select-trigger>
                                         <mat-option *ngFor="let role of roleList" [value]="role" style="font-size:14px">{{('ROLES.'+role)|translate}}</mat-option>
                                     </mat-select>
+                                    <div class="invalid-feedback" [ngStyle]="{'display':(userEditForm.controls.role_name.invalid && loaded) ? 'block' : 'none'}" [innerHTML]="'REQ_ERR' | translate"></div>
+
                                 </td>
                                 <!-- <td><input type="email" class="form-control" placeholder="" formControlName="roles"></td> -->
 
@@ -82,14 +90,7 @@
                 </form>
 
             <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
-            <button mat-button type="submit" [disabled]="userEditForm.invalid ||
-            userEditForm.get('passwordForm').get('pw1').untouched && userEditForm.get('passwordForm').get('pw2').untouched &&
-            (user.username == userEditForm.controls.username.value &&
-            user.name == userEditForm.controls.name.value &&
-            user.surname == userEditForm.controls.surname.value &&
-            user.position == userEditForm.controls.position.value &&
-            user.role_name.join('') == userEditForm.controls.role_name.value.join('') &&
-            user.email == userEditForm.controls.email.value)" (click)="submitEditedUser()" class="btn-light success_btn">{{'SUBMIT' |translate}}</button>
+            <button mat-button type="submit" [disabled]="userEditForm.pristine" (click)="submitEditedUser()" class="btn-light success_btn">{{'SUBMIT' |translate}}</button>
             </mat-card-content>
         </mat-card>
 

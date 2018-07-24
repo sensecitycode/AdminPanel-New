@@ -106,23 +106,25 @@ export class AddDepartmentComponent implements OnInit {
         // if (form.cclist) {
         //     tobeAddedDepartment['default_cc'] = form.cclist.map(idx => idx.email);
         // }
-        this.depServ.add_department(tobeAddedDepartment).subscribe(
-            data => {},
-            error => {
-                this.departmentAddForm.markAsPristine();
-                if (error.error == "DUPLICATE_DEPARTMENT") {
-                    this.toastr.error(this.translationService.get_instant('DASHBOARD.DEP_NAME_EXISTS_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-                    this.departmentAddForm.get('name').setErrors({nameExists: true});
-                } else {
-                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+        if (this.departmentAddForm.valid) {
+            this.depServ.add_department(tobeAddedDepartment).subscribe(
+                data => {},
+                error => {
+                    this.departmentAddForm.markAsPristine();
+                    if (error.error == "DUPLICATE_DEPARTMENT") {
+                        this.toastr.error(this.translationService.get_instant('DASHBOARD.DEP_NAME_EXISTS_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                        this.departmentAddForm.get('name').setErrors({nameExists: true});
+                    } else {
+                        this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    }
+                },
+                () => {
+                    this.toastr.success(this.translationService.get_instant('DASHBOARD.DEP_ADDED_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    this.newAddedDep = tobeAddedDepartment.department;
+                    this.onReset();
                 }
-            },
-            () => {
-                this.toastr.success(this.translationService.get_instant('DASHBOARD.DEP_ADDED_MSG', {"name":tobeAddedDepartment.department}), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
-                this.newAddedDep = tobeAddedDepartment.department;
-                this.onReset();
-            }
-        )
+            )
+        }
     }
 
     onReset() {

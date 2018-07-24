@@ -5,88 +5,188 @@
             <p class="category">{{'DASHBOARD.POL_DESC' | translate}}</p>
         </div>
         <div class="card-content container-fluid">
-            <div class="tab-content">
-                <div class="tab-pane active" id="profile">
-                    <table class="table">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="optionsCheckboxes" checked>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Policy1</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-sm">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="optionsCheckboxes">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Policy2</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-sm">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="optionsCheckboxes">
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Policy3
-                                </td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-sm">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="optionsCheckboxes" checked>
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>Policy4</td>
-                                <td class="td-actions text-right">
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-sm">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <mat-accordion class="example-headers-align">
+              <form [formGroup]="controlDepForm">
+                <mat-expansion-panel hideToggle>
 
-                </div>
-            </div>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong>{{'DASHBOARD.MAIN_DEPARTMENT' | translate}}</strong>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{'DASHBOARD.MAIN_DEPARTMENT_EDIT_DESC' | translate}}
+                            <mat-icon>business</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                        <div class="row justify-content-center">
+                            <div class="col-xl-4 col-lg-6">
+                                <mat-card class="example-card">
+                                    <mat-card-content>
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select placeholder="{{'DASHBOARD.MAIN_DEPARTMENT' | translate}}" formControlName="control_department">
+                                                <mat-select-trigger>
+                                                    {{controlDepForm.controls.control_department.value}}
+                                                </mat-select-trigger>
+                                                <mat-option *ngFor="let department of departments" [value]="department.component_name" style="font-size:14px" >{{department.component_name}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                        <!-- <mat-form-field class="example-full-width">
+                                            <input matInput placeholder="{{'GRID.DEP_NAME' | translate}}" formControlName="control_department"/>
+                                        </mat-form-field> -->
+                                    </mat-card-content>
+                                </mat-card>
+                            </div>
+                        </div>
+
+                    <mat-action-row>
+                        <button mat-raised-button color="primary" (click)="submit('control_dep')">{{'SUBMIT' | translate}}</button>
+                    </mat-action-row>
+
+                </mat-expansion-panel>
+                </form>
+                <form [formGroup]="cityPoliciesForm">
+                <mat-expansion-panel hideToggle [expanded]='true'>
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong>{{'DASHBOARD.CITIZENS_INFORMED' | translate}}</strong>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{'DASHBOARD.CITIZENS_INFORMED_DESC' | translate}}
+                            <mat-icon>notifications_active</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="row justify-content-center">
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                    <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">notification_important</i></div>
+                                    <mat-card-title>{{'DASHBOARD.CITIZENS_INFORMATION_MEANS' | translate}}</mat-card-title>
+                                    <mat-card-subtitle><span>Email/SMS</span></mat-card-subtitle>
+                                </mat-card-header>
+                                <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                                <mat-card-content class="table-responsive" style="overflow-y:hidden">
+                                    <div class="col-12">
+                                        <table class="table table-user-information">
+                                            <thead>
+                                                <tr>
+                                                    <th><strong>{{'DASHBOARD.MEANS' | translate}}</strong></th>
+                                                    <th><strong>{{'DASHBOARD.ACTIVE' | translate}}</strong></th>
+                                                    <th><strong>{{'DASHBOARD.MANOATORY' | translate}}</strong></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Email</td>
+                                                    <td><mat-slide-toggle color="primary" [checked]='true' [disabled]='true'></mat-slide-toggle></td>
+                                                    <td><mat-checkbox color="primary" formControlName = "mandatory_email"></mat-checkbox></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>SMS</td>
+                                                    <td><mat-slide-toggle color="primary" [(ngModel)]="activeSmsService" formControlName = "active_sms_service"></mat-slide-toggle></td>
+                                                    <td><mat-checkbox formControlName = "mandatory_sms" color="primary"></mat-checkbox></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                        <div class="col-xl-4 col-lg-6 col-md-12">
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                    <div mat-card-avatar><i class="material-icons" style="color: #3c4858;">vpn_key</i></div>
+                                    <mat-card-title>{{'DASHBOARD.SMS_SETTINGS' | translate}}</mat-card-title>
+                                </mat-card-header>
+                                <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                                <mat-card-content class="table-responsive" style="overflow-y:hidden">
+                                    <table class="table table-user-information">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <mat-form-field class="example-full-width">
+                                                        <input matInput placeholder="Fibair SMS key" formControlName="sms_key_fibair" [required]=activeSmsService/>
+                                                        <mat-error *ngIf="cityPoliciesForm.controls.sms_key_fibair.hasError('required')" [innerHTML]="'DASHBOARD.FIBAIR_KEY_ERROR' | translate"></mat-error>
+                                                    </mat-form-field>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <mat-action-row>
+                        <button mat-raised-button color="primary" (click)="submit('information_means')">{{'SUBMIT' | translate}}</button>
+                    </mat-action-row>
+
+                </mat-expansion-panel>
+                </form>
+
+                <form [formGroup]="issuePoliciesForm">
+                <mat-expansion-panel hideToggle>
+
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong>{{'DASHBOARD.ISSUES_POLICIES' | translate}}</strong>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{'DASHBOARD.ISSUES_POLICIES_DESC' | translate}}
+                            <mat-icon>event_note</mat-icon>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-card class="example-card">
+                                <mat-card-header>
+                                    <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">event_available</i></div>
+                                    <mat-card-title>{{'DASHBOARD.SUPPORTED_ISSUES' | translate}}</mat-card-title>
+                                    <mat-card-subtitle><span>{{'DASHBOARD.SUPPORTED_ISSUES_DESC' | translate}}</span></mat-card-subtitle>
+                                </mat-card-header>
+                                <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                                <mat-card-content class="table-responsive" style="overflow-y:hidden">
+                                    <table class="table ">
+                                        <thead>
+                                            <tr class="d-flex">
+                                                <th class="col-4"><strong>{{'DASHBOARD.ISSUE_CATEGORY' | translate}}</strong></th>
+                                                <th class="col-2"><strong>{{'DASHBOARD.ACTIVE' | translate}}</strong></th>
+                                                <th class="col-6"><strong>{{'DASHBOARD.ISSUE_EXPLANATION' | translate}}</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor='let category of issuesList' [formGroup]="issuePoliciesForm.get(category)" class="d-flex">
+                                                <td class="col-4 flex-align-center">{{'DASHBOARD.'+category | translate}}</td>
+                                                <td class="col-2 flex-align-center">
+                                                    <mat-slide-toggle color="primary" formControlName = "add_issue"></mat-slide-toggle>
+                                                </td>
+                                                <td class="col-6 flex-align-center">
+                                                    <mat-form-field  class="example-full-width">
+                                                        <textarea matInput placeholder="Κείμενο" formControlName = "policy_desc"></textarea>
+                                                    </mat-form-field>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <mat-action-row>
+                        <button mat-raised-button color="primary" (click)="submit('issue_policies')">{{'SUBMIT' | translate}}</button>
+                    </mat-action-row>
+
+                </mat-expansion-panel>
+                </form>
+            </mat-accordion>
+
         </div>
     </div>
 </div>

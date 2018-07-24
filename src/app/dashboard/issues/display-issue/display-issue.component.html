@@ -29,7 +29,7 @@
                             </tr>
                             <tr>
                                 <td>{{'DASHBOARD.REPORTED' | translate}}</td>
-                                <td><strong>{{issue?.create_at | date: 'EEEE, d MMM y, HH:mm'}}</strong></td>
+                                <td><strong>{{issue?.reported}}</strong></td>
                             </tr>
                             <tr>
                                 <td>{{'DASHBOARD.PRIORITY' | translate}}</td>
@@ -186,17 +186,11 @@
                     </form>
                     <button mat-button (click)="submitAdmin()" class="btn-light success_btn" [disabled] = 'requestGuard'><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">check</i><span>{{'SUBMIT' | translate}}</span></button>
                     <button mat-button (click)="resetAdmin()" class="btn-light danger_btn" ><i class="material-icons" style="font-size: 1.4rem; margin-right:0.2rem">clear</i><span>{{'CANCEL' | translate}}</span></button>
-
-
-
-
                 </div>
-
-
             </div>
         </div>
 
-        <div class="card" *ngIf="IBMwatson">
+        <!-- <div class="card" *ngIf="IBMwatson">
             <div class="card-header-bootstrap flex-box-center">
                 <img src="assets/ibm-watson-logo.png" class="mat-elevation-z2" style="margin-right:1em"/>
                 <h5>{{ 'DASHBOARD.IBM_WATSON_DESC' | translate }}</h5>
@@ -208,7 +202,6 @@
                             <i class='fa fa-eye icon-margin'></i><span>{{suggestion.class}}</span>
                         </li>
                     </ul>
-
                 </div>
                 <div class="flex-box-center" style="margin-top:1em">
                     <button mat-raised-button color="primary" *ngIf = "IBMwatsonSuggDep == 'green'">Προώθηση στο Τμήμα Πρασίνου</button>
@@ -216,7 +209,7 @@
                     <button mat-raised-button color="primary" *ngIf = "IBMwatsonSuggDep == 'light'">Προώθηση στο Τμήμα Ηλεκτροφωτισμού</button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="card" style="margin: 3rem 0 1rem 0; background: #f8f9fa">
             <!-- <div class="card-body"> -->
@@ -236,14 +229,15 @@
                                 <span *ngIf="last && issue.resolution">({{'DASHBOARD.RESOLVED_STATUS.' + issue.resolution | translate}})</span>
                                 <span *ngIf="progress.state=='NEW_USER_SUBSCRIBED'||'USER_COMMENTED'||'USER_UPLOADED_FILES'">{{progress.name}}</span>
                             </p>
-                            <p class="card-text">{{'DASHBOARD.REPORTED' | translate}}: {{progress.timestamp | date: 'EEEE, d MMM y, HH:mm'}} </p>
+                            <p class="card-text">{{'DASHBOARD.REPORTED' | translate}}: {{progress.timestamp | localizedDate: 'EEEE, d MMM y, HH:mm'}} </p>
                             <p class="card-text" *ngIf="index == 0">{{progress.department}}</p>
                             <p class="card-text" *ngIf="last && progress.state=='RESOLVED'">{{progress.department}}</p>
                             <p class="card-text" *ngIf="progress.state=='IN_PROGRESS' && index > 0">{{'FROM' | translate}}: {{history[index-1].department}}</p>
-                            <p class="card-text" *ngIf="progress.state=='IN_PROGRESS' && index > 0">{{'ΤΟ' | translate}}: {{progress.department}}</p>
-                            <p *ngIf="!last && progress.text != 'undefined'">{{progress.text}}</p>
+                            <p class="card-text" *ngIf="progress.state=='IN_PROGRESS' && index > 0">{{'TO' | translate}}: {{progress.department}}</p>
+                            <p *ngIf="progress.text != 'undefined'">{{progress.text}}</p>
+                            <!-- <p *ngIf="!last && progress.text != 'undefined'">{{progress.text}}</p>
                             <p *ngIf="last && progress.text != 'undefined' && issue.resolution != 'DUPLICATE'">{{progress.text}}</p>
-                            <p *ngIf="last && issue.resolution == 'DUPLICATE'">{{'DASHBOARD.DUPLICATE_ISSUE_REPORTED' | translate}} #{{progress.text}}</p>
+                            <p *ngIf="last && issue.resolution == 'DUPLICATE'">{{'DASHBOARD.DUPLICATE_ISSUE_REPORTED' | translate}} #{{progress.text}}</p> -->
                             <div *ngIf="progress.fileURLSs != []">
                                 <div *ngFor="let fileURL of progress.fileURLs; index as fileIndex;" style="height: 4rem; width: 4rem; float: left; margin-right: 0.5rem;">
                                     <a *ngIf="progress.file_types[fileIndex] === 'application'" href="{{fileURL}}" class="file-thumb-wrapper fa fa-file-o"></a>
@@ -266,7 +260,7 @@
             <!-- <div class="card-body"> -->
                 <div class="map-utilities">
                     <div class="input-group" style='padding:0.5em'>
-                        <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
+                        <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" (keyup)="checkEnterKey($event)" aria-describedby="enter address">
                         <div class="input-group-append">
                             <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e0e0e0;">{{'SEARCH' | translate}} </button>
                         </div>
@@ -300,7 +294,9 @@
             <div class="card-body flex-box-center">
                 <a>
                     <!-- <img *ngIf="!imageBroken" src="{{this.imageFetchURL}}&resolution=medium" (error)="imageLoadError()" style="max-width:100%"/> -->
-                    <img *ngIf="!imageBroken" [src]="issueImage[0].thumb" (click)="openLightbox()" (error)="imageLoadError()" (load)="imageLoaded()" style="max-width:100%"/>
+                    <!-- <img *ngIf="!imageBroken" [src]="issueImage[0].thumb" (click)="openLightbox()" (error)="imageLoadError()" (load)="imageLoaded()" style="max-width:100%"/> -->
+                    <img *ngIf="!imageBroken" [src]="issueImage[0].thumb" (click)="openLightbox()" (error)="imageLoadError()" style="max-width:100%"/>
+
 
                 </a>
                 <i *ngIf="imageBroken" class="{{issueIcon}}" style="font-size:10rem"></i>

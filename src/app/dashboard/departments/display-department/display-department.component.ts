@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+import { interval } from 'rxjs/observable/interval'
 
 import { DepartmentsService } from '../departments.service';
 import { UsersService } from '../../users/users.service';
@@ -14,19 +16,41 @@ export class DisplayDepartmentComponent implements OnInit {
 
     constructor(private depServ:DepartmentsService, private usersServ:UsersService, private activatedRoute:ActivatedRoute) { }
 
-    department:any = {};
+    departments = this.depServ.return_departmentsArray
+    subscription = new Subscription()
+    department:any = {}
 
     ngOnInit() {
-
         let dep_id = this.activatedRoute.snapshot.url[0].path;
-        let department = this.depServ.return_departmentsArray().find(idx => {return idx.departmentID == dep_id});
-        if (department)
-            this.department = {
-                name:department.component_name,
-                issueAdmins:department.cp_access,
-                manager:department.default_assigned_email[0],
-                ccList:department.default_cc_list
-            }
+        if (this.depServ.return_departmentsArray().length == 0) {
+            this.subscription = this.depServ.departmentsChanged.subscribe(
+              (status:string) => {
+                if (status == "departmentsArrayPopulated"){
+                  let department = this.depServ.return_departmentsArray().find(idx => {return idx.departmentID == dep_id});
+                  this.department = {
+                    name:department.component_name,
+                    issueAdmins:department.cp_access,
+                    manager:department.default_assigned_email[0],
+                    ccList:department.default_cc_list
+                  }
+                }
+              }
+            )
+            this.depServ.populate_departmentsArray()
+        } else {
+          let department = this.depServ.return_departmentsArray().find(idx => {return idx.departmentID == dep_id});
+          this.department = {
+              name:department.component_name,
+              issueAdmins:department.cp_access,
+              manager:department.default_assigned_email[0],
+              ccList:department.default_cc_list
+          }
+        }
+
+    }
+
+    ngOnDestroy() {
+      this.subscription.unsubscribe()
     }
 
 }

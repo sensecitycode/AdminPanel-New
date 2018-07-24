@@ -67,10 +67,12 @@ export class DashboardComponent implements OnInit {
         this.issuesService.API = this.bootstrapComp.API;
         this.issuesService.statisticsUrl = this.bootstrapComp.STATISTICS_URL;
         this.issuesService.googleKey =  this.bootstrapComp.GOOGLE_KEY;
-        this.issuesService.cityCenter = this.bootstrapComp.CITY_CENTERS[this.city]
+        this.bootstrapComp.CITY_CENTERS[this.city] ? this.issuesService.cityCenter = this.bootstrapComp.CITY_CENTERS[this.city] : this.issuesService.cityCenter = {"lat":38.074208, "lng":22.824312, "zoom":6}
+
         this.municService.API = this.bootstrapComp.API
         this.municService.city = this.city
         this.municService.uuid = this.uuid
+        this.bootstrapComp.CITY_CENTERS[this.city] ? this.municService.cityCenter = this.bootstrapComp.CITY_CENTERS[this.city] : this.municService.cityCenter = {"lat":38.074208, "lng":22.824312, "zoom":6}
 
 
         this.subscription.add(this.usersServ.usersChanged.subscribe(

@@ -131,7 +131,7 @@
             <!-- <div class="card-body"> -->
                 <div>
                     <div class="input-group" style='padding:0.5em'>
-                        <input class="bs3-form-control flex-input-group-append" #addressSearchInput placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
+                        <input class="bs3-form-control flex-input-group-append" #addressSearchInput (keyup)="checkEnterKey($event)" placeholder="{{'SIGNUP.ADDRESS' | translate}}" aria-describedby="enter address">
                         <div class="input-group-append">
                             <button mat-button class="btn-light" (click)="searchAddress(addressSearchInput.value)" style="background-color: #e0e0e0;">{{'SEARCH' | translate}} </button>
                         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -66,6 +66,7 @@ export class DisplayIssueComponent implements OnInit {
     priorityStatusList = ["High","Normal","Low"];
     severityStatusList = ["critical","major","normal","minor","trivial","enhancement"]
 
+    @ViewChild('addressSearchInput') addressSearchInput: ElementRef;
 
     constructor(private formBuilder: FormBuilder,
                 private issuesService: IssuesService,
@@ -96,9 +97,12 @@ export class DisplayIssueComponent implements OnInit {
                     this.departments = this.depServ.return_departmentsArray();
                     this.issuesService.departments = []
                     if (this.issuesService.departments_ids.length > 0) {
-
-                        for (let dep_id of this.issuesService.departments_ids) {
-                            this.issuesService.departments.push(this.departments.find((dep) => dep.departmentID == dep_id)['component_name'])
+                      let departmentObj = {}
+                      for (let dep_id of this.issuesService.departments_ids) {
+                          departmentObj = this.departments.find((dep) => dep.departmentID == dep_id)
+                          if (departmentObj) {
+                              this.issuesService.departments.push(departmentObj['component_name'])
+                          }
                         }
                     } else {
                         this.issuesService.departments.push(this.depServ.control_department)
@@ -152,18 +156,6 @@ export class DisplayIssueComponent implements OnInit {
             'Google Maps Satellite': googleHybrid,
         }
 
-        //get departments name for issue edit form
-        // this.departments = this.depServ.return_departmentsArray()
-        // this.subscriptions.add(this.depServ.departmentsChanged.subscribe(
-        //     (status:string) => {
-        //     if (status == "departmentsArrayPopulated"){
-        //         this.departments = this.depServ.return_departmentsArray();
-        //     }
-        // }))
-        //
-        // if (this.departments.length == 0) this.depServ.populate_departmentsArray()
-        //
-
         this.subscriptions.add(this.issuesService.updateIssueStatus.subscribe(
             (status:string) => {
                 if (status) {
@@ -192,10 +184,13 @@ export class DisplayIssueComponent implements OnInit {
                 if (this.issue.hasOwnProperty('created_ago')) {
                     this.issue.created_ago = moment(new Date(this.issue.create_at)).locale(new_lang).fromNow()
                 }
+                if (this.bugComments) this.fetchHistory(this.bugComments)
+                if (this.issue.hasOwnProperty('reported')) this.issue['reported'] = moment(new Date(this.issue.create_at)).locale(this.translationService.getLanguage()).format('dddd, D MMM YYYY, HH:mm')
 
-                this.layersControl['overlays'] = {}
-                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
-                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+
+                // this.layersControl['overlays'] = {}
+                // let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+                // this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
             }
         ))
 
@@ -235,6 +230,8 @@ export class DisplayIssueComponent implements OnInit {
         })
         this.issue['resolution'] != '' ? this.issueAdminForm.patchValue({resolution:this.issue['resolution']}) : this.issueAdminForm.patchValue({resolution:"FIXED"})
         this.issue['status'] == 'IN_PROGRESS' ? this.issueAdminForm.get('assignee').enable() : this.issueAdminForm.get('assignee').disable()
+
+        this.issue['reported'] = moment(new Date(this.issue.create_at)).locale(this.translationService.getLanguage()).format('dddd, D MMM YYYY, HH:mm')
 
         this.fileNamesArray = [];
         this.uploadFilesFormData = new FormData();
@@ -306,7 +303,12 @@ export class DisplayIssueComponent implements OnInit {
                 )
         }
     }
-    //
+
+    checkEnterKey(event) {
+      if (event.keyCode == 13) {
+        this.searchAddress(this.addressSearchInput.nativeElement.value)
+      }
+    }    //
     //  --- ISSUE ADMIN FUNCTIONS
     //
 
@@ -319,31 +321,30 @@ export class DisplayIssueComponent implements OnInit {
         this.imageBroken = true;
     }
 
-    IBMwatson = false;
-    IBMwatsonSuggestions = []
-    IBMwatsonSuggDep = ''
-    imageLoaded() {
-        this.imageBroken == false
-            this.IBMwatson = true
-            this.issuesService.get_IBMwatson_recommendations(this.fetch_params.bug_id)
-            .subscribe(
-                data => {
-                    this.IBMwatsonSuggestions = data
-                    this.IBMwatsonSuggestions.forEach( (sugg) => {
-                        if (sugg.class == "streetlight" || sugg.class == "lamp") {
-                            this.IBMwatsonSuggDep = "light"
-                        }
-                        if (sugg.class == "vehicle"){
-                            this.IBMwatsonSuggDep = "road"
-                        }
-                        if (sugg.class == "tree" || sugg.class == "plant"){
-                            this.IBMwatsonSuggDep = "green"
-                        }
-                    })
-                }
-            )
-
-    }
+    // IBMwatson = false;
+    // IBMwatsonSuggestions = []
+    // IBMwatsonSuggDep = ''
+    // imageLoaded() {
+    //     this.imageBroken == false
+    //         this.IBMwatson = true
+    //         this.issuesService.get_IBMwatson_recommendations(this.fetch_params.bug_id)
+    //         .subscribe(
+    //             data => {
+    //                 this.IBMwatsonSuggestions = data
+    //                 this.IBMwatsonSuggestions.forEach( (sugg) => {
+    //                     if (sugg.class == "streetlight" || sugg.class == "lamp") {
+    //                         this.IBMwatsonSuggDep = "light"
+    //                     }
+    //                     if (sugg.class == "vehicle"){
+    //                         this.IBMwatsonSuggDep = "road"
+    //                     }
+    //                     if (sugg.class == "tree" || sugg.class == "plant"){
+    //                         this.IBMwatsonSuggDep = "green"
+    //                     }
+    //                 })
+    //             }
+    //         )
+    // }
 
     openLightbox() {
         this.lightbox.open(this.issueImage)
@@ -377,118 +378,122 @@ export class DisplayIssueComponent implements OnInit {
 
     history = []
     cc_list = []
+    bugComments:any
     fetchComments() {
-        this.history = []
-        this.cc_list = []
         this.issuesService.fetch_issue_comment(this.fetch_params.bug_id)
         .subscribe(
             data => {
-                let id = this.fetch_params.bug_id;
-                let com_text:string
-
-                let duplicate_issue_status = '';
-                data.bugs[id].comments.slice(1).forEach((comment, comment_index) => {
-
-                    com_text = comment.text
-                    let com_text_splitted = com_text.split(" ");
-                    switch (true) {
-                        case (com_text_splitted[0] == "undefined"):
-                            com_text = "undefined";
-                            break
-                        case (com_text_splitted.indexOf("This") != -1):
-                            com_text = com_text_splitted[com_text_splitted.length-2];
-                            duplicate_issue_status = 'RESOLVED';
-                            break
-                        case (com_text_splitted.indexOf("Bug") != -1):
-                            com_text = this.translationService.get_instant("DASHBOARD.DUPLICATE_ISSUE_REPORTED") + " #" + com_text_splitted[2]
-                            duplicate_issue_status = 'CONFIRMED';
-                    }
-
-
-                    var status_index = -1;
-                    var dep_index = -1;
-                    var filename:string;
-                    var fileURLs = [];
-                    var file_types = [];
-                    var name:string;
-                    var user_status:string;
-                    for (let l = 0; l < comment.tags.length; l++) {
-
-                        if (comment.tags[l].split(":")[0].toUpperCase() == "STATUS") {status_index = l}
-
-                        if (comment.tags[l].split(":")[0].toUpperCase() == "DEPARTMENT") {dep_index = l}
-
-                        if (comment.tags[l].split(":")[0].toUpperCase() == "FILENAME") {
-                            filename = comment.tags[l].split(":")[1]
-                            fileURLs.push(this.issuesService.API + "/get_comments_files?bug_id=" + id + "&filename=" + filename);
-
-                            (filename.split(".")[1] =='jpeg' || filename.split(".")[1] == "png") ? file_types.push("image") : file_types.push("application")
-                        }
-
-                        if (comment.tags[l].split(":")[0].toUpperCase() == "NAME") { name = comment.tags[l].split(":")[1]}
-
-                        if (comment.tags[l].split(":")[0].toUpperCase() == "ACTION" && comment.tags[l].split(":")[1].toUpperCase() == "NEW-USER") {
-                            user_status = "NEW-USER";
-                            for (let j = 0; j < comment.tags.length; j++){
-                                if (comment.tags[j].split(":")[0].toUpperCase() == "NAME") {
-                                    var cc_name = comment.tags[j].split(":")[1];
-                                }
-                                if (comment.tags[j].split(":")[0].toUpperCase() == "MOBILE") {
-                                    var cc_mobile = comment.tags[j].split(":")[1];
-                                }
-                                if (comment.tags[j].split(":")[0].toUpperCase() == "EMAIL") {
-                                    var cc_email = comment.tags[j].split(":")[1];
-                                }
-                            }
-                        }
-
-                        if (comment.tags[l].split(":")[0].toUpperCase() == "ACTION" && comment.tags[l].split(":")[1].toUpperCase() == "USER-EXISTED") {
-                            user_status = "USER-EXISTED";
-                        }
-
-                    }
-
-                    var history_object = {
-                        "fileURLs": fileURLs,
-                        "file_types": file_types,
-                        "text": com_text,
-                        "timestamp": comment.time
-                    }
-
-                    if (status_index != -1) {
-                        history_object['state'] = comment.tags[status_index].split(":")[1]
-                        history_object['department'] = comment.tags[dep_index].split(":")[1]
-
-                        // history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com_text, "timestamp": comment.time, "state": comment.tags[status_index].split(":")[1], "department": comment.tags[dep_index].split(":")[1] });
-                    } else {
-
-                        history_object['state'] = 'USER_COMMENTED';
-
-                        if (duplicate_issue_status)  history_object['state'] = duplicate_issue_status
-
-                        history_object['department'] = this.history[comment_index-1].department
-                        history_object['name'] = name
-
-                        if (user_status == 'USER-EXISTED' ) {
-                            if (fileURLs.length == 0){
-                                history_object['state'] = 'USER_COMMENTED'
-                            }else{
-                                history_object['state'] = 'USER_UPLOADED_FILES'
-                            }
-                        }
-
-                        if (user_status == 'NEW-USER' ) {
-                            history_object['state'] = 'NEW_USER_SUBSCRIBED'
-                            this.cc_list.push({"fileURLs": fileURLs, "file_types": file_types,"name": cc_name, "mobile": cc_mobile, "mail": cc_email});
-                        }
-                    }
-
-                    this.history.push(history_object)
-                })
+              this.bugComments = data
+              this.fetchHistory(data)
             },
             error => { this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})},
             () => {}
         )
+    }
+
+    fetchHistory(data) {
+        this.history = []
+        this.cc_list = []
+
+        let id = this.fetch_params.bug_id;
+        let com_text:string
+
+        let duplicate_issue_status = '';
+        data.bugs[id].comments.slice(1).forEach((comment, comment_index) => {
+
+            com_text = comment.text
+            let com_text_splitted = com_text.split(" ");
+            switch (true) {
+                case (com_text_splitted[0] == "undefined"):
+                    com_text = "undefined";
+                    break
+                case (com_text_splitted.indexOf("This") != -1):
+                    com_text = this.translationService.get_instant("DASHBOARD.DUPLICATE_ISSUE_REPORTED") + " #" + com_text_splitted[com_text_splitted.length-2];
+                    duplicate_issue_status = 'RESOLVED';
+                    break
+                case (com_text_splitted.indexOf("Bug") != -1):
+                    com_text = this.translationService.get_instant("DASHBOARD.DUPLICATE_ISSUE_REPORTED") + " #" + com_text_splitted[2]
+                    duplicate_issue_status = this.history[comment_index-1].state;
+            }
+
+            var status_index = -1;
+            var dep_index = -1;
+            var filename:string;
+            var fileURLs = [];
+            var file_types = [];
+            var name:string;
+            var user_status:string;
+            for (let l = 0; l < comment.tags.length; l++) {
+
+                if (comment.tags[l].split(":")[0].toUpperCase() == "STATUS") {status_index = l}
+
+                if (comment.tags[l].split(":")[0].toUpperCase() == "DEPARTMENT") {dep_index = l}
+
+                if (comment.tags[l].split(":")[0].toUpperCase() == "FILENAME") {
+                    filename = comment.tags[l].split(":")[1]
+                    fileURLs.push(this.issuesService.API + "/get_comments_files?bug_id=" + id + "&filename=" + filename);
+
+                    (filename.split(".")[1] =='jpeg' || filename.split(".")[1] == "png") ? file_types.push("image") : file_types.push("application")
+                }
+
+                if (comment.tags[l].split(":")[0].toUpperCase() == "NAME") { name = comment.tags[l].split(":")[1]}
+
+                if (comment.tags[l].split(":")[0].toUpperCase() == "ACTION" && comment.tags[l].split(":")[1].toUpperCase() == "NEW-USER") {
+                    user_status = "NEW-USER";
+                    for (let j = 0; j < comment.tags.length; j++){
+                        if (comment.tags[j].split(":")[0].toUpperCase() == "NAME") {
+                            var cc_name = comment.tags[j].split(":")[1];
+                        }
+                        if (comment.tags[j].split(":")[0].toUpperCase() == "MOBILE") {
+                            var cc_mobile = comment.tags[j].split(":")[1];
+                        }
+                        if (comment.tags[j].split(":")[0].toUpperCase() == "EMAIL") {
+                            var cc_email = comment.tags[j].split(":")[1];
+                        }
+                    }
+                }
+
+                if (comment.tags[l].split(":")[0].toUpperCase() == "ACTION" && comment.tags[l].split(":")[1].toUpperCase() == "USER-EXISTED") {
+                    user_status = "USER-EXISTED";
+                }
+            }
+
+            var history_object = {
+                "fileURLs": fileURLs,
+                "file_types": file_types,
+                "text": com_text,
+                "timestamp": comment.time
+            }
+
+            if (status_index != -1) {
+                history_object['state'] = comment.tags[status_index].split(":")[1]
+                history_object['department'] = comment.tags[dep_index].split(":")[1]
+
+                // history.push({"fileURLs": fileURLs, "file_types": file_types,"text": com_text, "timestamp": comment.time, "state": comment.tags[status_index].split(":")[1], "department": comment.tags[dep_index].split(":")[1] });
+            } else {
+
+                history_object['state'] = 'USER_COMMENTED';
+
+                if (duplicate_issue_status)  history_object['state'] = duplicate_issue_status
+
+                history_object['department'] = this.history[comment_index-1].department
+                history_object['name'] = name
+
+                if (user_status == 'USER-EXISTED' ) {
+                    if (fileURLs.length == 0){
+                        history_object['state'] = 'USER_COMMENTED'
+                    }else{
+                        history_object['state'] = 'USER_UPLOADED_FILES'
+                    }
+                }
+
+                if (user_status == 'NEW-USER' ) {
+                    history_object['state'] = 'NEW_USER_SUBSCRIBED'
+                    this.cc_list.push({"fileURLs": fileURLs, "file_types": file_types,"name": cc_name, "mobile": cc_mobile, "mail": cc_email});
+                }
+            }
+            this.history.push(history_object)
+        })
     }
 
     displayIssuesOnMap(issue) {
@@ -513,70 +518,70 @@ export class DisplayIssueComponent implements OnInit {
     leafletMap: L.Map
     onMapReady(map: L.Map){
         this.leafletMap = map
-        this.issuesService.fetch_fixed_points()
-        .subscribe(
-            data => {
-                let StaticGarbageMarkers:L.Layer[] = []
-                let StaticLightingMarkers:L.Layer[] = []
-                for (let FixPnt of data) {
-                    if (FixPnt.type == 'garbage') {
-                        let AwesomeMarker;
-                        switch (FixPnt.notes[0].ANAKIKLOSI) {
-                            case '0':
-                                AwesomeMarker = UntypedL.AwesomeMarkers.icon({
-                                    icon: 'fa-trash-o',
-                                    markerColor: 'green',
-                                    prefix: 'fa',
-                                    className: 'awesome-marker awesome-marker-square'
-                                });
-                                break;
-                            case '1':
-                                AwesomeMarker = UntypedL.AwesomeMarkers.icon({
-                                    icon: 'fa-trash-o',
-                                    markerColor: 'blue',
-                                    prefix: 'fa',
-                                    className: 'awesome-marker awesome-marker-square'
-                                });
-                        }
-                        let TrashMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
-                        StaticGarbageMarkers.push(TrashMarker);
-                    }
-
-                    if (FixPnt.type == 'fotistiko') {
-                        let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
-                            icon: 'fa-lightbulb-o',
-                            markerColor: 'orange',
-                            prefix: 'fa',
-                            className: 'awesome-marker awesome-marker-square'
-                        });
-                        let LightMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
-                        StaticLightingMarkers.push(LightMarker);
-                    }
-                }
-
-                this.markerClusterData =  StaticLightingMarkers.concat(StaticGarbageMarkers);
-                this.markerClusterOptions = {
-                    disableClusteringAtZoom: 19,
-                    animateAddingMarkers: false,
-                    spiderfyDistanceMultiplier: 2,
-                    singleMarkerMode: false,
-                    showCoverageOnHover: true,
-                    chunkedLoading: true
-                }
-
-                let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
-
-                this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
-                // this.layersControl = {
-            	// 	overlays: {
-            	// 		overlayTitle : this.markerClusterGroup,
-            	// 		// StaticLightingMarkers: StaticLightingMarkers
-            	// 	}
-            	// };
-            },
-            error => {},
-            () => { }
-        )
+        // this.issuesService.fetch_fixed_points()
+        // .subscribe(
+        //     data => {
+        //         let StaticGarbageMarkers:L.Layer[] = []
+        //         let StaticLightingMarkers:L.Layer[] = []
+        //         let AwesomeMarker;
+        //         for (let FixPnt of data) {
+        //             if (FixPnt.type == 'garbage') {
+        //                 switch (FixPnt.notes[0].ANAKIKLOSI) {
+        //                     case '0':
+        //                         AwesomeMarker = UntypedL.AwesomeMarkers.icon({
+        //                             icon: 'fa-trash-o',
+        //                             markerColor: 'green',
+        //                             prefix: 'fa',
+        //                             className: 'awesome-marker awesome-marker-square'
+        //                         });
+        //                         break;
+        //                     case '1':
+        //                         AwesomeMarker = UntypedL.AwesomeMarkers.icon({
+        //                             icon: 'fa-trash-o',
+        //                             markerColor: 'blue',
+        //                             prefix: 'fa',
+        //                             className: 'awesome-marker awesome-marker-square'
+        //                         });
+        //                 }
+        //                 let TrashMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
+        //                 StaticGarbageMarkers.push(TrashMarker);
+        //             }
+        //
+        //             if (FixPnt.type == 'fotistiko') {
+        //                 let AwesomeMarker =  UntypedL.AwesomeMarkers.icon({
+        //                     icon: 'fa-lightbulb-o',
+        //                     markerColor: 'orange',
+        //                     prefix: 'fa',
+        //                     className: 'awesome-marker awesome-marker-square'
+        //                 });
+        //                 let LightMarker = new L.Marker([FixPnt.loc.coordinates[1],FixPnt.loc.coordinates[0]], {icon: AwesomeMarker})
+        //                 StaticLightingMarkers.push(LightMarker);
+        //             }
+        //         }
+        //
+        //         this.markerClusterData =  StaticLightingMarkers.concat(StaticGarbageMarkers);
+        //         this.markerClusterOptions = {
+        //             disableClusteringAtZoom: 19,
+        //             animateAddingMarkers: false,
+        //             spiderfyDistanceMultiplier: 2,
+        //             singleMarkerMode: false,
+        //             showCoverageOnHover: true,
+        //             chunkedLoading: true
+        //         }
+        //
+        //         let overlayTitle = "<span class='fa fa-map-marker fa-2x'></span> " + this.translationService.get_instant('DASHBOARD.FIXED_POINTS');
+        //
+        //         this.layersControl['overlays'][overlayTitle] = this.markerClusterGroup
+        //         // this.layersControl = {
+        //     	// 	overlays: {
+        //     	// 		overlayTitle : this.markerClusterGroup,
+        //     	// 		// StaticLightingMarkers: StaticLightingMarkers
+        //     	// 	}
+        //     	// };
+        //     },
+        //     error => {},
+        //     () => { }
+        // )
 
         map.on('click', (ev:L.LeafletMouseEvent) => {
             if (this.enableAdmin) {
@@ -599,7 +604,7 @@ export class DisplayIssueComponent implements OnInit {
     }
 
     markerClusterReady(group: L.MarkerClusterGroup) {
-        this.markerClusterGroup = group;
+        // this.markerClusterGroup = group;
     }
 
     panorama: any

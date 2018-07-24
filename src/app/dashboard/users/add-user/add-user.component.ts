@@ -57,34 +57,36 @@ export class AddUserComponent implements OnInit {
         let toAddUser = this.userAddForm.value;
         toAddUser.password = this.userAddForm.controls.passwordForm.get("pw1").value;
         delete toAddUser.passwordForm;
-        this.usersServ.add_user(toAddUser).subscribe(
-            data => {},
-            error => {
-                // this.userAddForm.markAsPristine();
-                if (error.error == "duplicate_username") {
-                    // this.userServiceMsg = 'duplicate_username';
+        if (this.userAddForm.valid) {
+            this.usersServ.add_user(toAddUser).subscribe(
+                data => {},
+                error => {
+                    // this.userAddForm.markAsPristine();
+                    if (error.error == "duplicate_username") {
+                        // this.userServiceMsg = 'duplicate_username';
+                        let usernameObj = {username:this.userAddForm.get('username').value};
+                        this.toastr.error(this.translationService.get_instant('DASHBOARD.USERNAME_EXISTS_MSG', usernameObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                        this.userAddForm.get('username').setErrors({usernameExists: true});
+                    }
+                    else if (error.error == "duplicate_email") {
+                        // this.userServiceMsg = 'duplicate_email';
+                        let emailObj = {email:this.userAddForm.get('email').value};
+                        this.toastr.error(this.translationService.get_instant('DASHBOARD.EMAIL_EXISTS_MSG', emailObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                        this.userAddForm.get('email').setErrors({emailExists: true});
+                    }
+                    else {
+                        // this.userServiceMsg = 'services_error';
+                        this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    }
+                },
+                () => {
                     let usernameObj = {username:this.userAddForm.get('username').value};
-                    this.toastr.error(this.translationService.get_instant('DASHBOARD.USERNAME_EXISTS_MSG', usernameObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-                    this.userAddForm.get('username').setErrors({usernameExists: true});
+                    this.toastr.success(this.translationService.get_instant('DASHBOARD.USER_ADDED_MSG', usernameObj), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
+                    // this.userServiceMsg = 'success';
+                    this.userAddForm.reset();
                 }
-                else if (error.error == "duplicate_email") {
-                    // this.userServiceMsg = 'duplicate_email';
-                    let emailObj = {email:this.userAddForm.get('email').value};
-                    this.toastr.error(this.translationService.get_instant('DASHBOARD.EMAIL_EXISTS_MSG', emailObj), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-                    this.userAddForm.get('email').setErrors({emailExists: true});
-                }
-                else {
-                    // this.userServiceMsg = 'services_error';
-                    this.toastr.error(this.translationService.get_instant('SERVICES_ERROR_MSG'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
-                }
-            },
-            () => {
-                let usernameObj = {username:this.userAddForm.get('username').value};
-                this.toastr.success(this.translationService.get_instant('DASHBOARD.USER_ADDED_MSG', usernameObj), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true})
-                // this.userServiceMsg = 'success';
-                this.userAddForm.reset();
-            }
-        )
+            )
+        }
     }
 
     // ngOnDestroy() {

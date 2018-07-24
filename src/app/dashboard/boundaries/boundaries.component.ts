@@ -56,17 +56,19 @@ export class BoundariesComponent implements OnInit {
             zoom: 6,
             center: latLng(38.074208 , 22.824312)
         };
+
+        this.returnBoundaries()
+    }
+
+    returnBoundaries() {
         this.municService.get_boundaries()
             .subscribe(
                 data => {
-                    console.log(data)
                     if (data.length == 0) {
                         this.toastr.error(this.translationService.get_instant('DASHBOARD.CITY_BOUNDARIES_ERROR'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
                     } else {
                         this.geojsonFeature.features[0].geometry = {"type": data[0].boundaries.type, "coordinates": data[0].boundaries.coordinates};
-
                         this.geoJSON = geoJSON(this.geojsonFeature);
-
                         this.boundaryLayer = [
                             this.geoJSON
                         ];
@@ -77,7 +79,6 @@ export class BoundariesComponent implements OnInit {
                 },
                 () => {}
             );
-
     }
 
     onMapReady(map: Map){
@@ -91,58 +92,39 @@ export class BoundariesComponent implements OnInit {
     }
 
     submitBoundaries() {
-        console.log(this.boundariesObj)
-        this.municService.update_municipality(this.boundariesObj)
+        this.municService.update_municipality_boundaries({"boundaries":this.boundariesObj})
         .subscribe(
-            data => console.log(data),
-            error => console.error(error)
+            data => this.toastr.success(this.translationService.get_instant('DASHBOARD.BOUNDARIES_CHANGED_MSG'), this.translationService.get_instant('SUCCESS'), {timeOut:8000, progressBar:true, enableHtml:true}),
+            error => {
+                this.toastr.error(this.translationService.get_instant('DASHBOARD.BOUNDARIES_CHANGED_ERROR'), this.translationService.get_instant('ERROR'), {timeOut:8000, progressBar:true, enableHtml:true})
+                this.returnBoundaries()
+            },
+            () => {this.returnBoundaries()}
         )
     }
 
     displayCityOnMap(boundaries) {
-        console.log('displayCityOnMap')
         this.boundaryLayer = []
 
-        // this.validateJSON(boundaries)
         this.boundariesObj = boundaries
-
-        console.log(this.boundariesObj)
-
-
         this.geojsonFeature.features[0].geometry = {"type": boundaries.type, "coordinates": boundaries.coordinates}
-
         this.geoJSON = geoJSON(this.geojsonFeature);
-        console.log(this.geoJSON)
-
         this.boundaryLayer = [
             this.geoJSON
         ];
-
         this.submitButtonEnabled = true;
-
     }
 
     validateJSON(boundaries) {
-        console.log(boundaries)
         let valid:boolean = false;
         let poly = boundaries.coordinates[0]
         if (boundaries.type == 'Polygon') {
-            console.log(poly)
-            console.log(poly[0])
-            console.log(poly[poly.length - 1])
             valid = arraysEqual(poly[0], poly[poly.length - 1])
         }
-
         else if (boundaries.type == 'MultiPolygon') {
-            console.log(poly)
             for (let polygon of poly) {
-                console.log(polygon)
-                console.log(polygon[0])
-                console.log(polygon[polygon.length - 1])
-
                 valid = arraysEqual(polygon[0], polygon[polygon.length - 1])
                 if (valid == false) break;
-
             }
         }
 
@@ -153,13 +135,10 @@ export class BoundariesComponent implements OnInit {
                 if(arr1[i] !== arr2[i])
                 return false;
             }
-
             return true;
         }
 
-        console.log(valid)
         return valid
-
     }
 
     fileName = ""
@@ -178,23 +157,18 @@ export class BoundariesComponent implements OnInit {
                 let json = {}
                 reader.onload = () => {
                     text = reader.result
-                    console.log(text)
                     try {
                         json = JSON.parse(text)
-                        console.log(json)
                         if (this.validateJSON(json)) {
                             this.displayCityOnMap(json)
                         } else {
                             this.toastr.error(this.translationService.get_instant('DASHBOARD.INVALID_BOUNDARIES_FILE_ERROR'), this.translationService.get_instant('ERROR'), {timeOut:4000, progressBar:true, enableHtml:true})
                         }
-
                     } catch (ex) {
-                        console.error(ex)
                         this.toastr.error(this.translationService.get_instant('DASHBOARD.INVALID_BOUNDARIES_FILE_ERROR'), this.translationService.get_instant('ERROR'), {timeOut:4000, progressBar:true, enableHtml:true})
                     }
                 }
                 reader.readAsText(files[0])
-
             } else {
                 this.toastr.error(this.translationService.get_instant('DASHBOARD.INVALID_BOUNDARIES_FILE_ERROR'), this.translationService.get_instant('ERROR'), {timeOut:4000, progressBar:true, enableHtml:true})
             }

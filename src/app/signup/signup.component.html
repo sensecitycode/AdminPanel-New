@@ -16,25 +16,14 @@
                 <mat-step [stepControl]="mapForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP1_LABEL' | translate}} </ng-template>
                     <app-map-link></app-map-link>
-                    <div class="text-right" style="margin-top:2%">
-                        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
-                    </div>
                 </mat-step>
                 <mat-step [stepControl]="personalInfoForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP2_LABEL' | translate}} </ng-template>
                     <app-personal-info></app-personal-info>
-                    <div class="text-right" style="margin-top:2%">
-                        <button color="primary" mat-raised-button matStepperPrevious> {{'BACK' | translate}} </button>
-                        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
-                    </div>
                 </mat-step>
                 <mat-step [stepControl]="accountForm">
                     <ng-template matStepLabel> {{'SIGNUP.STEP3_LABEL' | translate}} </ng-template>
                     <app-account-create></app-account-create>
-                    <div class="text-right" style="margin-top:2%">
-                        <button color="primary" mat-raised-button matStepperPrevious> {{'BACK' | translate}} </button>
-                        <button color="primary" mat-raised-button matStepperNext> {{'NEXT' | translate}} </button>
-                    </div>
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel> {{'SIGNUP.STEP4_LABEL' | translate}} </ng-template>
@@ -62,7 +51,6 @@
                                     </div>
                                 </div>
                             </mat-expansion-panel>
-
                         </div>
                     </div>
                     <div class="text-center" style="margin-top:2%">

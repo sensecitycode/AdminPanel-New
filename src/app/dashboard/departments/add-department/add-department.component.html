@@ -5,6 +5,7 @@
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-xl-5 col-lg-12">
+          <form [formGroup]="departmentAddForm">
             <mat-card class="example-card">
                 <mat-card-header>
                     <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
@@ -14,97 +15,96 @@
                 <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
                 <mat-card-content class="container-fluid">
 
-                    <form class="example-form example-full-width" [formGroup]="departmentAddForm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="{{'GRID.NAME' | translate}}" formControlName="name"/>
-                                    <mat-error *ngIf="departmentAddForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                                </mat-form-field>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="{{'GRID.NAME' | translate}}" formControlName="name"/>
+                                <mat-error *ngIf="departmentAddForm.controls.name.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            </mat-form-field>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <mat-form-field class="example-full-width">
-                                    <mat-select placeholder="{{'GRID.DEP_ISSUE_ADMIN' | translate}}" formControlName="users" multiple (change)="onAddUser()">
-                                        <mat-select-trigger>
-                                            <span *ngIf="departmentAddForm.controls.users.value?.length == 1" class="example-additional-selection">
-                                                {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
-                                            </span>
-                                            <span *ngIf="departmentAddForm.controls.users.value?.length > 1" class="example-additional-selection">
-                                                {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
-                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="departmentAddForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                                </mat-form-field>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                                <mat-select placeholder="{{'GRID.DEP_ISSUE_ADMIN' | translate}}" formControlName="users" multiple (change)="onAddUser()">
+                                    <mat-select-trigger>
+                                        <span *ngIf="departmentAddForm.controls.users.value?.length == 1" class="example-additional-selection">
+                                            {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USER' | translate }}
+                                        </span>
+                                        <span *ngIf="departmentAddForm.controls.users.value?.length > 1" class="example-additional-selection">
+                                            {{departmentAddForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.departments[0] != 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
+                                        {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="departmentAddForm.controls.users.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            </mat-form-field>
+                        </div>
 
-                            <div class="col-md-12">
-                                <div  #panelDivElement>
-                                    <div *ngFor='let user of issueAdmins' class="card">
-                                        <div class="card-body">
-                                            {{user.username}} - <dfn>{{'ROLES.cityManager' | translate}}</dfn>
-                                        </div>
+                        <div class="col-md-12">
+                            <div  #panelDivElement>
+                                <div *ngFor='let user of issueAdmins' class="card">
+                                    <div class="card-body">
+                                        {{user.username}} - <dfn>{{'ROLES.cityManager' | translate}}</dfn>
                                     </div>
+                                </div>
 
-                                    <div *ngFor='let user of nonIssueAdmins; let idx = index' class="card ">
-                                        <div class="card-body">
-                                            {{user.username}}
-                                            <button type='button' rel="tooltip" title="Remove" class="danger_btn btn btn-light btn-sm float-right" (click)='onRemoveUser(idx)'>
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                        </div>
+                                <div *ngFor='let user of nonIssueAdmins; let idx = index' class="card ">
+                                    <div class="card-body">
+                                        {{user.username}}
+                                        <button type='button' rel="tooltip" title="Remove" class="danger_btn btn btn-light btn-sm float-right" (click)='onRemoveUser(idx)'>
+                                            <i class="fa fa-times"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <mat-form-field class="example-full-width">
-                                    <mat-select placeholder="{{'GRID.DEP_MANAGER' | translate}}" formControlName="manager" [disabled]='allDepartmentUsers.length==0'>
-                                        <mat-select-trigger>
-                                            {{departmentAddForm.controls.manager.value.username}}
-                                            <span *ngIf="departmentAddForm.controls.manager.value?.length > 1" class="example-additional-selection">
-                                                (+{{departmentAddForm.controls.manager.value.length - 1}} {{ 'OTHERS' | translate }})
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of allDepartmentUsers" [value]="user" style="font-size:14px">
-                                            {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="departmentAddForm.controls.manager.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                                </mat-form-field>
 
-                                <mat-form-field class="example-full-width">
-                                    <mat-select placeholder="{{'GRID.DEP_CCLIST' | translate}}" formControlName="cclist" multiple>
-                                        <mat-select-trigger>
-                                            {{departmentAddForm.controls.cclist.value.length > 0 ? departmentAddForm.controls.cclist.value[0].username : ''}}
-                                            <span *ngIf="departmentAddForm.controls.cclist.value?.length > 1" class="example-additional-selection">
-                                                (+{{departmentAddForm.controls.cclist.value.length - 1}} {{ 'OTHERS' | translate }})
-                                            </span>
-                                        </mat-select-trigger>
-                                        <mat-option *ngFor="let user of users" [value]="user" style="font-size:14px" [disabled]='(user == departmentAddForm.controls.manager.value)' [ngClass]="{'mat-selected': user==departmentAddForm.controls.manager.value}">
-                                            {{user.username}}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-error *ngIf="departmentAddForm.controls.cclist.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
-                                </mat-form-field>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <mat-form-field class="example-full-width">
+                                <mat-select placeholder="{{'GRID.DEP_MANAGER' | translate}}" formControlName="manager" [disabled]='allDepartmentUsers.length==0'>
+                                    <mat-select-trigger>
+                                        {{departmentAddForm.controls.manager.value.username}}
+                                        <span *ngIf="departmentAddForm.controls.manager.value?.length > 1" class="example-additional-selection">
+                                            (+{{departmentAddForm.controls.manager.value.length - 1}} {{ 'OTHERS' | translate }})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let user of allDepartmentUsers" [value]="user" style="font-size:14px">
+                                        {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="departmentAddForm.controls.manager.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="example-full-width">
+                                <mat-select placeholder="{{'GRID.DEP_CCLIST' | translate}}" formControlName="cclist" multiple>
+                                    <mat-select-trigger>
+                                        {{departmentAddForm.controls.cclist.value.length > 0 ? departmentAddForm.controls.cclist.value[0].username : ''}}
+                                        <span *ngIf="departmentAddForm.controls.cclist.value?.length > 1" class="example-additional-selection">
+                                            (+{{departmentAddForm.controls.cclist.value.length - 1}} {{ 'OTHERS' | translate }})
+                                        </span>
+                                    </mat-select-trigger>
+                                    <mat-option *ngFor="let user of users" [value]="user" style="font-size:14px" [disabled]='(user == departmentAddForm.controls.manager.value)' [ngClass]="{'mat-selected': user==departmentAddForm.controls.manager.value}">
+                                        {{user.username}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="departmentAddForm.controls.cclist.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error>
+                            </mat-form-field>
                         </div>
+                    </div>
 
-                    </form>
+
                     <div class="row">
                         <div class="col-md-12">
                             <!-- <button mat-button (click)="onReset(); departmentServiceMsg = ''" class="btn-default danger_btn" >{{'RESET' | translate}}</button> -->
                             <button mat-button (click)="onReset()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
-                            <button mat-button [disabled]="!departmentAddForm.valid" (click)="submitNewDepartment()" class="btn-light success_btn" [ngStyle]="{'opacity': !departmentAddForm.valid ? '0.65' : '1'}">{{'SUBMIT' | translate}}</button>
+                            <button mat-button (click)="submitNewDepartment()" class="btn-light success_btn">{{'SUBMIT' | translate}}</button>
                         </div>
                     </div>
                 </mat-card-content>
@@ -113,6 +113,7 @@
                     <button mat-button [disabled]="!userAddForm.valid" (click)="submitNewUser()">{{ 'DASHBOARD.CREATE_USER' | translate }}</button>
                 </mat-card-actions> -->
             </mat-card>
+          </form>
 
             <!-- <div class='alert-success message text-center' [ngStyle]="{'display':(departmentServiceMsg == 'success') && !departmentAddForm.dirty ? 'block' : 'none'}" >
                 <i class="fa fa-check" style="margin-right:5px"></i><span [innerHTML]="'DASHBOARD.DEP_ADDED_MSG' | translate:{name: newAddedDep}"></span>

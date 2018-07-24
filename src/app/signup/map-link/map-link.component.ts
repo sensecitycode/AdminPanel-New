@@ -172,7 +172,7 @@ export class MapLinkComponent implements OnInit{
         domain:string;
         last_domain:string;
         onDomainSelect(){
-            this.mapForm.get('domain').markAsTouched();
+            // this.mapForm.get('domain').markAsTouched();
 
             this.sugg_domain = this.sugg_domain.replace(/ /g,"");
             if (this.sugg_domain!=this.last_domain){

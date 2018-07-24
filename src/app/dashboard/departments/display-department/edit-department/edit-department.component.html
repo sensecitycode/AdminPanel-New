@@ -3,21 +3,23 @@
 </div>
 <div class="row justify-content-center">
     <div class="col-xl-5 col-lg-12">
-        <mat-card class="example-card">
-            <mat-card-header>
-                <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
-                <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
-                <mat-card-subtitle><span>{{originalDepName}}</span></mat-card-subtitle>
-            </mat-card-header>
-            <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-            <mat-card-content>
-                <form [formGroup]="depEditForm">
-
+        <form [formGroup]="depEditForm">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <div mat-card-avatar style="margin-right: 20px;"><i class="material-icons" style="font-size:55px; color: #3c4858;">content_paste</i></div>
+                    <mat-card-title>{{'DASHBOARD.DEPARTMENT' | translate}}</mat-card-title>
+                    <mat-card-subtitle><span>{{originalDepName}}</span></mat-card-subtitle>
+                </mat-card-header>
+                <!-- <img mat-card-image src="http://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+                <mat-card-content>
                     <table class="table table-user-information">
                         <tbody>
                             <tr>
                                 <td style="vertical-align:middle"><strong>{{'GRID.DEP_NAME' | translate}}</strong></td>
-                                <td><input class="bs3-form-control" formControlName="name" disabled></td>
+                                <td>
+                                  <input [ngClass]="{'bs3-form-control':true, 'is-invalid':(depEditForm.controls.name.invalid && loaded)}" formControlName="name" readonly>
+                                  <div class="invalid-feedback" [ngStyle]="{'display':(depEditForm.controls.name.invalid && loaded)? 'block' : 'none'}" [innerHTML]="'REQ_ERR' | translate"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td style="vertical-align:top"><strong>{{'GRID.DEP_ISSUE_ADMIN' | translate}}</strong></td>
@@ -32,7 +34,7 @@
                                                     {{depEditForm.controls.users.value.length}} {{ 'DASHBOARD.USERS' | translate }}
                                                 </span>
                                             </mat-select-trigger>
-                                            <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
+                                            <mat-option *ngFor="let user of possibleAdminUsers" [value]="user" [disabled]="user.isCityManager || (user.departments.length > 0 && user.departments[0] != 0 && user.role_name[0]=='departmentUser')" style="font-size:14px">
                                                 {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
                                             </mat-option>
                                         </mat-select>
@@ -59,10 +61,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="vertical-align:middle"><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
+                                <td ><strong>{{'GRID.DEP_MANAGER' | translate}}</strong></td>
                                 <td>
                                     <!-- <mat-form-field class="example-full-width"> -->
-                                    <mat-select formControlName="manager" [disabled]=true class="bs3-form-control">
+                                    <mat-select formControlName="manager" [ngClass]="{'bs3-form-control':true, 'is-invalid':(depEditForm.controls.manager.invalid && loaded)}">
                                         <!-- <mat-select formControlName="manager" [disabled]='allDepartmentUsers.length==0' class="bs3-form-control" > -->
                                             <mat-select-trigger>
                                                 {{depEditForm.controls.manager.value.username}}
@@ -73,7 +75,8 @@
                                             <mat-option *ngFor="let user of allDepartmentUsers" [value]="user" style="font-size:14px">
                                                 {{user.username}} <dfn><strong *ngFor="let role of user.role_name"> - {{('ROLES.'+role)|translate}}</strong></dfn>
                                             </mat-option>
-                                        </mat-select>
+                                      </mat-select>
+                                      <div class="invalid-feedback" [ngStyle]="{'display':(depEditForm.controls.manager.invalid && loaded) ? 'block' : 'none'}" [innerHTML]="'REQ_ERR' | translate"></div>
                                         <!-- <mat-error *ngIf="depEditForm.controls.manager.hasError('required')" [innerHTML]="'REQ_ERR' | translate"></mat-error> -->
                                     <!-- </mat-form-field> -->
                                 </td>
@@ -82,7 +85,7 @@
                                 <td style="vertical-align:middle"><strong>{{'GRID.DEP_CCLIST' | translate}}</strong></td>
                                 <td>
                                     <!-- <mat-form-field class="example-full-width"> -->
-                                        <mat-select class="bs3-form-control" formControlName="cclist" multiple [disabled]=true>
+                                        <mat-select class="bs3-form-control" formControlName="cclist" multiple>
                                             <mat-select-trigger>
                                                 {{depEditForm.controls.cclist.value.length > 0 ? depEditForm.controls.cclist.value[0].username : ''}}
                                                 <span *ngIf="depEditForm.controls.cclist.value?.length > 1" class="example-additional-selection">
@@ -99,12 +102,12 @@
                             </tr>
                         </tbody>
                     </table>
-                </form>
 
-            <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
-            <!-- <button mat-button [disabled]="depEditForm.invalid && depEditForm.untouched" (click)="submitEditedDep()" class="btn-light success_btn" [ngStyle]="{'opacity': !depEditForm.valid ? '0.65' : '1'}">{{'SUBMIT' |translate}}</button> -->
-            </mat-card-content>
-        </mat-card>
+                    <button mat-button (click)="onResetEdit()" class="btn-light danger_btn" >{{'RESET' | translate}}</button>
+                    <button mat-button (click)="submitEditedDep()" [disabled]="(newAssigneeFinished && newCCListFinished && cpUsersFinished)" class="btn-light success_btn">{{'SUBMIT' |translate}}</button>
+                </mat-card-content>
+            </mat-card>
+        </form>
     </div>
 
     <div class="col-xl-5 col-lg-12">

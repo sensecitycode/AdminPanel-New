@@ -33,12 +33,6 @@ export class IssuesService {
     actionGroupSelect:string = 'DEPARTMENT_ISSUES';
 
     fetch_issues(reqparams) {
-        //
-        //awaiting migrate
-        // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
-        // this.role = 'cityAdmin';
-        //
-        //
         reqparams.city = this.city;
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
         return this.httpClient.get<any>(`${this.API}/admin/issue`,{params: reqparams, headers: reqheaders})
@@ -49,12 +43,6 @@ export class IssuesService {
     }
 
     fetch_issue_comment(bug_id) {
-        //
-        //awaiting migrate
-        // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
-        // this.role = 'cityAdmin';
-        //
-        //
         const reqheaders = new HttpHeaders().set('x-uuid', this.uuid).append('x-role', this.role);
         return this.httpClient.post<any>(`${this.API}/admin/bugs/comment`, {id:bug_id}, {headers: reqheaders})
     }
@@ -89,9 +77,6 @@ export class IssuesService {
 
     updateIssueStatus = new Subject();
     update_bug(update_obj, comment, files) {
-        // this.uuid = 'dGVzdDIxMjM0NTY3OFdlZCBNYXIgMjggMjAxOCAxODo0NjozMSBHTVQrMDMwMCAoRUVTVCk=';
-        // this.role = 'cityAdmin';
-
         //add mantatory field 'product' at update object
         update_obj['product'] = this.city;
 
